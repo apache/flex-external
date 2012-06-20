@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<s:WindowedApplication
+    xmlns:mx="library://ns.adobe.com/flex/mx"
+    xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+    width="100%" height="100%"
+    >
+    <fx:Script>
+        <![CDATA[
+			/**
+			 * Takes an FXG composed of many symbols and breaks each one up into its own FXG file.
+			 * The FXG compiler doesn't make library definitions public as symbols so splitting
+			 * into multiple files is required to put each symbol in its own file.
+			 */
+			
+			private var sourceFile:File = new File();
+			
+			private function browse():void
+			{
+				var fxgFilter:FileFilter = new FileFilter("FXG", "*.fxg");
+				sourceFile.browseForOpen("Select FXG file", [fxgFilter]);
+				sourceFile.addEventListener(Event.SELECT, fileSelected);
+			}
+			
+			private function fileSelected(event:Event):void
+			{
+				sourceFileTI.text = sourceFile.nativePath;
+			}
+			
+			private var sourcePath:String;
+			private var sourceDir:String;
+			private var slash:String;
+			private var sourceStream:FileStream;
+			private var sourceString:String;
+			private var sourceXML:XML;
+			
+			private var xml1:XML = <afx:foo xmlns:afx="http://ns.apache.org/flex/2012" />;
+			private var afxns:Namespace = xml1.namespace();
+			private var xml2:XML = <flm:foo xmlns:flm="http://ns.adobe.com/flame/2008" />;
+			private var flmns:Namespace = xml2.namespace();
+
+			private var fxgns:Namespace = new Namespace("http://ns.adobe.com/fxg/2008");
+			
+			private var originalNameQName:QName = new QName(flmns, "originalName");
+			
+			private function refactor():void
+			{
+				if (Capabilities.os.indexOf("Windows") != -1)
+					slash = "\\";
+				else
+					slash = "/";
+				
+				sourceFile.nativePath = sourceFileTI.text;	
+				sourcePath = sourceFile.nativePath;
+				var c:int = sourcePath.lastIndexOf(slash);
+				sourceDir = sourcePath.substring(0, c);
+				
+				sourceStream = new FileStream();
+				sourceStream.open(sourceFile, FileMode.READ);
+				sourceString = sourceStream.readUTFBytes(sourceStream.bytesAvailable);
+				
+				sourceXML = XML(sourceString);
+				callLater(makeFXGFiles);
+			}
+			
+			private var topTags:XMLList;
+			private var numTags:int;
+			private var curTag:int = 0;
+			
+			private var symbols:Object = {};
+			private var symbolList:Array = [];
+			
+			private function makeFXGFiles():void
+			{
+				default xml namespace = fxgns;
+				var topGroups:XMLList = sourceXML.Group;
+				if (topGroups.length() > 1)
+					errorLabel.text = "Unexpected: More than one top-level group";
+				topTags = topGroups.children();
+				numTags = topTags.length();
+				
+				var syms:XMLList = sourceXML.Library.children();
+				var n:int = syms.length();
+				for (var i:int = 0; i < n; i++)
+				{
+					var node:XML = syms[i];
+					symbols[node.@name] = node;
+				}
+				callLater(makeFXGFile);
+			}
+			
+			private function makeFXGFile():void
+			{
+				if (curTag == numTags)
+				{
+					callLater(makeMainClass);
+					return;
+				}
+				
+				var tag:XML = topTags[curTag++];
+				var tagName:String = tag.localName();
+				if (tagName == "Group")
+				{
+					callLater(makeFXGFile);
+					return;
+				}
+				if (tagName == "RichText")
+				{
+					callLater(makeFXGFile);
+					return;
+				}
+				if (tagName.indexOf("not_for_export") != -1)
+				{
+					callLater(makeFXGFile);
+					return;
+				}
+				var definitions:XMLList = sourceXML.Library.Definition.(@name == tagName);
+				if (definitions.length() != 1)
+				{
+					errorLabel.text = definitions.length().toString() + " definitions of " + tagName;
+					return;
+				}
+				var newName:String = tagName;
+				var definition:XML = definitions[0];
+				var originalNames:XMLList = definition.attribute(originalNameQName);
+				if (originalNames.length() == 1)
+				{
+					var originalName:String = originalNames.toString();
+					var c:int = originalName.lastIndexOf("/");
+					newName = originalName;
+					if (c != -1)
+						newName = originalName.substring(c + 1);
+				}
+			
+				var newFXG:XML = definition.copy();
+				// change name from 'Definition' to 'Graphic'
+				newFXG.setName("Graphic");
+				newFXG.addNamespace(afxns);
+				newFXG.addNamespace(flmns);
+				
+				// delete name attribute
+				delete newFXG.@name;
+				
+				// add version
+				newFXG.@version = "2.0";
+					
+				// add afx:className and baseclassName
+				newFXG.@afxns::className = newName;
+				newFXG.@afxns::baseClassName = "flash.display.Sprite";
+				
+				addLibrarySymbols(newFXG, newFXG);
+				
+				symbolList.push(newName);
+				
+				// write out file
+				var destFile:File = new File(sourceDir + slash + newName + ".fxg");
+				var writeStream:FileStream = new FileStream();
+				writeStream.open(destFile, FileMode.WRITE);
+				writeStream.writeUTFBytes(xmlheader);
+				writeStream.writeUTFBytes(newFXG.toXMLString());
+				writeStream.close();
+				
+				callLater(makeFXGFile);
+				errorLabel.text = "Wrote " + destFile.nativePath;
+			}
+
+			private function addLibrarySymbols(xml:XML, symbol:XML):void
+			{
+				// find dependent library entries
+				var allChildren:XMLList = symbol.descendants();
+				var n:int = allChildren.length();
+				for (var i:int = 0; i < n; i++)
+				{
+					var node:XML = allChildren[i];
+					var nodeName:String = node.localName();
+					if (symbols[nodeName])
+					{
+						if (xml.Library.length() == 0)
+							xml.insertChildBefore(xml.children()[0], <Library />);
+						var child:XML = symbols[nodeName];
+						if (xml.Library.children().length() == 0)
+							xml.Library.appendChild(child);
+						else if (xml.Library[nodeName].length() == 0)
+							xml.Library.insertChildBefore(xml.Library.children()[0], child);
+						addLibrarySymbols(xml, child);
+					}
+				}
+			}
+
+			private var firstPart:String = "package {\nimport flash.display.Sprite;\npublic class flex_skins extends Sprite\n{\n\tpublic function flex_skins(){}\n\nprivate var assets:Array = [\n";
+			private var secondPart:String = "];\n}\n}\n";
+			private function makeMainClass():void
+			{
+				// write out file
+				var destFile:File = new File(sourceDir + slash + "flex_skins.as");
+				var writeStream:FileStream = new FileStream();
+				writeStream.open(destFile, FileMode.WRITE);
+				writeStream.writeUTFBytes(asheader);
+				writeStream.writeUTFBytes(firstPart);
+				var n:int = symbolList.length - 1;
+				for (var i:int = 0; i < n; i++)
+				{
+					writeStream.writeUTFBytes(symbolList[i] + ",\n");					
+				}
+				writeStream.writeUTFBytes(symbolList[i] + "\n");					
+				writeStream.writeUTFBytes(secondPart);
+				writeStream.close();
+				errorLabel.text = "Wrote " + destFile.nativePath;				
+			}
+        ]]>
+    </fx:Script>
+    <fx:Declarations>
+		<fx:String id="xmlheader">
+<![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+]]>
+		</fx:String>
+		<fx:String id="asheader">
+<![CDATA[////////////////////////////////////////////////////////////////////////////////
+//
+//  Licensed to the Apache Software Foundation (ASF) under one or more
+//  contributor license agreements.  See the NOTICE file distributed with
+//  this work for additional information regarding copyright ownership.
+//  The ASF licenses this file to You under the Apache License, Version 2.0
+//  (the "License"); you may not use this file except in compliance with
+//  the License.  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
+////////////////////////////////////////////////////////////////////////////////
+]]>
+		</fx:String>
+    </fx:Declarations>
+	<s:VGroup width="100%" >
+	    <s:HGroup width="100%">
+	        <s:Label text="Source File:" />
+	        <s:TextInput id="sourceFileTI" width="100%" />
+		<s:Button label="Browse..." click="browse()" />
+		<s:Button label="Refactor" click="refactor()" />
+	    </s:HGroup>
+	    <s:Label id="errorLabel" />		
+	</s:VGroup>
+</s:WindowedApplication>
