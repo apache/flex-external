@@ -1,0 +1,3 @@
+This folder contains FLA files used to generate FXG files for the samples/themes.  Before using these files to re-generate the FXG files make sure nobody has otherwise modified the FXG files otherwise you will overwrite their changes.
+
+To generate FXG files, place all library symbols you want to export on the stage, select all, then choose Export Selection and generate one big FXG file.  Then use FXGRefactor app (from the utilities folder) to cut the FXG file into many small FXG files.
