@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:components="components.*"
+			   skinClass="skins.ApplicationContainerSkin">
+	
+	<!-- Exercise 5.06: Creating custom skin properties ~~~~~~~~~~~~~ -->
+	
+	<!-- Properties of the parent ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:layout>        
+		<s:BasicLayout/>    
+	</s:layout>    
+	
+	<!-- Metadata ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Style source="ex5_06_starter.css"/>
+	
+	<!-- Script ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:SkinnableContainer x="0" y="0" 
+						  skinClass="skins.TopContainerSkin">
+		
+		<s:BitmapImage source="assets/logo.png"/>
+		
+		<s:Label text="Employee"
+				 fontSize="38" 
+				 fontWeight="bold"
+				 alignmentBaseline="ideographicBottom"
+				 color="#FFFFFF"/>
+		
+		<s:Label text="Portal"
+				 fontSize="38"
+				 alignmentBaseline="ideographicBottom"
+				 color="#FFFFFF"/>
+		
+	</s:SkinnableContainer>
+	
+	<s:Button label="LOGOUT" 
+			  x="710" y="35"
+			  fontWeight="bold"/>
+	
+	<components:EmployeeOfTheMonth title="EMPLOYEE OF THE MONTH"
+								   x="0" y="95" 
+								   skinClass="skins.PanelContainerSkin"/>
+	
+	<components:EmployeeDirectory title="EMPLOYEE DIRECTORY"
+								  x="0" y="410" 
+								  backgroundColor="#E8E8E8"/>
+	
+	<components:Cafeteria title="CAFETERIA SPECIAL"
+						  x="275" y="95"
+						  skinClass="skins.PanelContainerSkin"/>
+	
+	<components:MonthlyEvents title="MONTHLY EVENTS"
+							  x="550" y="95" 
+							  color="#000000"
+							  skinClass="skins.PanelContainerSkin"/>
+	
+</s:Application>

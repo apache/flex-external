@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<Graphic version="2.0" viewHeight="14" viewWidth="14" ai:appVersion="15.0.2.399" ATE:version="1.0.0" flm:version="1.0.0" d:id="1" d:using="" xmlns="http://ns.adobe.com/fxg/2008" xmlns:ATE="http://ns.adobe.com/ate/2009" xmlns:ai="http://ns.adobe.com/ai/2009" xmlns:d="http://ns.adobe.com/fxg/2008/dt" xmlns:flm="http://ns.adobe.com/flame/2008">
+  <Library/>
+  <Group ai:artboardActive="1" ai:artboardIndex="0" ai:seqID="1" d:layerType="page" d:pageHeight="14" d:pageWidth="14" d:type="layer" d:userLabel="Artboard 1">
+    <Group ai:objID="37519d40" ai:seqID="2" d:id="2" d:type="layer" d:userLabel="Layer 1">
+      <Path winding="nonZero" ai:objID="300080a0" ai:seqID="3" data="M13.9863 11.9941 10.6582 8.89844C11.3125 7.98242 11.6992 6.87207 11.6992 5.6748 11.6992 2.5459 9.07422 0 5.84766 0 2.62305 0 0 2.5459 0 5.6748 0 8.80469 2.62305 11.3506 5.84766 11.3506 7.10693 11.3506 8.27148 10.959 9.22754 10.2998L12.625 13.459
+ 13.9863 11.9941ZM5.84766 9.35059C3.72607 9.35059 2 7.70117 2 5.6748 2 3.64844 3.72607 2 5.84766 2 7.97119 2 9.69922 3.64844 9.69922 5.6748 9.69922 7.70117 7.97119 9.35059 5.84766 9.35059Z">
+        <fill>
+          <SolidColor color="#CCCCCC"/>
+        </fill>
+      </Path>
+    </Group>
+  </Group>
+  <Private>
+      <ai:PrivateElement d:ref="#1">
+        <ai:SaveOptions>
+          <ai:Dict data="I rasterizeResolution 72 B downsampleLinkedImages 0 I expandBlendsOption 5 B aiEditCap 1 B includeXMP 0 I preserveGradientPolicy 4 B includeSymbol 0 B includeObjectOutsideArtboard 0 B writeImages 1 I versionKey 2 I preserveTextPolicy 4 I preserveFilterPolicy 3 "/>
+        </ai:SaveOptions>
+        <ai:DocData base="search_icon.assets/images" rulerCanvasDiffH="7.5" rulerCanvasDiffV="7.5">
+          <ai:DocRasterSettings>
+            <ai:Dict data="I colr 4 I dpi. 72 B alis 0 B spot 0 B mask 0 R padd 36 "/>
+          </ai:DocRasterSettings>
+        </ai:DocData>
+        <ai:AutoGenImageList>
+          <ai:Dict/>
+        </ai:AutoGenImageList>
+      </ai:PrivateElement>
+      <ai:PrivateElement flm:hashcode="88417461B199F17C09F6ACDAB73064FE" d:ref="#2">
+        <ai:LayerOptions color="5 79.31 257 128.502"/>
+      </ai:PrivateElement>
+    </Private>
+  </Graphic>

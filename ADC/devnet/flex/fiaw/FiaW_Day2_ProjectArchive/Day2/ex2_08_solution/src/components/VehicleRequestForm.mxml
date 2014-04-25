@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 creationComplete="init()">
+
+	<!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Script ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Script>
+		<![CDATA[
+			
+			// import statements ----------------------------------------
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.CalendarLayoutChangeEvent;
+			
+			// variable declarations ------------------------------------
+			
+			[Bindable]
+			public var employees:ArrayCollection;
+			
+			// getter/setters -------------------------------------------
+			
+			
+			// helper methods -------------------------------------------
+			
+			
+			// event handlers -------------------------------------------
+			
+			private function dateChangeHandler(event:CalendarLayoutChangeEvent):void
+			{
+				Alert.show('You have selected ' + event.target.selectedDate.toDateString());
+				
+				if ((event.target.id == "returnDate") && (pickupDate.selectedDate > returnDate.selectedDate)) 
+				{
+					Alert.show("Pickup date must be scheduled before return date.");
+				}
+				
+				if ((event.target.id == "pickupDate") && (pickupDate.selectedDate > returnDate.selectedDate) && (returnDate.selectedDate != null)) 
+				{
+					Alert.show("Pickup date must be scheduled before return date.")
+				}
+				
+			}
+			
+			private function init():void
+			{
+				pickupDate.addEventListener(CalendarLayoutChangeEvent.CHANGE, dateChangeHandler);
+				returnDate.addEventListener(CalendarLayoutChangeEvent.CHANGE, dateChangeHandler);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<s:Form x="10" y="70">
+		
+		<s:FormItem label="Employee:">
+			<s:DropDownList id="dropDownList"
+							dataProvider="{employees}"
+							labelField="lastName"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Office Phone:">
+			<s:TextInput id="phone"
+						 text="{dropDownList.selectedItem.phone}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Mobile Phone:">
+			<s:TextInput id="mobilePhone"/>
+		</s:FormItem>
+		
+		<s:FormHeading label="Dates Requested"/>
+		
+		<s:FormItem label="Pickup Date:">
+			<mx:DateChooser id="pickupDate"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Return Date:">
+			<mx:DateChooser id="returnDate"/>
+		</s:FormItem>
+		
+		<s:FormItem>
+			<s:Button id="submitButton" 
+					  label="Submit Request"/>
+		</s:FormItem>
+		
+	</s:Form>
+	
+</s:Group>

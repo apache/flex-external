@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<Graphic version="2.0" xmlns="http://ns.adobe.com/fxg/2008" scaleGridLeft="7" scaleGridRight="113" scaleGridTop="7" scaleGridBottom="38">
+  
+      <Rect x="0.75" y="2.27441" width="118.5" height="43.9678" radiusX="5.99958" radiusY="6.06324">
+        <stroke>
+          <SolidColorStroke caps="none" joints="miter" miterLimit="10" color="#FFFFFF" alpha="0.1"/>
+        </stroke>
+      </Rect>
+      <Rect x="0.75" y="0.758301" width="118.5" height="43.9673" radiusX="5.99958" radiusY="6.065">
+        <stroke>
+          <SolidColorStroke caps="none" joints="miter" miterLimit="10" color="#484848"/>
+        </stroke>
+      </Rect>
+
+      <!-- scale grid fix -->
+      <Rect width="120" height="47">
+        <fill>
+          <SolidColor alpha="0"/>
+        </fill>
+      </Rect>
+
+</Graphic>

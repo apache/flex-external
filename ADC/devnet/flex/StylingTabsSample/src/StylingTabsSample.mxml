@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:TabbedViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark"
+								  persistNavigatorState="true">
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		
+		s|ActionBar 
+		{
+			chromeColor: #229988;
+			titleAlign: center;
+		}
+		
+		s|ActionBar #titleDisplay
+		{
+			color: #CCCCCC; /* default color is white */
+			fontSize: 40; 
+			fontFamily: "Comic Sans MS";
+		}
+		
+		s|TabbedViewNavigator #tabBar
+		{
+			chromeColor: #229988;
+			color: #CCCCCC;
+			fontFamily: "Comic Sans MS";
+			iconPlacement:left;
+			textDecoration:underline;
+			downColor: #FFFFFF;
+			skinClass: ClassReference("skins.MyTabbedViewNavigatorTabBarSkin");
+		} 
+	</fx:Style>
+	
+	<s:ViewNavigator id="trends" label="Trends" width="100%" height="100%" firstView="views.TrendsView" icon="@Embed('assets/column-chart-icon32.png')"/>
+	<s:ViewNavigator id="attach" label="Attach" width="100%" height="100%" firstView="views.AttachView" icon="@Embed('assets/paperclip-icon32.png')"/>
+	<s:ViewNavigator id="call" label="Call Center" width="100%" height="100%" firstView="views.CallView" icon="@Embed('assets/receptionist-icon32.png')"/>
+	
+</s:TabbedViewNavigatorApplication>

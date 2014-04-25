@@ -1,0 +1,1901 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE html>
+<html xml:lang="EN" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<title>Flex in a Week - Use the Data Services wizard to connect to a service | Adobe Developer Connection</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="noodp" />
+	<meta name="keywords" content="RIA" />
+	<meta name="description" content="Learn to use Flash Builder by building a simple form application." /><meta name="creationDate" content="2011-05-03 @ 19:07:32" />
+	<meta name="lastModifiedDate" content="2011-05-03 @ 19:07:32" />
+	<meta name="viewport" content="width=device-width" />
+<meta name="page" content="main" />
+<meta name="shortTitle" content="Exercise 2.9: Use the Data Services wizard to connect to a service"/>
+<meta name="blurb" content="Learn to use Flash Builder by building a simple form application." />
+<meta name="author" content="Trilemetry" />
+<meta name="area" content="devnet" />
+<link rel="icon" href="http://wwwimages.adobe.com/www.adobe.com/include/img/favicon.ico" type="image/x-icon"/>
+	<link rel="shortcut icon" href="http://wwwimages.adobe.com/www.adobe.com/include/img/favicon.ico" type="image/x-icon"/>
+<link rel="canonical" href="http://www.adobe.com/devnet/flex/videotraining/exercises/ex2_09.html"/>
+       <link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/style/adobe-light-compressed.css"/>
+<!--[if !IE]><!-->
+		<link rel="stylesheet" media="screen,print" href="http://wwwimages.adobe.com/www.adobe.com/include/style/compressed.css"/>
+	<!--<![endif]-->
+	<!--[if IE]>
+		<link rel="stylesheet" media="screen,print" href="/include/style/dotcom-css-compressed.css" />
+		<link rel="stylesheet" media="screen,print" href="/include/style/default/SearchBuddy.css" />
+		<link rel="stylesheet" media="screen,print" href="/include/style/dotcom-css-modes.css" />
+	<![endif]-->
+    <link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/jmvc/adobe-configurator-compressed.css"/>
+    <link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/bach/bach-1.0.1.min.css"/>
+	<!--[if lt IE 10]>
+		<link rel="stylesheet" media="screen" href="/include/style/modes/MirrorIE.css" />
+	<![endif]-->
+	<script>
+	function createNs ( ns )
+	{
+		var o, a;			
+		a = ns.split(".");			
+		o = window[a[0]] = window[a[0]] || {};			
+		for(i=1; i < a.length; i++)
+		{
+			o = o[a[i]] = o[a[i]] || {};	
+		}
+		return o;		
+	}
+
+	createNs("Adobe.PageInfo");
+	createNs("Adobe.Tokens");
+	createNs("Adobe.UserInfo");
+	Adobe.PageInfo.AuthenticatedState = false;
+	Adobe.PageInfo.localeCode = "en";
+	Adobe.PageInfo.accountPageName = "";
+	Adobe.PageInfo.productKey = "";
+	Adobe.PageInfo.catalogName = "";
+	Adobe.PageInfo.countryCode = "US";
+    Adobe.PageInfo.localeString = "en_us";
+	Adobe.PageInfo.marketSegment = "COM";
+	Adobe.PageInfo.sitecatalystMarketSegment = "COM";
+	Adobe.PageInfo.akamaiURLPrefix = "http://wwwimages.adobe.com/www.adobe.com";
+	Adobe.PageInfo.pageLevel = "8";
+</script>
+<script src="http://wwwimages.adobe.com/www.adobe.com/include/script/compressed.js"></script>
+	<script src="http://wwwimages.adobe.com/www.adobe.com/include/jmvc/adobe-store-compressed.js"></script>
+	<script src="http://wwwimages.adobe.com/www.adobe.com/include/bach/bach-1.0.1.min.js"></script>
+    <script src="http://wwwimages.adobe.com/www.adobe.com/uber/js/VisitorAPI.js"></script>
+	<script src="http://wwwimages.adobe.com/www.adobe.com/uber/js/omniture/mbox.js"></script>
+	<!--[if IE 6]>
+    <script>
+        try{void(document.execCommand("BackgroundImageCache",false,true));} catch(e) {}
+    </script>
+    <![endif]-->
+	<script>
+	//<![CDATA[
+	$(window).bind("hashchange load", adobe.fn.focusHashElement);
+	cart = new adobe.ui.CartFacade("cart-dialog", "cart-dialog-flash");
+	cart.setRequiredFlashVersion("9.0.115");
+	cart.setDefaultCountry("");
+	cart.setDomain(".adobe.com"); // set this to ".adobe.com"
+	cart.setContextPath(""); // set this to empty when web context is '/'
+	// Possibly add the .edu selector or override market segment
+	Adobe.Product.Controller.CPod.EduController.processLocation(true);
+	if(cart.isOverlaySupported()) {
+		var PromoIDReport = new Array();
+		var prmid = window.location.search.match(/\bpromoid\=([^&#$]+)/);
+		if(prmid) {
+			prmid[1]=prmid[1].toUpperCase();
+			cart.setEmailTrackingId(prmid[1]);
+		}
+		// if a promo code is pass thru the URL, set the promo in the cart and the cookie
+		prmid = window.location.search.match(/\bpromocode\=([^&#$]+)/) || null;
+		if(prmid) {
+			if (Adobe && Adobe.Cart && Adobe.Cart.Models && Adobe.Cart.Models.Cart) {
+				var cart = Adobe.Cart.Models.Cart;
+				var marketSegment = cart.getMarketSegment() || Adobe.Product.Controller.CPod.EduController.COM;
+				cart.addPromotion({code:prmid[1], marketSegment:marketSegment});
+				cart.savePromoCode(prmid[1]);
+			}
+		}
+	}
+	//]]>
+</script>
+<script>
+	$(document).ready(function()
+	{
+		adobe.dom.param("wcmmode=disabled");
+		adobe.dom.param("compress=false");
+	});
+</script>
+<script>
+    var locales = {"cn":true,"us":true,"en_xx":true,"mena_fr":true,"tw":true};
+    var tokens = document.location.pathname.split('/');
+    var locale = ((tokens.length < 2) || ((locales[tokens[1]] == undefined) && tokens[1]!='content')) ? 'us' : tokens[1];
+    var geoCook = 'international=';
+    var cookies = document.cookie.split(';');
+    for(var i=0;i < cookies.length;i++) {
+        var c = cookies[i];
+        if ((c.indexOf(geoCook) >= 0) && !(locale=='content') ){
+            var preferredLocale = c.substring(c.indexOf(geoCook) + geoCook.length,c.length);
+            if ((preferredLocale != locale)&&(locales[preferredLocale])){
+                var url = document.location.pathname + document.location.search;
+                if (locale == 'us'){
+                    url = '/' + preferredLocale + url;
+                } else {
+                    var suffix = url.substring(locale.length + 1);
+                    if ((suffix == null) || (suffix == ""))
+                    { 
+                    	suffix = "/";
+                    }
+                    if (preferredLocale != 'us'){
+                        url = '/' + preferredLocale + suffix;
+                    } else {
+                        url = suffix;
+                    }
+                }
+                window.location.replace(url);
+            }
+        }
+    }
+</script>
+<!--[if (gte IE 9)|(IEMobile)]><!-->
+    <link rel="stylesheet" media="only screen" href="/etc/pagetables/reflowtypes/adobe_adc_article.css"/>
+    <script src="/etc/pagetables/reflowtypes/adobe_adc_article.js"></script>
+    <!--<![endif]-->
+<script>
+    //<![CDATA[
+    if(typeof jQuery != 'undefined'){
+        (function($) {
+            var dispatcher = (adobe.vrbl("reflowDispatcher") || adobe.vrbl("reflowDispatcher", adobe.reflow.createDispatcher("width", window.document))),
+                    viewport = $(window),
+                    viewportWidth = NaN,
+                    meta = window.document.getElementsByName("viewport")[0],
+                    metaContent;
+
+            $(window).bind("resize orientationchange", setRenderMode);
+
+            if(meta) {
+                $(window.document).bind("adobe.reflow.LayoutChange", snapViewportToMaxWidth);
+            }
+
+            setRenderMode();
+
+            function snapViewportToMaxWidth(event, layout_event) {
+                if (layout_event.snapView && layout_event.active) {
+                    var widthSetter = "width=",
+                            width = widthSetter+layout_event.maxRange,
+                            content = meta.getAttribute("content");
+
+                    if(content.indexOf(widthSetter) > -1) {
+                        content = content.replace(/width=[^,$]+/, width);
+                    } else {
+                        content = width;
+                    }
+                    meta.setAttribute("content", content);
+                }
+            }
+
+            function setRenderMode() {
+                var currentViewportWidth = viewport.width();
+                if (viewportWidth == currentViewportWidth) {
+                    return;
+                } //trottle noisy event
+                viewportWidth = currentViewportWidth;
+                dispatcher.updateLayout(viewportWidth);
+            }
+        })(jQuery);
+    }
+    //]]>
+</script>
+<link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/style/article-compressed.css"/>
+<script src="http://community.adobe.com/help/badge/v4/ionLoader.js"></script>
+	<script src="http://community.adobe.com/help/badge/v4/ionSupport.js"></script>
+	<script src="http://community.adobe.com/help/badge/v4/ionBadge.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/jquery.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/utils.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/jquery/granite.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/jquery.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/shared.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/personalization/kernel.js"></script>
+<link rel="stylesheet" href="/apps/dotcom/ag-widgets.css" type="text/css">
+<script type="text/javascript">
+    $CQ(function() {
+        CQ_Analytics.SegmentMgr.loadSegments("/etc/segmentation");
+        CQ_Analytics.ClientContextUtils.init("/etc/clientcontext/default","/content/dotcom/en/devnet/flex/videotraining/exercises/ex2_09");
+
+        
+    });
+</script><script type="text/javascript" src="/etc/clientlibs/granite/jquery-ui.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/jquery-ui.js"></script>
+<script type="text/javascript" src="/etc/designs/dotcom/clientlib/stores.js"></script>
+<link rel="stylesheet" href="/etc/clientlibs/granite/jquery-ui.css" type="text/css">
+<link rel="stylesheet" href="/etc/clientlibs/foundation/jquery-ui/themes/default.css" type="text/css">
+<script src="http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/typekit/yoe7ink.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+    </head>
+<body class="Text TextMedium Link">
+<div class="ArticleGrid ArticleWideGrid LayoutSlimGrid LayoutCenter PanelDiffuseShadow PanelFillExtraLight LayoutP">
+    <div class="PrintLayoutHide">
+        <!--googleoff: all--><div class="sitenav"><script>
+    //<![CDATA[
+	if (navigator.userAgent.match(/iPad/i) != null){
+		adobe.dom.createStyleSheet($('head').get(0), "/include/style/default/SiteHeader-iPad.css");
+	}
+
+    $(document).ready(adobe.fn.initGlobalNav);
+    //]]>
+</script>
+<!--googleoff: index-->
+<!-- $Id: //depot/projects/dylan/releases/rc_13_11/ubi/globalnav/en_us/globalnav_ssi.html#1 $ -->
+<form id="globalnav-search" class="searchbuddy LayoutSlimHidden" name="globalnav-search" method="get" action="/go/gnav_search" accept-charset="utf-8">
+    <div id="SiteHeader" class="SiteHeader Text TextSmall">
+        <span id="globalnav"></span>
+        <a href="/" id="shHome" class="SiteHeaderHome">Adobe</a>
+        <div class="SiteHeaderBar" id="shBar">
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem SiteHeaderBarItemFirst" id="shProducts">
+                <a href="/products/catalog.html?promoid=KAWQI" id="shProductsLink" class="SiteHeaderBarLink">Products</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Full" id="ProductsPanel">
+                    <div class="SiteHeaderColumnSingle">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Top destinations</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud.html?promoid=JQPEQ" id="Products_Topdestinations_AdobeCreativeCloud">Adobe Creative Cloud</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/teams.html?promoid=KFKQF" id="Products_Topdestinations_CreativeCloudforteams">Creative Cloud for teams</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/cs6.html?promoid=JOLIS" id="Product_Topdestinationss_CreativeSuite6">Creative Suite 6</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/marketing?promoid=JOLIT" id="Products_Topdestinations_AdobeMarketingCloud">Adobe Marketing Cloud</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/acrobat.html?promoid=JOLIR" id="Products_Topdestinations_Acrobat">Acrobat</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/photoshop.html?promoid=JOLIW" id="Products_Topdestinations_Photoshop">Photoshop</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/sitecatalyst.html?promoid=KAWQH" id="Product_Topdestinationss_SiteCatalyst">SiteCatalyst</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/education/students.html?marketSegment=EDU&promoid=KFKQD" id="Product_Topdestinationss_Students">Students</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/elements-family.html?promoid=JOLIV" id="Product_Topdestinationss_Elementsfamily">Elements family</a></li>
+                            </ul>
+                        </div>
+                    </div>
+            
+                    <div class="SiteHeaderColumnDouble SiteHeaderShadowLeft">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Adobe Creative Cloud</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud.html?promoid=KAUBZ" id="Products_AdobeCreativeCloud_WhatisAdobeCreativeCloud">What is Adobe Creative Cloud?</a></li>
+                            </ul>
+
+                            <div class="SiteHeaderColumn-1">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/design.html?promoid=KFKPZ" id="Products_AdobeCreativeCloud_Design">Design</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/web.html?promoid=KFKQC" id="Products_AdobeCreativeCloud_Web">Web</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/photography.html?promoid=KFKQA" id="Products_AdobeCreativeCloud_Photography">Photography</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/video.html?promoid=KFKQB" id="Products_AdobeCreativeCloud_Video">Video</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/students.html?marketSegment=EDU&promoid=JUTMG" id="Products_AdobeCreativeCloud_Students">Students</a></li>
+                                </ul>
+							</div>            
+
+                            <div class="SiteHeaderColumn-2">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/teams.html?promoid=JZVVU" id="Products_AdobeCreativeCloud_Teams">Teams</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/enterprise.html?promoid=KFKPX" id="Products_AdobeCreativeCloud_Enterprise">Enterprise</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/enterprise/education.html?promoid=KFKQE" id="Products_AdobeCreativeCloud_Educationalinstitutions">Educational institutions</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/enterprise.html?promoid=KFKPY" id="Products_AdobeCreativeCloud_Government">Government</a></li>
+                                </ul>
+							</div>            
+
+                            <div class="SiteHeaderColumn-1">
+                                <p class="SiteHeaderPanelHeaderSmall">Design and photography</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/photoshop.html?promoid=KAUCA" id="Products_DesignandPhotography_Photoshop">Photoshop</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/illustrator.html?promoid=KAUCB" id="Products_DesignandPhotography_Illustrator">Illustrator</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/indesign.html?promoid=KAUCC" id="Products_DesignandPhotography_InDesign">InDesign</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/muse.html?promoid=KAUCE" id="Products_DesignandPhotography_AdobeMuse">Adobe Muse</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/photoshop-lightroom.html?promoid=KAUCD" id="Products_DesignandPhotography_Lightroom">Lightroom</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Video</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="/products/premiere.html?promoid=KAUCJ" id="Products_Video_AdobePremiere">Adobe Premiere</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/aftereffects.html?promoid=KAUCK" id="Products_Video_AfterEffects">After Effects</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-2">
+                                <p class="SiteHeaderPanelHeaderSmall">Web development and HTML5</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="http://html.adobe.com/edge/?promoid=KAGMS" target="_blank" id="Products_WebdevelopmentHTML5_EdgeToolsServices">Edge Tools &amp; <span class="SiteHeaderIconNewWindowNoWrap">Services<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/dreamweaver.html?promoid=KAUCF" id="Products_WebdevelopmentHTML5_Dreamweaver">Dreamweaver</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="http://gaming.adobe.com/?promoid=KAUCG" target="_blank" id="Products_WebdevelopmentHTML5_Gaming"><span class="SiteHeaderIconNewWindowNoWrap">Gaming<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="SiteHeaderColumnDouble SiteHeaderShadowLeft">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Adobe Marketing Cloud</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-marketing.html?promoid=KAUCL" id="Products_AdobeMarketingCloud_WhatisAdobeMarketingCloud">What is Adobe Marketing Cloud?</a></li>
+                            </ul>
+            
+                            <div class="SiteHeaderColumn-1">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/digital-analytics.html?promoid=KAVVU" id="Products_AdobeMarketingCloud_Digitalanalytics">Digital analytics</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/social-marketing.html?promoid=KAVVV" id="Products_AdobeMarketingCloud_Socialmarketing">Social marketing</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/web-experience-management.html?promoid=KAVVX" id="Products_AdobeMarketingCloud_Webexperiencemanagement">Web experience management</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-2">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/testing-targeting.html?promoid=KAVVW" id="Products_AdobeMarketingCloud_Testingandtargeting">Testing and targeting</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/media-optimization.html?promoid=KAVVY" id="Products_AdobeMarketingCloud_Mediaoptimization">Media optimization</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/campaign-management.html?promoid=KFKQH" id="Products_AdobeMarketingCloud_Campaignmanagement">Campaign management</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-1">
+                                <p class="SiteHeaderPanelHeaderSmall">Analytics</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/sitecatalyst.html?promoid=KAUCM" id="Products_Analytics_SiteCatalyst">SiteCatalyst</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/discover.html?promoid=KAUCN" id="Products_Analytics_AdobeDiscover">Adobe Discover</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/insight.html?promoid=KAUCO" id="Products_Analytics_Insight">Insight</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Social</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/social-marketing.html?promoid=KAUCP" id="Products_Social_AdobeSocial">Adobe Social</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Experience Manager</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="/products/cq.html?promoid=KAUCQ" id="Products_ExperienceManager_CQ">CQ</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/scene7.html?promoid=KAUCR" id="Products_ExperienceManager_Scene7">Scene7</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-2">
+                                <p class="SiteHeaderPanelHeaderSmall">Target</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/testandtarget.html?promoid=KAUCS" id="Products_Target_TestTarget">Test&amp;Target</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/recommendations.html?promoid=KAUCT" id="Products_Target_Recommendations">Recommendations</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/searchandpromote.html?promoid=KAUCU" id="Products_Target_SearchPromote">Search&amp;Promote</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Media Optimizer</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/adlens.html?promoid=KAUCV" id="Products_MediaOptimizer_AdLens">AdLens</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/audiencemanager.html?promoid=KAUCW" id="Products_MediaOptimizer_AudienceManager">AudienceManager</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/audienceresearch.html?promoid=KAUCX" id="Products_MediaOptimizer_AudienceResearch">AudienceResearch</a></li>
+                                </ul>
+                                
+                                <p class="SiteHeaderPanelHeaderSmall">Campaign management</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/campaign-management.html?promoid=KFKQI" id="Products_Campaignmanagement_AdobeCampaign">Adobe Campaign</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="SiteHeaderColumnSingle SiteHeaderShadowLeft">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Document services</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/products/acrobat.html?promoid=KAUCY" id="Products_DocumentServices_Acrobat">Acrobat</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.echosign.adobe.com/en/home.html?promoid=KAUDB" target="_blank" class="SiteHeaderLinkNewWindow" id="Products_DocumentServices_EchoSign"><span class="SiteHeaderIconNewWindowNoWrap">EchoSign<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.acrobat.com/formscentral/en/home.html?promoid=KAUCZ" target="_blank" id="Products_DocumentServices_FormsCentral"><span class="SiteHeaderIconNewWindowNoWrap">FormsCentral<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.acrobat.com/sendnow/en/home.html?promoid=KAUDA" target="_blank" id="Products_DocumentServices_SendNow"><span class="SiteHeaderIconNewWindowNoWrap">SendNow<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.acrobat.com/welcome/en/home.html?promoid=KAUDC" target="_blank" id="Products_DocumentServices_Acrobatcom"><span class="SiteHeaderIconNewWindowNoWrap">Acrobat.com<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                            </ul>
+            
+                            <p class="SiteHeaderPanelHeader">Publishing</p>
+                            <ul class="SiteHeaderPanelLinkNoBottom">
+                                <li class="SiteHeaderPanelLink"><a href="/products/digital-publishing-suite-family.html?promoid=JOLIU" id="Products_Publishing_DigitalPublishingSuite">Digital Publishing Suite</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br style="clear: both" />
+            
+                    <div class="SiteHeaderRow">
+                        <ul class="SiteHeaderRightLink">
+                            <li class="SiteHeaderPanelLink"><a href="/products/catalog.html?promoid=JOOTH" id="Products_Seeallproducts">See all products</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shBusinessSolutions">
+                <a href="/solutions.html?promoid=KAWQJ" id="shBusinessSolutionsLink" class="SiteHeaderBarLink">Business solutions</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Double" id="BusinessSolutionsPanel">
+                    <div class="SiteHeaderRow">
+                        <div class="SiteHeaderColumn-1">
+                            <p class="SiteHeaderPanelHeaderSmall">By business need</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-analytics.html?promoid=JOLJB" id="BusinessSolutions_Bybusinessneed_Digitalanalytics">Digital analytics</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-publishing.html?promoid=JOLJA" id="BusinessSolutions_Bybusinessneed_Digitalpublishing">Digital publishing</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/acrobat.html?promoid=KAWSC" id="BusinessSolutions_Bybusinessneed_Documentmanagement">Document management</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/media-optimization.html?promoid=JOLIX" id="BusinessSolutions_Bybusinessneed_Mediaoptimization">Media optimization</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/social-marketing.html?promoid=JZPNO" id="BusinessSolutions_Bybusinessneed_Socialmarketing">Social marketing</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/testing-targeting.html?promoid=KAXLU" id="BusinessSolutions_Bybusinessneed_Testingandtargeting">Testing and targeting</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/video.html?promoid=KAUDD" id="BusinessSolutions_Bybusinessneed_Videoeditingandserving">Video editing and serving</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="http://html.adobe.com?promoid=JZEFF" target="_blank" class="SiteHeaderLinkNewWindow" id="BusinessSolutions_Bybusinessneed_Webdevelopment">Web <span class="SiteHeaderIconNewWindowNoWrap">development<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/web-experience-management.html?promoid=JOOYM" id="BusinessSolutions_Bybusinessneed_Webexperiencemanagement">Web experience management</a></li>
+                            </ul>
+            
+                            <ul class="SiteHeaderPanelLinkNoBottom">
+                                <li class="SiteHeaderPanelLink"><a href="/solutions.html?promoid=JOOTI" id="BusinessSolutions_Seeallbusinessneeds">See all business needs</a></li>
+                            </ul>
+                         </div>
+            
+                        <div class="SiteHeaderColumn-2">
+                            <p class="SiteHeaderPanelHeaderSmall">By industry</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/broadcasting.html?promoid=JOLIY" id="BusinessSolutions_Byindustry_Broadcast">Broadcast</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/education.html?marketSegment=EDU&promoid=JOLIZ" id="BusinessSolutions_Byindustry_Education">Education</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/financial-services.html?promoid=KAUDE" id="BusinessSolutions_Byindustry_Financialservices">Financial services</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/government.html?promoid=KAUDF" id="BusinessSolutions_Byindustry_Government">Government</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-publishing.html?promoid=KAUDG" id="BusinessSolutions_Byindustry_Publishing">Publishing</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/retail.html?promoid=KAWSD" id="BusinessSolutions_Byindustry_Retail">Retail</a></li>
+                            </ul>
+            
+                            <ul class="SiteHeaderPanelLinkNoBottom">
+                                <li class="SiteHeaderPanelLink"><a href="/solutions.html?promoid=KAUDH" id="BusinessSolutions_Seeallindustries">See all industries</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shSupportLearning">
+                <a href="http://helpx.adobe.com/support/?promoid=KAWQK" id="shSupportLearningLink" class="SiteHeaderBarLink">Support &amp; Learning</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="SupportLearningPanel">
+                    <div class="SiteHeaderRow">
+                        <p class="SiteHeaderPanelHeaderSmall">I need help</p>
+                        <ul>
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/support/?promoid=JZEFP" id="SupportLearning_Ineedhelp_Products">Products</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/creative-cloud/topics/getting-started.html?promoid=JZEFO" id="SupportLearning_Ineedhelp_AdobeCreativeCloud">Adobe Creative Cloud</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/marketing-cloud.html?promoid=KAWSE" id="SupportLearning_Ineedhelp_AdobeMarketingCloud">Adobe Marketing Cloud</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://forums.adobe.com/index.jspa?promoid=JZEFM" target="_blank" id="SupportLearning_Ineedhelp_Forums"><span class="SiteHeaderIconNewWindowNoWrap">Forums<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                        </ul>
+            
+                        <p class="SiteHeaderPanelHeaderSmall">I want to learn</p>
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/learning.html?promoid=KAUDK" id="SupportLearning_Iwanttolearn_Trainingandtutorials">Training and tutorials</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://training.adobe.com/certification.html?promoid=KAUDM" target="_blank" id="SupportLearning_Iwanttolearn_Certification"><span class="SiteHeaderIconNewWindowNoWrap">Certification<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/devnet.html?promoid=KAUDN" id="SupportLearning_Iwanttolearn_AdobeDeveloperConnection">Adobe Developer Connection</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/designcenter.html?promoid=KAUDO" id="SupportLearning_Iwanttolearn_AdobeDesignCenter">Adobe Design Center</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://tv.adobe.com?promoid=KFELF" target="_blank" id="SupportLearning_Iwanttolearn_AdobeTV">Adobe <span class="SiteHeaderIconNewWindowNoWrap">TV<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/solutions/digital-marketing/guides.html?promoid=KAWSF" id="SupportLearning_Iwanttolearn_AdobeMarketingCenter">Adobe Marketing Center</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://labs.adobe.com/?promoid=JZEFQ" target="_blank" id="SupportLearning_Iwanttolearn_AdobeLabs">Adobe <span class="SiteHeaderIconNewWindowNoWrap">Labs<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shDownload">
+                <a href="/downloads/?promoid=KAWQL" id="shDownloadLink" class="SiteHeaderBarLink">Download</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="DownloadPanel">
+                    <div class="SiteHeaderRow">
+                        <ul>
+                            <li class="SiteHeaderPanelLink"><a href="/downloads/?promoid=JZEFS" id="Download_Producttrials">Product trials</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://get.adobe.com/flashplayer/?promoid=JZEFT" id="Download_AdobeFlashPlayer">Adobe Flash Player</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://get.adobe.com/reader/?promoid=JZEFU" id="Download_AdobeReader">Adobe Reader</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://get.adobe.com/air/?promoid=JZEFV" id="Download_AdobeAIR">Adobe AIR</a></li>
+                        </ul>
+            
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="/downloads/?promoid=JZEFW" id="Download_Seealldownloads">See all downloads</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shCompany">
+                <a href="/company.html?promoid=KAWQM" id="shCompanyLink" class="SiteHeaderBarLink">Company</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="CompanyPanel">
+                    <div class="SiteHeaderRow">
+                        <ul>
+                            <li class="SiteHeaderPanelLink"><a href="/careers.html?promoid=JZEFX" id="Company_CareersatAdobe">Careers at Adobe</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/aboutadobe/invrelations/?promoid=JZEFZ" id="Company_InvestorRelations">Investor Relations</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/aboutadobe/pressroom/?promoid=JZEGA" id="Company_Newsroom">Newsroom</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/privacy.html?promoid=JZEGB" id="Company_Privacy">Privacy</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/corporate-responsibility.html?promoid=JZEFY" id="Company_CorporateResponsibility">Corporate Responsibility</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/customershowcase.html?promoid=KEWBG" id="Company_CustomerShowcase">Customer Showcase</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/company/contact.html?promoid=JZEGC" id="Company_Contactus">Contact us</a></li>
+                        </ul>
+            
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="/company.html?promoid=JZPLK" id="Company_Morecompanyinfo">More company info</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shBuy">
+                <a href="/products/catalog/software._sl_id-contentfilter_sl_catalog_sl_software_sl_mostpopular.html?promoid=KAWQN" id="shBuyLink" class="SiteHeaderBarLink">Buy</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="BuyPanel">
+                    <div class="SiteHeaderRow">
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="/products/catalog/software.html?marketSegment=COM&promoid=KAWQO" id="Buy_Forpersonalandprofessionaluse">For personal and professional use</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/products/catalog/software._sl_id-contentfilter_sl_catalog_sl_education_sl_alledu.html?marketSegment=EDU&promoid=KAWQP" id="Buy_Forstudentseducatorsandstaff">For students, educators, and staff</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/products/small-business-pricing/software-catalog._sl_id-contentfilter_sl_catalog_sl_software_sl_creativecloudmembership.html?marketSegment=COM&promoid=JOLJE" id="Buy_Forsmallandmediumbusinesses">For small and medium businesses</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/volume-licensing.html?promoid=KAWQQ" id="Buy_VolumeLicensing">Volume Licensing</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/products/discount-software-coupons.html?promoid=KAWQR" id="Buy_Specialoffers">Special offers</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://success.adobe.com/en/na/programs/rfi/dm_sales_inquiries.html?promoid=KAWSG" target="_blank" id="Buy_AdobeMarketingCloudsales">Adobe Marketing Cloud <span class="SiteHeaderIconNewWindowNoWrap">sales<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+			<!--
+            <div id="tooltipStrings" class="SiteHeaderTooltipStrings LayoutHidden">
+                <span id="tooltipStringExpandMenu">Expand menu</span>
+                <span id="tooltipStringOpenLink">Open link</span>
+            </div>
+			-->
+            
+            <a href="/go/gnav_search" id="shSearchButton" class="SiteHeaderBarItem SiteHeaderSearchButton" style="display: none;">Search</a>
+            <div class="SiteHeaderBarItem SiteHeaderBarItemLast">&nbsp;</div>
+            <div id="site-search" class="SiteHeaderSearch">
+                <input title="Search" type="text" id="search-input" name="term" maxlength="1000" />
+                <input type="hidden" id="searchbuddy-loc" name="loc" value="en_us" />
+                <button type="submit" id="search-submit" class="icon-replace search">Search</button>
+            </div>
+        </div>
+        <div class="SiteHeaderUser">
+            <div id="shSignInBlock">
+                <a id="shInfo" class="SiteHeaderUserItem SiteHeaderInfo">Info</a>
+                <a href="/account/sign-in.adobedotcom.html" id="shSignIn" class="SiteHeaderUserItem LinkStrong">Sign in</a>
+                <div class="SiteHeaderPopPanelShadow width-250" id="InfoPanelShadow" style="display: none;"></div>
+                <div class="SiteHeaderPopPanel width-250" id="InfoPanel" style="display: none;">
+                    <div class="SiteHeaderPanelRow">
+                        <span class="SiteHeaderPanelHeader">Why sign in?</span>
+                        Sign in to manage your account and access trial downloads, product extensions, community areas, and more.
+                    </div>
+                </div>
+            </div>
+        
+            <a href="/account.html" id="shWelcome" class="SiteHeaderUserItem SiteHeaderArrow LinkStrong" style="display: none;">Welcome, <span id="screenName"></span></a>
+        
+            <div class="SiteHeaderPopPanelShadow" id="WelcomePanelShadow" style="display: none;"></div>
+            <div class="SiteHeaderPopPanel" id="WelcomePanel" style="display: none;">
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyAccount">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_en_us">My Adobe</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyOrders">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_myorders_en_us">My orders</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyInformation">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_myinformation_en_us">My information</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyPreferences">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_mypreferences_en_us">My preferences</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyProductsServices">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_myproducts_services_en_us">My products and services</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shSignOut">
+                    <a class="SiteHeaderPanelHeader" id="shSignOutLink" href="/cfusion/membership/logout.cfm">Sign out</a>
+                </div>
+            </div>
+        
+            <div id="MyCartLinkContainer">
+                <a href="/go/gnav_mycart_en_us" id="shMyCart" class="SiteHeaderUserItem SiteHeaderCart">My cart<span id="cartQuantity"></span></a>
+            </div>
+        
+            <a href="/privacy.html" id="shPrivacy" class="SiteHeaderUserItem">Privacy</a>
+            <a href="/go/gnav_myadobe_en_us" id="shMyAdobe" class="SiteHeaderUserItem">My Adobe</a>
+        </div>
+    </div>
+</form>
+
+<div id="SiteHeaderMobile" class="SiteHeaderMobile LayoutHidden LayoutSlim Text TextSmall">
+    <a href="/go/gnav_adobe_logo_en_us" id="shHomeMobile" class="SiteHeaderHome SiteHeaderHomeMobile">Adobe</a>
+
+    <div class="SiteHeaderBar SiteHeaderBarMobile" id="shBarMobile">
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoLeftBorder" id="shProductsMobileSpan"><a href="/go/gnav_products_en_us" id="shProductsMobile" class="SiteHeaderBarLink">Products</a></span>
+        <span class="SiteHeaderBarItemMobile" id="shSectionsMobileSpan"><a href="#" id="shSectionsMobile" class="SiteHeaderArrowMobile SiteHeaderBarLink">Sections</a></span>
+        <span class="SiteHeaderBarItemMobile" id="shSectionsMobileBuy"><a href="/go/gnav_store_en_us" id="shBuyMobile" class="SiteHeaderBarLink">Buy</a></span>
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoRightBorder SiteHeaderBarItemMobileNoPadding">&nbsp;</span>
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoRightBorder SiteHeaderBarItemFloatRight" id="shSearchMobileSpan"><a href="/go/gnav_search" id="shSearchMobile" class="SiteHeaderSearchButtonMobile">Search</a></span>
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoLeftBorder SiteHeaderBarItemFloatRight SiteHeaderBarItemMobileNoPadding">&nbsp;</span>
+    </div>
+    <div class="SiteHeaderBarMobileExtend" id="shBarExtend">
+        <div id="shBarExtendSections" style="display: none;">
+            <div id="shBarExtendSections1" class="SiteHeaderBarMobileExtendSections">
+                <a href="/go/gnav_solutions_en_us" id="shSectionsSolutionsMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Solutions</a>
+                <a href="/go/gnav_company_en_us" id="shSectionsCompanyMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Company</a>
+            </div>
+            <div id="shBarExtendSections2" class="SiteHeaderBarMobileExtendSections">
+                <a href="/go/gnav_help_en_us" id="shSectionsHelpMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Help</a>
+                <a href="/go/gnav_learning_en_us" id="shSectionsLearningMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Learning</a>
+            </div>
+        </div>
+        <div id="shBarExtendSearch" style="display: none;">
+            <form id="globalnav-search-mobile" class="SiteHeaderSearchMobileForm" name="globalnav-search-mobile" method="get" action="/go/gnav_search" accept-charset="utf-8">
+                <input title="Search" type="text" id="search-input-mobile" name="term" maxlength="1000" />
+                <button type="submit" id="search-submit-mobile">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="SiteHeaderUser">
+        <a href="/cfusion/membership/index.cfm?loc=en_us&amp;nl=1" id="shSignInMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile LinkStrong">Sign in</a>
+        <a href="/cfusion/membership/logout.cfm" id="shSignOutMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile LinkStrong" style="display: none;">Sign out</a>
+        <a href="/privacy.html" id="shPrivacyMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile">Privacy</a>
+        <a href="/go/gnav_myadobe_en_us" id="shMyAdobeMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile">My Adobe</a>
+    </div>
+</div>
+<!--googleon: index--><div class="hovercart"><div id="HoverCartModal">
+		<div class="CartHeaderPopPanelShadow HoverCartwidth" id="CartPanelShadow" style="display: none;">
+		<div class="CartHeaderPopPanel HoverCart" id="CartPanel">
+			<div id="HoverCartItem" class="RuleHBottom HoverCart-1-3 LayoutBigRowTop" style="display: none">
+				<div class="LayoutBreakAfter">
+					<div class="HoverCart-1 LayoutHItem">
+						<div style="padding-left:60px;" class=" LayoutBreakAfter LayoutPullout">
+	<div id="HoverCartBoxShotxyz" class="HoverCartBoxShot">
+								<a href="">
+										<img src="" class="LayoutImage" alt=""/>
+									</a>
+								</div>
+							<div style="float:left;width:100%" class="CPodCostCell">
+							    <span class="TextStrong ProductName" id="HoverCartHeaderxyz"> 
+							    	<a href="#">
+							        	</a>
+							    </span>
+								<div class="LayoutBigRowBottom" id="HoverCartDescriptionxyz">
+									</div>
+                                <span id="HoverCartPreOrderHardGoodMsgxyz" style="display:none;" class="TextWarning TextPostScript">Preorder Estimated Availability <span id="HoverCartPreOrderHardGoodMsgDatexyz">Date</span>. Your credit card will not be charged until the product is shipped. Estimated availability date is subject to change.</span>
+                                <span id="HoverCartPreOrderSoftGoodMsgxyz" style="display:none;" class="TextWarning TextPostScript">Preorder Estimated Availability <span id="HoverCartPreOrderSoftGoodMsgDatexyz">Date</span>. Your credit card will not be charged until the product is ready to download. Estimated availability date is subject to change.</span>
+
+							</div>
+						</div>
+</div>
+					<div class="LayoutHItem HoverCart-2">
+						<div class="HoverCartQty">
+							Qty: 
+							<span id="HoverCartQtyxyz">
+								</span>
+						</div>
+					</div>
+                    <div class="LayoutRight">
+						<div class="CheckoutCostDark LayoutRight TextRight">
+							<span id="HoverCartPricexyz"> 
+							</span>
+								<span id="HoverCartSubscriptionxyz" class="CheckoutSubscription"> 
+								</span>						
+                            <div id="HoverCartVatPercentageLabelxyz" class="TextEm TextSmall" style="display:none; max-width: 100px;"><span id="HoverCartVatPercentagePreTextxyz"></span>
+                                    <span id="HoverCartVatPercentagexyz"></span></div>                  
+                        </div>
+					</div>
+					
+				</div>
+				<div class="HoverCartEDUMessage LayoutBigCellBottom" style="display:none">Purchase requires verification of academic eligibility</div>
+			</div>
+			<div id="HoverCartContainer" class="LayoutBreakAfter" style=""></div>
+			<a id="HoverCartMoreItems" class="LayoutBreakAfter" style="text-align: center;" href="/cart.html"></a>
+            <div  id="HoverCartButtons" class="HoverCart-1-3">
+                <table border="0" align="right" width="70%">
+                    <tr>
+                        <td>
+                            <div class="TextRight HoverCartSubTotal">Subtotal</div>
+                            <div id="ExVatLabel" style="display:none" class="TextEm TextSmall TextRight"></div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartSubTotal">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="HoverCartPromotionsRow">
+                        <td>
+                            <div class="TextRight HoverCartPromotionsLabel HoverCartSubTotal">Promotions</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartPromotions">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="HoverCartShippingRow">
+                        <td>
+                            <div class="TextRight HoverCartShippingLabel HoverCartSubTotal">Estimated shipping</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartShipping">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="HoverCartVATRow">
+                        <td>
+                            <div class="TextRight HoverCartVATLabel HoverCartSubTotal">Tax</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartVat">
+                                    </span>
+                                        </div>
+                                <div id="CartTaxHeader">
+                                    Calculated at checkout</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><div class="RuleH"></div></td>
+                        <td><div class="RuleH"></div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="TextRight HoverCartTotalLabel HoverCartSubTotal">Total</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartTotal">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+				<div class="LayoutBreak"></div>		
+				
+				<div class="HoverCart-1-3 LayoutRight LayoutCellTop LayoutBreakAfter">
+						<a href="/cart.html" id="HoverCartCheckOut" class="CartButtonYellow CartShopCheckOut LayoutRight"><span class="CartBuyIconText">Review and Checkout</span></a>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+<script>
+	/*global jQuery,adobe*/
+	jQuery.createNs("Adobe.Cart.ShoppingCart");
+
+	Adobe.Cart.ShoppingCart.HoverCart = {
+			
+		MaxItems: "4",
+
+		DisplayTime: "5000",
+
+		MoreItemsTextSingular: "() more item in your cart",
+
+		MoreItemsTextPlural: "() more items in your cart",
+
+		MonthToMonthText: "per month",
+
+		YearlyText: "per year"
+    };
+
+    Adobe.Cart.TaxLabels = {
+            TaxInclusiveText    : "",
+            TaxNotApplicable    : "Tax not applicable"
+	};
+
+	Adobe.Cart.ShoppingCart.GlobalVars = {
+			
+		CountryCode: 			"US",
+
+		MarketSegment: 			"COM",
+
+		AkamaiURLPrefix: 		"http://wwwimages.adobe.com/www.adobe.com",
+
+		PriceMonthText:			"per month",
+
+		PriceYearText:			"per year",
+
+		FullSubMonthText:		"Month-to-month",
+
+		FullSubYearText:		"One-year",
+
+		SubMonthText:			"Monthly",
+
+		SubYearText:			"Annual",
+
+		SubscriptionItemText:	"NONE",
+
+		TermTypeMonth:			"MONTH",
+
+		TermTypeYear:			"YEAR",
+
+		BackupDVDParent:		"_PARENT",
+		/*
+			params: {
+				cart,
+				price,
+				categoryPath,
+				originalPrice,
+				storeName,
+				locale,
+				usePrecision,
+				type,
+				taxCode,
+				delimiter,
+				showCentDelim,
+				distributionMethod
+			}
+		*/
+		getPriceLabel: function(params) {
+			var currency = params.cart.currency;
+			var params = {
+				storeName: params.storeName,
+				locale: params.locale,
+				productKey: params.categoryPath,
+				priceObject: {
+					price: {
+						orginalPriceWithoutTax: params.originalPrice,
+						priceWithoutTax: params.price,
+						taxCode: params.taxCode || ""
+					},
+					priceTypeKey: params.distributionMethod
+				},
+				currencyObject: {
+					delimiter: params.delimiter || ",",
+					formatString: currency.FORMATSTRING,
+					iso3Code: currency.CODE,
+					symbol: currency.SYMBOL,
+					usePrecision: params.usePrecision
+				},
+				showCentDelim : params.showCentDelim || false,
+				type: params.type
+			};
+			return params;
+		},
+
+		isSubscription: function(serviceCommitment, termType) {
+			return (serviceCommitment == this.SubscriptionItemText && 
+					(termType == this.TermTypeMonth || termType == this.TermTypeYear));
+		},
+
+		subscriptionItem: function(serviceCommitment, termType) {
+			return (termType == this.TermTypeMonth && 
+					(serviceCommitment == this.TermTypeMonth || serviceCommitment == this.TermTypeYear));
+		},
+
+		getSubscriptionText: function(serviceCommitment, termType) {
+			if (this.isSubscription(serviceCommitment, termType)) {
+				if (termType === this.TermTypeMonth) {
+					return this.SubMonthText;
+				} else if (termType === this.TermTypeYear) {
+					return this.SubYearText;
+				}	
+			} else if (this.subscriptionItem(serviceCommitment, termType)) {
+				if (serviceCommitment === this.TermTypeMonth) {
+					return this.FullSubMonthText;
+				} else if (serviceCommitment === this.TermTypeYear) {
+					return this.FullSubYearText;
+				}	
+			}
+			return "";
+		},
+
+		getSubscriptionPriceText: function(serviceCommitment, termType) {
+			if (this.isSubscription(serviceCommitment, termType)) {
+				if (termType === this.TermTypeMonth) {
+					return this.PriceMonthText;
+				} else if (termType === this.TermTypeYear) {
+					return this.PriceYearText;
+				}	
+			} else if (this.subscriptionItem(serviceCommitment, termType)) {
+				return this.PriceMonthText;	
+			}
+			return "";
+		}
+		
+	};
+</script>
+</div>
+<div id="modalContent" style="display:none;"></div>
+</div>
+<!--googleon: all--></div>
+    <div class="Link" id="top">
+    <div class="Link LayoutBreakAfter">
+        <div class="parbase compbase breadcrumb"><div class="LayoutHeader LayoutBreakAfter Link">
+	<div class="LayoutHeaderPath">
+		<div class="LayoutCellSides LinkStrong LayoutH IconAlign">
+			<span class="LayoutHItem LayoutSmallGutterRight">
+						<a href="/devnet.html">
+							Adobe Developer Connection</a>
+					</span>
+					<span class="LayoutSmallGutterRight LayoutHItem">/</span>
+				<span class="LayoutHItem LayoutSmallGutterRight">
+						<a href="/devnet/flex.html">
+							Flex Developer Center</a>
+					</span>
+					<span class="LayoutSmallGutterRight LayoutHItem">/</span>
+				<span class="LayoutHItem LayoutSmallGutterRight">
+						<a href="/devnet/flex/videotraining.html">
+							Flex in a Week</a>
+					</span>
+					<span class="LayoutSmallGutterRight LayoutHItem">/</span>
+				</div>
+	</div>
+</div>
+</div>
+<div class="LayoutGrid-1-3 LayoutSlimGrid-1-2">
+            <h1 class="LayoutCellSides LayoutSmallRow TextH1">
+                Exercise 2.9: Use the Data Services wizard to connect to a service</h1>
+        </div>
+    </div>
+</div>
+<div class="LayoutRow Link RuleH">
+    <div class="LayoutBreakAfter">
+        <!-- Article Leaf -->
+        <div class="ArticleGrid-1 LayoutSlimGrid-1-2 ArticleWideGrid-1 TextSmall">
+                <div class="LayoutCellSides LayoutRow">
+                    <div class="articleAuthorDisplay authordisplay"><h2 class="TextH5 LayoutRow">
+        by&nbsp;<a href="/devnet/author_bios/trilemetry.html">Trilemetry</a></h2>
+    <div class="LayoutRow">
+        <img title="trilemetry_bio" alt="Trilemetry" class="ImageShadow LayoutImage" src="devnet/authors/bio/t/trilemetry_bio.gif.adimg.mw.160.png"/></div>
+    <div class="LayoutRow">
+                 <ul>
+            <li><a href="http://www.trilemetry.com" title="Trilemetry, Inc." target="_blank">Trilemetry, Inc.</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                    <div class="parbase compbase articleTOC singlepagetoc"><div class="LayoutRow">
+            <h2 class="TextH5 LayoutSmallRow">Content</h2>
+            <ul class="LayoutSmallRow">
+                <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader">
+                                Use a Flash Builder wizard to connect to a web service</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_0">
+                                Examine the generated value object classes</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_1">
+                                Use the value object class to create a typed data model</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_2">
+                                View the ArrayCollection of value objects in the Debugger</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_3">
+                                Display the data</a>
+                        </li>
+                    </ul>
+        </div>
+
+    </div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                    <div class="articleTools articletools"><div class="LayoutRow LayoutCellVSides">
+                    <h2 class="TextH5 LayoutSmallRow">Modified</h2>
+                    <p>2 May 2011</p>
+                </div>
+            <ul class="LayoutRow">
+            </ul>
+     </div>
+</div>
+                <div class="LayoutRow">
+                    <div class="articleCommentSummary commentsummary"><div class="LayoutRow LayoutCellSides">
+    <div id="articleRankAndCommentSummary"></div>
+</div>
+</div>
+</div>
+                <div class="LayoutRow">
+                    <!-- Page Tools -->
+                    <div class="pagetools pageTools"><div class="LayoutBreakAfter">
+    <div class="LayoutRow LayoutBreakAfter TextH5">
+	<table class="LayoutMaxH">
+        <tbody>
+            <tr>
+                <td class="PanelFillDark">
+					<h2 class="TextH5 LayoutCellSides LayoutSmallCellVSides">
+                        		Page tools</h2>
+					    </td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+<div class="LayoutCellSides">
+            <div class="LayoutRow">
+                    <div id="PageTools" style="padding-left:23px;" class=" LayoutBreakAfter LayoutPullout">
+	<div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Facebook-button Icon IconFacebook" href="http://www.facebook.com/sharer.php"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a href="http://www.facebook.com/sharer.php" class="Facebook-button" title="Share on Facebook" target="_blank">Share on Facebook</a></div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Twitter-button Icon IconTwitter" href="http://twitter.com/"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a href="http://twitter.com/" class="Twitter-button" title="Share on Twitter" target="_blank">Share on Twitter</a></div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="LinkedIn-button Icon IconLinkedIn" href="http://www.linkedin.com/"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a href="http://www.linkedin.com/" class="LinkedIn-button" title="Share on LinkedIn" target="_blank">Share on LinkedIn</a></div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Bookmark-button Icon IconBookmark" href="#"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a class="Bookmark-button" href="#">Bookmark</a>
+                                </div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Print-button Icon IconPrint" href="#"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a class="Print-button" href="#">Print</a>
+                                </div>
+                            </div>
+                        </div>
+</div>
+            </div>
+            </div>
+</div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                    <!-- Article Community -->
+                    <div class="articletags articleTags"><div class="LayoutRow">
+             	<div class="LayoutH LinkWeak TextTag">
+                <a href="/devnet/tagsearch.tsb.prod-_sl_flash_builder_v_.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="Flash&nbsp;Builder">Flash&nbsp;Builder</a><a href="/devnet/tagsearch.tsb.prod-_sl_flex_v_.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="Flex">Flex</a><a href="/devnet/tagsearch.tsb.tag-ADC%2BKeywords_c_ria.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="RIA">RIA</a></div>
+            </div>
+        </div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                          <div class="parbase adcFeedBack compbase adcfeedback"><script type="javascript">
+                //<![CDATA[
+                    s_tagEnv = 'dev';
+                //]]>
+              </script>
+        <script src="http://wwwimages.adobe.com/www.adobe.com/include/script/article-compressed.js"></script>
+
+        <div id="helpful-pod">
+            <div id="helpful" class="collapsed">
+              <div id="helpfulspan">Was this helpful?</div>
+              <input type="radio" name="feedback" id="radioyes" onClick="showForm();"/><span id="yesspan" class="radio-option">Yes</span> &#160;
+              <input type="radio" name="feedback" id="radiono" onClick="showForm();"/><span id="nospan" class="radio-option">No</span>
+              <textarea title="(Optional) Please let us know how we can improve this page. " id="feedbacktext" placeholder="" rows="5" cols="25" style="font-family:sans-serif;display:none"></textarea>
+              <button id="submitButton" onClick="submitForm();" style="display:none">Submit</button>
+              <button id="noCommentButton" onClick="hideForm();" style="display:none">No comment</button>
+              <br clear="both">
+              <div id="termsofuse"><p>By clicking Submit, you accept the <a href="/misc/terms.html">Adobe Terms of Use</a>.</p>
+</div>
+            </div>
+            <div id="fold">&nbsp;</div>
+        </div>
+        <div id="helpful-thankyou" class="thankyou">Thanks for your feedback.</div>
+
+        <script>
+        //<![CDATA[
+            // Send CHL-specific data to SiteCatalyst
+            var s_chl = s_gi("mxchlprod");
+            var urlMatch = /(https?:\/\/)([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*))(index.html)?(\?\S+)?(#\S+)?/;
+            var adobeMatch = /(https?:\/\/)([-\w\.]+)+(\.adobe\.com)/;
+            var adobeLocaleMatch = /^\/(ae|bg|cz|dk|de|gr|es|ee|fi|fr|il|hr|hu|it|jp|kr|lt|lv|no|nl|pl|br|ro|ru|sk|si|se|tr|ua|cn|tw)\/.+/;
+            var cqLocaleMatch = /^\/content\/help\/(ae|bg|cz|dk|de|gr|es|ee|fi|fr|il|hr|hu|it|jp|kr|lt|lv|no|nl|pl|br|ro|ru|sk|si|se|tr|ua|cn|tw)\/.+/;
+            var ua = navigator.userAgent.toLowerCase();
+            s_chl.channel = "helpx";
+            s_chl.eVar3 = window.location.toString().replace(/[\?,#](.*)/, "");
+            s_chl.pageName = s_chl.eVar11 = document.title;
+            if ( typeof(omtrPageName) != 'undefined' && omtrPageName.length > 0 ) {
+                s_chl.pageName = s_chl.eVar11 = omtrPageName;
+            }
+           // s_chl.list1 = omtrProductList.replace(/,/g,":");
+            var omtrLocale = "en";
+            if (adobeLocaleMatch.test(location.pathname)) {
+                var matchArray = adobeLocaleMatch.exec(location.pathname).slice();
+                omtrLocale = matchArray[1];
+                if ( typeof(matchArray[1]) != 'undefined') {
+                    omtrLocale = matchArray[1];
+                }
+            }
+            else if (cqLocaleMatch.test(location.pathname)) {
+                var matchArray = cqLocaleMatch.exec(location.pathname).slice();
+                omtrLocale = matchArray[1];
+                if ( typeof(matchArray[1]) != 'undefined') {
+                    omtrLocale = matchArray[1];
+                }
+            }
+
+            s_chl.eVar8 = omtrLocale;
+            if (omtrLocale != "en") {
+                s_chl.eVar9 = document.title;
+            }
+            // Transmit
+            // The s_gs() call in compressed.js causes problems with any .t() call in any report suite
+            function s_gs(){}
+            s_chl.t();
+
+            function showForm(){
+                if (ua.indexOf('msie 6') == -1 ){
+                    $('#helpfulspan').hide();
+                    $('#radioyes').hide();
+                    $('#radiono').hide();
+                    $('#yesspan').hide();
+                    $('#nospan').hide();
+                    $('#feedbacktext').autofill();
+                    $('#helpful').animate({width:'420px', height: '185px'});
+                    $('#helpful').removeClass('collapsed');
+                    $('#helpful').addClass('expanded');
+                    $('#fold').css('background-position', '-12px 0');
+                    displayTextField();
+                }else{
+                    submitForm();
+                }
+            }
+
+
+
+            $(document).ready(function() {
+                var feedbackLocales = "en, jp, fr, de, it, se, es, nl , dk, br, no, fi";
+                if ( feedbackLocales.indexOf( omtrLocale ) > -1 ){
+                $('#helpful-pod').fadeIn();
+                    $('#helpful-pod').animate({
+                    opacity: 1,
+                   top: '+=20'},
+                    1500);
+                }
+            });
+
+        // ]]>
+        </script>
+    </div>
+</div>
+                <div class="LayoutBreak"></div>
+        </div>
+        <!-- Main Content -->
+        <div class="LayoutSlimGrid-1-2 ArticleGrid-2-4 ArticleWideGrid-2-6">
+            <div class="ArticleWideGrid-2-4">
+                <div class="articlerequirements articlePrerequistes"><div class="PanelFillMedium PanelBorder LayoutRow TextSmall">
+			<div id="requirements-title" class="LayoutCell Link">
+				<h2 class="TextH5">
+					<span class="LayoutSmallGutterRight Icon IconSmallerAdd"></span>
+					Requirements</h2>
+			</div>
+			<div id="requirements-content" class="LayoutBreakAfter">
+				<div class="ArticleGrid-2">
+					<div class="LayoutCellSides">
+						<h3 class="TextH5 LayoutSmallRowTop">
+								Prerequisite knowledge</h3>
+							<div class="LayoutRowBottom">
+								<ul class="link-list">
+<li>Exercise 1.1: <a href="/devnet/flex/newcontent/videotraining/exercises/ex1_01.html">Setting up Flash Builder and your project files</a></li>
+<li>Exercise 2.7: <a href="/devnet/flex/newcontent/videotraining/exercises/ex2_07.html">Creating an ActionScript value object class</a></li>
+<li>Exercise 2.8: <a href="/devnet/flex/newcontent/videotraining/exercises/ex2_08.html">Creating an ArrayCollection of value objects</a></li>
+</ul>
+</div>
+						<h3 class="TextH5 LayoutSmallRowTop">
+							User level</h3>
+						<p class="LayoutRowBottom">Beginning</p>
+					</div>
+				</div>
+				<div class="ArticleGrid-3">
+						<div class="LayoutCellSides">
+							<h3 class="TextH5 LayoutSmallRowTop">
+									Required products</h3>
+								<ul class="LayoutSmallRowTop LayoutRowBottom">
+									<li class="LayoutSmallRow">
+												<span class="IconLeft IconSmallDownload"></span>Flash Builder 4.7 Premium<a href="/go/try_flashbuilder/"> (Download trial)</a></li>
+										</ul>
+							</div>
+					</div>
+				<div class="ArticleGrid-4">
+							<div class="LayoutCellSides">
+								<h3 class="TextH5 LayoutSmallRowTop">
+									Sample files</h3>
+								<ul class="LayoutSmallRowTop LayoutRowBottom">
+									<li class="LayoutSmallRow"><a href="fiaw/ex2_09_starter.zip"><span class="LayoutSmallGutterRight Icon IconSmallDownload"></span>ex2_09_starter.zip</a></li>
+											<li class="LayoutSmallRow"><a href="fiaw/ex2_09_solution.zip"><span class="LayoutSmallGutterRight Icon IconSmallDownload"></span>ex2_09_solution.zip</a></li>
+											</ul>
+							</div>
+						</div>
+					</div>
+        </div>
+    <script>
+    adobe.fn.panelToggle("requirements-title", "requirements-content", true);
+</script>
+<script>
+    adobe.fn.panelToggle("requirements-title", "requirements-content", true);
+</script>
+</div>
+<div class="LayoutGrid-1-4 LayoutSlimGrid-1-2 LayoutBreakAfter">
+                    <div class="parsys articlecontentAdobe"><div id="articlecontentAdobe">
+<a name="articlecontentAdobe_text" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>In this exercise you will use the Flash Builder Data Services wizard to connect to a web service and generate ActionScript value object classes. You will then use one of the classes to create a series of employee instances and populate the Employee Portal: Vehicle Request application with that data.</p>
+<p>In previous exercises you have learned about value object classes and creating typed data models. This exercise simply introduces you to a feature of Flash Builder that can save you the step of creating your value object classes manually.</p>
+<p>In this exercise you will learn how to:</p>
+<ul>
+<li><a href="#articlecontentAdobe_numberedheader">Use a Flash Builder wizard to connect to a web service </a></li>
+<li><a href="#articlecontentAdobe_numberedheader_0">Examine the generated value object classes</a></li>
+<li><a href="#articlecontentAdobe_numberedheader_1">Use the value object class to create a typed data model</a></li>
+<li><a href="#articlecontentAdobe_numberedheader_2">View the ArrayCollection of value objects in the Debugger</a></li>
+<li><a href="#articlecontentAdobe_numberedheader_3">Display the data</a></li>
+</ul>
+</div>
+				</div>
+<a name="articlecontentAdobe_numberedheader" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader"></a>
+        Use a Flash Builder wizard to connect to a web service</h3>
+</div>
+<a name="articlecontentAdobe_text_0" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>In this section, you will use the Data Services wizard to retrieve data using a web service.</p>
+<p class="note"><span class="note"><b>Note</b>: The Data Services wizard can create HTTP, web service and remote/AMF connections (see Figure 1). We have chosen to work with a web service for this exercise, but you can use the knowledge you've learned in this training series to connect to the HTTP and remote/AMF options.</span></p>
+<ol>
+<li>Download the <a href="fiaw/ex2_09_starter.zip">ex2_09_starter.zip</a> file provided if you haven't already and extract the ex2_09_starter.fxp to your computer.</li>
+<li>Open Flash Builder and import the ex2_09_starter.fxp file.</li>
+<li>Select Data &gt; Connect to Web Service (see Figure 1).</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_image" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Select Data &gt; Connect to Web Service" alt="Select Data &gt; Connect to Web Service" class="cq-dd-image  LayoutImage LayoutRow " src="/content/dotcom/en/devnet/flex/videotraining/exercises/ex2_09/_jcr_content/articlecontentAdobe/image.adimg.mw.227.jpg/1303115738473.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 1. Select Data &gt; Connect to Web Service</div>
+</div>
+<a name="articlecontentAdobe_text_1" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="4">
+<li>Within the Connect to Data/Service for ex2_09_starter file dialog box, for the WSDL URI type <b>http://www.adobetes.com/f45iaw100/remoteData/ex2_09.cfc?wsdl</b> (see Figure 2).</li>
+<p>Note the Service name, Service package, and Data type package fields automatically populate when you enter the WSDL URI.</p>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_0" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Enter the WSDL URI path." alt="Enter the WSDL URI path." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/videotraining/exercises/ex2_09/figure02.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 2. Enter the WSDL URI path.</div>
+</div>
+<a name="articlecontentAdobe_text_2" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="5">
+<li>Click Next.</li>
+<li>Review the data operations (see Figure 3).</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_1" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Review the operations and click Finish." alt="Review the operations and click Finish." class="cq-dd-image  LayoutImage LayoutRow " src="/content/dotcom/en/devnet/flex/videotraining/exercises/ex2_09/_jcr_content/articlecontentAdobe/image_1.adimg.mw.468.jpg/1303115862372.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 3. Review the operations and click Finish.</div>
+</div>
+<a name="articlecontentAdobe_text_3" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="7">
+<li>Click Finish.<p>You should see the Ex2_09 service listed in the Data/Services view (see Figure 4).</p>
+</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_2" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="View the Ex2_09 service in the Data/Services view." alt="View the Ex2_09 service in the Data/Services view." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/videotraining/exercises/ex2_09/figure04.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 4. View the Ex2_09 service in the Data/Services view.</div>
+</div>
+<a name="articlecontentAdobe_numberedheader_0" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_0"></a>
+        Examine the generated value object classes</h3>
+</div>
+<a name="articlecontentAdobe_text_4" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>In this section you will view the value object for the employee data that Flash Builder created.</p>
+<p class="note"><span class="note"><b>Note:</b> The WSDL defined a server-side class called Employees, which is the equivalent of the value object ActionScript classes created by Flash Builder.</span></p>
+<ol>
+<li>In the Package Explorer view, expand the valueObjects package to reveal its contents (see Figure 5). The valueObjects package contains three files that help configure the EMPLOYEES class.</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_3" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Expand the valueObjects directory." alt="Expand the valueObjects directory." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/videotraining/exercises/ex2_09/figure05.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 5. Expand the valueObjects directory.</div>
+</div>
+<a name="articlecontentAdobe_text_5" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="2">
+<li>Double-click the _Super_EMPLOYEES.as file to open it.</li>
+<li>Within the file, locate the class properties starting on line 50 (see Figure 6). These properties are created from the server side EMPLOYEES object, which represent the columns that exist in the data table on the server. You can use these properties to create typed data that is compatible with the Ex2_09 service.</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_4" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Locate the class properties." alt="Locate the class properties." class="cq-dd-image  LayoutImage LayoutRow " src="/content/dotcom/en/devnet/flex/videotraining/exercises/ex2_09/_jcr_content/articlecontentAdobe/image_4.adimg.mw.437.jpg/1303115908458.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 6. Locate the class properties.</div>
+</div>
+<a name="articlecontentAdobe_numberedheader_1" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_1"></a>
+        Use the value object class to create a typed data model</h3>
+</div>
+<a name="articlecontentAdobe_text_6" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>In this section you will use a for loop to populate an ArrayCollection with EMPLOYEES value objects.</p>
+<ol>
+<li>From the Package Explorer view, open the ex2_09_starter.mxml file.</li>
+<li>Within the <code>Script</code> block, locate the <code>employeeService_resultHandler()</code> function.</li>
+<li>Within the <code>Script</code> block, create a local variable named <code>employeeData</code> and data type it to the <code>ArrayCollection</code> class:</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_codeblock" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">protected function employeeService_resultHandler(event:ResultEvent):void
+{
+var employeeData:ArrayCollection; 
+}</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_7" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="4">
+<li>Set the value of the <code>employeeData</code> variable to the <code>event.result</code> property:</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_codeblock_0" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">protected function employeeService_resultHandler(event:ResultEvent):void
+{
+var employeeData:ArrayCollection = event.result;
+}</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_8" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="5">
+ <li>Use the <code>as</code> operand to cast the <code>event.result</code> value to the <code>ArrayCollection</code> class.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_codeblock_1" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">protected function employeeService_resultHandler(event:ResultEvent):void
+{
+var employeeData:ArrayCollection = event.result as ArrayCollection;
+}</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_9" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="6">
+ <li>Below the <code>employeeData</code> variable, declare a local variable named <code>employee</code> and use the content assist tool to data type it to the <code>EMPLOYEES</code> class (see Figure 7).</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_image_5" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Create a local employee and use the content assist tool to type it." alt="Create a local employee and use the content assist tool to type it." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/videotraining/exercises/ex2_09/figure07.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 7. Create a local employee and use the content assist tool to type it.</div>
+</div>
+<a name="articlecontentAdobe_text_10" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="7">
+<li>Below the employee variable type <b>fore</b>, press Ctrl+Space to invoke content assist, and select the <code>for each</code> loop code template.</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_codeblock_2" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">protected function employeeService_resultHandler(event:ResultEvent):void
+{
+var employeeData:ArrayCollection = event.result as ArrayCollection;
+var employee:EMPLOYEES;
+for each(var i:int in employeeData)
+{
+
+}
+}
+</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_22" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="8">
+ <li>Modify the generated <code>for each</code> loop so that it loops over each item in the <code>employeeData ArrayCollection</code> using the iterant <code>emp</code> data typed to the <code>Object</code> class.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_codeblock_9" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">protected function employeeService_resultHandler(event:ResultEvent):void 
+{ 
+var employeeData:ArrayCollection = event.result as ArrayCollection; 
+var employee:EMPLOYEES; 
+for each(var emp:Object in employeeData) 
+{ 
+
+} 
+} 
+</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_11" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="9">
+ <li>Within the <code>for each</code> loop, to the <code>employee</code> variable, assign a new instance of the Employee value object class.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_codeblock_3" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">for each(var emp:Object in employeeData)
+{
+employee = new EMPLOYEES();
+}</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_12" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="10">
+<li>Set the value of the <code>employee.FIRSTNAME</code> property to the <code>emp.FIRSTNAME</code> property.</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_codeblock_4" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">for each(var emp:Object in employeeData)
+{
+employee = new EMPLOYEES();
+employee.FIRSTNAME = emp.FIRSTNAME;
+}</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_13" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="11">
+ <li>Repeat step 10 for the rest of the properties in the EMPLOYEES class.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_codeblock_5" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">for each(var emp:Object in employeeData)
+{
+employee = new EMPLOYEES(); 
+employee.FIRSTNAME = emp.FIRSTNAME;
+employee.LASTNAME = emp.LASTNAME;
+employee.ID = emp.ID;
+employee.TITLE = emp.TITLE;
+employee.MANAGERID = emp.MANAGERID;
+employee.DEPARTMENT = emp.DEPARTMENT;
+employee.LOCATION = emp.LOCATION;
+employee.DESKLOCATION = emp.DESKLOCATION;
+employee.CITY = emp.CITY;
+employee.STATE = emp.STATE;
+employee.COUNTRYCODE = emp.COUNTRYCODE;
+employee.POSTALCODE = emp.POSTALCODE;
+employee.DIRECTDIAL = emp.DIRECTDIAL;
+employee.HIREDATE = emp.HIREDATE;
+employee.EVALUATION = emp.EVALUATION;
+employee.PHONE = emp.PHONE;
+}</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_14" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="12">
+ <li>At the bottom of the <code>for each</code> loop, add the employee object to the employees <code>ArrayCollection</code> using the <code>addItem()</code> method.<p>The employees <code>ArrayCollection</code> variable exists in the <code>Script</code> block below the variable <code>declarations</code> comment.</p>
+ </li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_codeblock_6" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">for each(var emp:Object in employeeData)
+{
+...
+employee.PHONE = emp.PHONE;
+employees.addItem(employee);
+}</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_23" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="13">
+ <li>Save the file.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_numberedheader_2" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_2"></a>
+        View the ArrayCollection of value objects in the Debugger</h3>
+</div>
+<a name="articlecontentAdobe_text_15" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						 <p>In this section you will use Flash Builder debug mode to view the populated <code>employees</code> ArrayCollection variable.</p>
+ <ol>
+ <li>Within the <code>Script</code> block, locate the closing brace of the <code>employeeService_resultHandler() </code>function and double-click next to the line number to set a breakpoint (see Figure 8).</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_image_6" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Add a breakpoint to the closing line of the employeeService_resultHanlder() function." alt="Add a breakpoint to the closing line of the employeeService_resultHanlder() function." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/videotraining/exercises/ex2_09/figure08.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 8. Add a breakpoint to the closing line of the employeeService_resultHanlder() function.</div>
+</div>
+<a name="articlecontentAdobe_text_16" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="2">
+<li>Click the Debug button.</li>
+<li>When you see the Confirm Perspective Switch dialog box, click the Yes button (see Figure 9).</li>
+</ol>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_7" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Click the Yes button to switch perspectives." alt="Click the Yes button to switch perspectives." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/videotraining/exercises/ex2_09/figure09.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 9. Click the Yes button to switch perspectives.</div>
+</div>
+<a name="articlecontentAdobe_text_17" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="4">
+ <li>Within the Flash Debug perspective, double-click the Variables view to maximize it.</li>
+ <li>Open the <code>this</code> node to reveal the <code>employees</code> node.</li>
+ <li>Open the employees node (see Figure 10).<p>You should see that the <code>employees</code> ArrayCollection variable is populated with EMPLOYEES value objects.</p>
+ </li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_image_8" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Open the employees node to see it is populated with EMPLOYEES objects." alt="Open the employees node to see it is populated with EMPLOYEES objects." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/videotraining/exercises/ex2_09/figure10.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 10. Open the employees node to see it is populated with EMPLOYEES objects.</div>
+</div>
+<a name="articlecontentAdobe_text_24" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="7">
+ <li>Double-click the Variables tab to minimize the view.</li>
+ <li>Click the Terminate button to stop the debugging session.</li>
+ <li>Switch to the Flash perspective.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_numberedheader_3" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_3"></a>
+        Display the data</h3>
+</div>
+<a name="articlecontentAdobe_text_18" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						 <p>In this section you will adjust the application to use the data properties returned by the <code>WebService</code> object to display data in the application.</p>
+ <ol>
+ <li>From the components package, open the VehicleRequestForm.mxml file.</li>
+ <li>Within the Form container block, locate the FormItem container that nests the DropDownList control.</li>
+ <li>Change the value of the DropDownList control's <code>labelField</code> property to <code>LASTNAME</code>.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_codeblock_7" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">&lt;s:FormItem label=&#034;Employee:&#034;&gt; 
+
+&lt;s:DropDownList id=&#034;dropDownList&#034; 
+dataProvider=&#034;{employees}&#034;
+labelField=&#034;LASTNAME&#034;/&gt; 
+
+&lt;/s:FormItem&gt; 
+</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_19" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="4">
+ <li>Locate the FormItem container that nests the TextInput control for the office phone number.</li>
+ <li>Change the value the <code>text</code> property is being passed from the DropDownList control to <code>dropDownList.selectedItem.PHONE</code>.</li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_codeblock_8" style="visibility:hidden"></a><div class="parbase codeblock compbase section"><div class="PanelFillLight PanelBevelTop LayoutCell LayoutRow">
+        <code class="CodeBlock">&lt;s:FormItem label=&#034;Office Phone:&#034;&gt;
+
+&lt;s:TextInput id=&#034;phone&#034; 
+text=&#034;{dropDownList.selectedItem.PHONE}&#034;/&gt;
+
+&lt;/s:FormItem&gt;</code>
+    </div>
+</div>
+<a name="articlecontentAdobe_text_20" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<ol start="6">
+ <li>Save the project and run the application.<p>Open the DropDownList control to see it is populated with employees (see Figure 11).</p>
+ </li>
+ </ol>
+ </div>
+				</div>
+<a name="articlecontentAdobe_image_9" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Open the DropDownList control to see it is populated with data." alt="Open the DropDownList control to see it is populated with data." class="cq-dd-image  LayoutImage LayoutRow " src="/content/dotcom/en/devnet/flex/videotraining/exercises/ex2_09/_jcr_content/articlecontentAdobe/image_9.adimg.mw.332.jpg/1303116000351.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 11. Open the DropDownList control to see it is populated with data.</div>
+</div>
+<a name="articlecontentAdobe_text_21" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>In this exercise you learned how to use the Flash Builder Data Services wizard to connect to a Web Service and generate ActionScript value objects. In the next exercise you will create an application that lets administrators choose an employee to feature on the Employee of the Month panel of the Employee Portal.<br>
+</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_reference" style="visibility:hidden"></a><div class="parbase section reference"><div style="display:inline;" class="cq-dd-paragraph"><div class="text parbase"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p><a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img src="http://cookbooks.adobe.com/resources/images/license_creative_commons.png" alt="Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported License"></a>+<a target="_blank" href="/communities/guidelines/ccplus/commercialcode_plus_permission.html"><img src="http://cookbooks.adobe.com/resources/images/license_adobe.jpg" alt="Adobe Commercial Rights"></a></p>
+ <p>This work is licensed under a <a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported License</a>. Permissions beyond the scope of this license, pertaining to the examples of code included within this work are available at <a target="_blank" href="/communities/guidelines/ccplus/commercialcode_plus_permission.html">Adobe</a>.</p>
+</div>
+				</div>
+</div>
+</div>
+</div></div>
+<div class="LayoutRow">
+                                <div class="articlePaging paging"></div>
+</div>
+                        </div>
+            </div>
+            <div class="ArticleWideGrid-5-6 ArticleWideRight">
+                <div class="LayoutBreakAfter RuleH ArticleWideRuleHide TextSmall LayoutBreak">
+                    <div class="ArticleGrid-2-3 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                            <div class="morelikethis"><div class="LayoutCellSides">
+                                    <h2 class="TextH5 LayoutRow">More Like This</h2>
+                                    
+                                    <ul class="LayoutRow">
+                                        <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex5_10.html" title="Exercise 5.10: Creating a production build">Exercise 5.10: Creating a production build</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex5_08.html" title="Exercise 5.8: Animating Button components">Exercise 5.8: Animating Button components</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex3_04_web.html" title="Exercise 3.4: Passing data to the server with the WebService class">Exercise 3.4: Passing data to the server with the WebService class</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex3_07.html" title="Exercise 3.7: Using two-way binding">Exercise 3.7: Using two-way binding</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex2_08.html" title="Exercise 2.8: Creating an ArrayCollection of value objects">Exercise 2.8: Creating an ArrayCollection of value objects</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex3_04_remote.html" title="Exercise 3.4: Passing data to the server with the RemoteObject class">Exercise 3.4: Passing data to the server with the RemoteObject class</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex3_06.html" title="Exercise 3.6: Validating form data">Exercise 3.6: Validating form data</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex4_04.html" title="Exercise 4.4: Using the Spark DataGrid control">Exercise 4.4: Using the Spark DataGrid control</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex4_06.html" title="Exercise 4.6: Navigating using navigator containers">Exercise 4.6: Navigating using navigator containers</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/videotraining/exercises/ex5_01.html" title="Exercise 5.1: Using text controls">Exercise 5.1: Using text controls</a></li>
+                                            </ul>
+                                </div>
+                            </div>
+</div>
+                    <div class="LayoutGrid-1-4 LayoutSlimGrid-1-2 LayoutBreakAfter">
+                        <div class="LayoutRow">
+                            <div class="parbase compbase inheritedpromo">
+
+
+
+
+
+<div class="LayoutRow"></div></div>
+</div>
+                    </div>
+                </div>
+                <div class="LayoutBreakAfter TextSmall">
+                    <div class="ArticleGrid-2 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                        <div class="parsys inheritedresources inheritedResources"></div>
+</div>
+                    <div class="ArticleGrid-3 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                        <div class="parsys inheritedresources inheritedResources2"></div>
+</div>
+                    <div class="ArticleGrid-4 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                        <div class="parsys inheritedResources3 inheritedresources"></div>
+</div>
+                </div>
+            </div>
+            <!-- Main Content Comments -->
+
+            <div class="LayoutRow LayoutGridBreak LayoutBreakAfter">
+                <div class="parbase compbase jivecomments jiveComments"></div>
+</div>
+
+        </div>
+
+    </div>
+</div>
+<div class="PrintLayoutHide">
+        <!--googleoff: all--><script>
+	//<![CDATA[
+	var hideEvidon = false;
+
+    $(document).ready(function() {
+		adobe.fn.initGlobalFooter();
+		adobe.fn.evidon('_bapw-link');
+		
+		adobe.fn.initGeorouting();
+	});
+    changeRegion = adobe.fn.changeRegionFooter;
+    //]]>
+</script>
+
+<!--googleoff: index-->
+<!-- $Id: //depot/projects/dylan/releases/rc_13_11/ubi/footer/en_us/globalfooter_ssi.html#1 $ -->
+<div id="SiteFooter" class="SiteFooter Text TextSmall TextInvert Link LayoutBreak">
+	<span id="Georouting"></span>
+    <div class="LayoutBreakAfter">
+        <div class="LayoutGrid-1 LayoutSlimGrid-1 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/products/catalog.html?promoid=JOPBT">Products</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconCloud" href="/products/creativecloud.html?promoid=JQPER">Adobe Creative Cloud</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconCS" href="/products/cs6.html?promoid=KFHNH">Creative Suite 6</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconOMS" href="/solutions/digital-marketing.html?promoid=JOPBY">Adobe Marketing Cloud</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconAcrobat" href="/products/acrobat.html?promoid=JOPBV">Acrobat</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconPS" href="/products/photoshop.html?promoid=JOPCB">Photoshop</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconDPS" href="/products/digital-publishing-suite-family.html?promoid=JOPBZ">Digital Publishing Suite</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconElements" href="/products/elements-family.html?promoid=JOPBX">Elements family</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconSC" href="/products/sitecatalyst.html?promoid=KFGCH">SiteCatalyst</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts" href="/education.html?marketSegment=EDU&promoid=JUTMH">For education</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-2 LayoutSlimGrid-2 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/downloads/?promoid=JOPDB">Download</a></h4>
+                <ul class="SiteFooterLinkList SiteFooterLinkListBottom">
+                    <li><a href="/downloads/?promoid=KEWBH">Product trials</a></li>
+                    <li><a href="/go/gffooter_adobe_reader">Adobe Reader</a></li>
+                    <li><a href="http://get2.adobe.com/flashplayer/?promoid=KFHNI">Adobe Flash Player</a></li>
+                    <li><a href="/go/gffooter_adobe_air">Adobe AIR</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-3 LayoutSlimGrid-1 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/go/gffooter_help">Support &amp; Learning</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a href="http://helpx.adobe.com/support.html?promoid=KFKQG">Product help</a></li>
+                    <li><a href="http://forums.adobe.com/index.jspa?promoid=JOPCT" target="_blank">Forums</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-4 LayoutSlimGrid-2 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/buy.html?promoid=JOPCV">Buy</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a href="/go/gffooter_homeuse">For personal and professional use</a></li>
+                    <li><a href="/go/gffooter_students_store">For students, educators, and staff</a></li>
+                    <li><a href="/products/small-business-pricing/software-catalog._sl_id-contentfilter_sl_catalog_sl_software_sl_creativecloudmembership.html?marketSegment=COM&promoid=JOPCY">For small and medium businesses</a></li>
+                    <li><a href="/go/gffooter_licensingprograms">Volume Licensing</a></li>
+                    <li><a href="/go/gffooter_special_offers">Special offers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-5 LayoutSlimGrid-1-2 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/company.html?promoid=JOPDG">Company</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a href="/go/gffooter_news_room">News room</a></li>
+                    <li><a href="/go/gffooter_partner_programs">Partner programs</a></li>
+                    <li><a href="/go/gffooter_corporate_social_responsibility">Corporate responsibility</a></li>
+                    <li><a href="/go/gffooter_career_opportunities">Career opportunities</a></li>
+                    <li><a href="/go/gffooter_investor_relation">Investor Relations</a></li>
+                    <li><a href="/go/gffooter_events">Events</a></li>
+                    <li><a href="/go/gffooter_legal">Legal</a></li>
+                    <li><a href="/go/gffooter_security">Security</a></li>
+                    <li><a href="/company/contact.html?promoid=JOPDO">Contact Adobe</a></li>
+                </ul>
+            </div>
+        </div>
+        
+		<div class="LayoutGridBreak">
+        	<div class="LayoutCellSides LayoutCellBottom">
+                <div class="SiteFooterRegionSelector TextInvert LinkInvert LinkStrong">
+                    <a href="/go/gffooter_choose_region" id="sfRegion" class="SiteFooterMenuItemIcon SiteFooterMenuItemIconRegionBlue">Choose your region</a>
+                    <span id="sfRegionSet" class="SiteFooterMenuItemIcon SiteFooterMenuItemIconRegionBlack" style="display: none;">United States <a href="/go/gffooter_choose_region" id="sfRegionChange">(Change)</a></span>
+                </div>
+                <div class="SiteFooterRegionPanel SiteFooterRegionPanelEvidon" id="RegionPanel" style="display: none;">
+                    <div class="SiteFooterRegionPanelHeader">
+                        <span class="SiteFooterMenuItemIcon SiteFooterMenuItemIconRegionBlack">Choose your region</span>
+                        <a id="sfRegionClose" class="SiteFooterRegionPanelHeaderClose">Close</a>
+                    </div>
+                    <div class="Column">
+                        <div class="Column-1">
+                            <p class="SiteFooterRegionPanelRegionHeader">North America</p>
+                        </div>
+                        <div class="Column-2-3">
+                            <p class="SiteFooterRegionPanelRegionHeader">Europe, Middle East and Africa</p>
+                        </div>
+                        <div class="Column-4">
+                            <p class="SiteFooterRegionPanelRegionHeader">Asia Pacific</p>
+                        </div>
+                        <div class="Column-1">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('ca');">Canada - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('ca_fr');">Canada - Fran&ccedil;ais</a></li>
+                                <li lang="es"><a onClick="changeRegion('la');">Latinoam&eacute;rica</a></li>
+                                <li lang="es"><a onClick="changeRegion('mx');">M&eacute;xico</a></li>
+                                <li lang="en"><a onClick="changeRegion('us');">United States</a></li>
+                            </ul>
+            
+                            <p class="SiteFooterRegionPanelRegionHeader">South America</p>
+                            <ul>
+                                <li lang="pt"><a onClick="changeRegion('br');">Brasil</a></li>
+                            </ul>
+                        </div>
+                        <div class="Column-2">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('africa');">Africa - English</a></li>
+                                <li lang="de"><a onClick="changeRegion('at');">&Ouml;sterreich - Deutsch</a></li>
+                                <li lang="en"><a onClick="changeRegion('be_en');">Belgium - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('be_fr');">Belgique - Fran&ccedil;ais</a></li>
+                                <li lang="nl"><a onClick="changeRegion('be_nl');">Belgi&euml; - Nederlands</a></li>
+                                <li lang="bg"><a onClick="changeRegion('bg');">България</a></li>
+                                <li lang="hr"><a onClick="changeRegion('hr');">Hrvatska</a></li>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Cyprus - English</a></li>                                
+                                <li lang="cs"><a onClick="changeRegion('cz');">Česk&aacute; republika</a></li>
+                                <li lang="da"><a onClick="changeRegion('dk');">Danmark</a></li>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Eastern Europe - English</a></li>
+                                <li lang="et"><a onClick="changeRegion('ee');">Eesti</a></li>
+                                <li lang="fi"><a onClick="changeRegion('fi');">Suomi</a></li>
+                                <li lang="fr"><a onClick="changeRegion('fr');">France</a></li>
+                                <li lang="de"><a onClick="changeRegion('de');">Deutschland</a></li>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Greece - English</a></li>
+                                <li lang="hu"><a onClick="changeRegion('hu');">Magyarorsz&aacute;g</a></li>
+                                <li lang="en"><a onClick="changeRegion('ie');">Ireland</a></li>
+                                <li lang="en"><a onClick="changeRegion('il_en');">Israel - English</a></li>
+                                <li lang="he"><a onClick="changeRegion('il_he');">&#1497;&#1513;&#1512;&#1488;&#1500; - &#1506;&#1489;&#1512;&#1497;&#1514;</a></li>
+                                <li lang="it"><a onClick="changeRegion('it');">Italia</a></li>
+                                <li lang="lv"><a onClick="changeRegion('lv');">Latvija</a></li>
+                                <li lang="lt"><a onClick="changeRegion('lt');">Lietuva</a></li>
+                                <li lang="de"><a onClick="changeRegion('lu_de');">Luxembourg - Deutsch</a></li>
+                                <li lang="en"><a onClick="changeRegion('lu_en');">Luxembourg - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('lu_fr');">Luxembourg - Fran&ccedil;ais</a></li>
+                            </ul>
+                        </div>
+                        <div class="Column-3">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Malta - English</a></li>
+								<li lang="ar"><a onClick="changeRegion('mena_ar');">&#1575;&#1604;&#1588;&#1585;&#1602; &#1575;&#1604;&#1571;&#1608;&#1587;&#1591; &#1608;&#1588;&#1605;&#1575;&#1604; &#1571;&#1601;&#1585;&#1610;&#1602;&#1610;&#1575; - &#1575;&#1604;&#1604;&#1594;&#1577; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</a></li>                                <li lang="en"><a onClick="changeRegion('mena_en');">Middle East and North Africa - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('mena_fr');">Moyen-Orient et Afrique du Nord - Fran&ccedil;ais</a></li>
+                                <li lang="nl"><a onClick="changeRegion('nl');">Nederland</a></li>
+                                <li lang="no"><a onClick="changeRegion('no');">Norge</a></li>
+                                <li lang="pl"><a onClick="changeRegion('pl');">Polska</a></li>
+                                <li lang="pt"><a onClick="changeRegion('pt');">Portugal</a></li>
+                                <li lang="ro"><a onClick="changeRegion('ro');">Rom&acirc;nia</a></li>
+                                <li lang="ru"><a onClick="changeRegion('ru');">Россия</a></li>
+                                <li lang="sr"><a onClick="changeRegion('rs');">Srbija</a></li>
+                                <li lang="sk"><a onClick="changeRegion('sk');">Slovensko</a></li>
+                                <li lang="sl"><a onClick="changeRegion('si');">Slovenija</a></li>
+                                <li lang="es"><a onClick="changeRegion('es');">Espa&ntilde;a</a></li>
+                                <li lang="sv"><a onClick="changeRegion('se');">Sverige</a></li>
+                                <li lang="de"><a onClick="changeRegion('ch_de');">Schweiz - Deutsch</a></li>
+                                <li lang="fr"><a onClick="changeRegion('ch_fr');">Suisse - Fran&ccedil;ais</a></li>
+                                <li lang="it"><a onClick="changeRegion('ch_it');">Svizzera - Italiano</a></li>
+                                <li lang="tr"><a onClick="changeRegion('tr');">T&uuml;rkiye</a></li>
+                                <li lang="uk"><a onClick="changeRegion('ua');">Україна</a></li>
+                                <li lang="en"><a onClick="changeRegion('uk');">United Kingdom</a></li>
+                            </ul>
+                        </div>
+                        <div class="Column-4">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('au');">Australia</a></li>
+                                <li lang="zh"><a onClick="changeRegion('cn');">中国</a></li>
+                                <li lang="zh"><a onClick="changeRegion('hk_zh');">中國香港特別行政區</a></li>
+                                <li lang="en"><a onClick="changeRegion('hk_en');">Hong Kong S.A.R. of China</a></li>
+                                <li lang="en"><a onClick="changeRegion('in');">India - English</a></li>
+                                <li lang="ja"><a onClick="changeRegion('jp');">日本</a></li>
+                                <li lang="ko"><a onClick="changeRegion('kr');">한국</a></li>
+                                <li lang="en"><a onClick="changeRegion('nz');">New Zealand</a></li>
+                                <li lang="zh"><a onClick="changeRegion('tw');">台灣</a></li>
+                            </ul>
+            
+                            <p class="SiteFooterRegionPanelRegionHeader">Southeast Asia</p>
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('sea');">Includes Indonesia, Malaysia, Philippines, Singapore, Thailand, and Vietnam - English</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<div class="LayoutGridBreak">
+        	<div class="LayoutCellSides">
+                <hr />
+            </div>
+        </div>
+    
+        <div class="LayoutGrid-1-5 LayoutSlimGrid-1-2 LinkInvert LinkStrong">
+        	<div class="LayoutCellSides LayoutCellBottom LinkInvert">
+                <p class="SiteFooterRow TextSmall">Copyright &copy; 2013 Adobe Systems Incorporated.  All rights reserved.</p>
+                <p class="SiteFooterRow TextSmall"><a href="/go/gffooter_terms_of_use">Terms of Use</a> | <a href="/privacy.html">Privacy</a> | <a href="/privacy/cookies.html">Cookies</a></p>
+                <p class="SiteFooterRow SiteFooterRowTop"><a href="#" id="_bapw-link" class="TextSmall icon Icon SiteFooterMenuItemIconEvidon" style="display:none;">Ad Choices</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--googleon: index--><!--googleon: all--></div>
+    <div class="parsys templatembox bottomofbodymbox"><div class="mboxDefault">
+                    </div>
+                <script>
+                            mboxCreate('defaultmboxname');
+                    </script>
+                </div>
+<div class="parsys doubleclickfloodlight"><!-- Fetch either EDU or COM snippet based on the Mode selection-->
+</div>
+
+    <!-- Invoking faas form engine tracking Script !! --->
+    </div>
+</body>
+</html>

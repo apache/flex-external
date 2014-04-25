@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:TabbedViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark"
+								  creationComplete="creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+            import mx.core.IVisualElementContainer;
+            import mx.events.FlexEvent;
+            
+            import spark.components.View;
+            import spark.events.ElementExistenceEvent;
+            import spark.events.IndexChangeEvent;
+            import spark.events.ViewNavigatorEvent;
+            
+            import views.HomeView;
+            import views.ItemRendererView;
+            import views.PopUpsView;
+            
+            // trick Flash Builder by adding a dependency
+            IOSThemeClasses;
+            
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+                tabbedNavigator.addEventListener(IndexChangeEvent.CHANGING, indexChangingHandler);
+                tabbedNavigator.addEventListener(IndexChangeEvent.CHANGE, indexChangeHandler);
+                indexChangeHandler(null);
+			}
+			
+			protected function indexChangingHandler(event:IndexChangeEvent):void
+			{
+				// remove back button from previous navigator
+				var previousNav:ViewNavigator = ViewNavigator(tabbedNavigator.getElementAt(event.oldIndex));
+				
+				if (previousNav.length > 1)
+				{
+					var backButtonParent:IVisualElementContainer = backButton.parent as IVisualElementContainer;
+					if (backButtonParent)
+						backButtonParent.removeElement(backButton);
+					
+					removeBackButton(previousNav.activeView);
+				}
+			}
+			
+			protected function indexChangeHandler(event:IndexChangeEvent):void
+			{
+				if (!tabbedNavigator.selectedNavigator)
+					return;
+				
+				// install listeners on the active ViewNavigator
+				var viewNav:ViewNavigator = ViewNavigator(tabbedNavigator.selectedNavigator);
+				viewNav.addEventListener(ElementExistenceEvent.ELEMENT_ADD, elementAdded);
+				viewNav.addEventListener(ElementExistenceEvent.ELEMENT_REMOVE, elementRemoved);
+				
+				// add back button to the new navigator if it still has history
+				if (viewNav.length > 1)
+					addBackButton(viewNav.activeView);
+			}
+			
+			protected function backButton_clickHandler(event:MouseEvent):void
+			{
+				ViewNavigator(tabbedNavigator.selectedNavigator).popView();
+			}
+			
+			protected function elementAdded(event:ElementExistenceEvent):void
+			{
+				if (ViewNavigator(tabbedNavigator.selectedNavigator).length > 1)
+				{
+					var view:View = View(event.element);
+					
+					if (view)
+						addBackButton(view);
+				}
+			}
+			
+			protected function addBackButton(view:View):void
+			{
+				// add backButton to the pending View's navigationContent
+				// so that it animates in
+				if (!view.navigationContent
+					|| view.navigationContent.length == 0
+					|| (view.navigationContent.length == 1 && view.navigationContent[0] == backButton))
+				{
+					view.navigationContent = [backButton];
+				}
+			}
+			
+			protected function elementRemoved(event:ElementExistenceEvent):void
+			{
+				var view:View = View(event.element);
+				
+				if (view)
+					removeBackButton(view);
+			}
+			
+			protected function removeBackButton(view:View):void
+			{
+				if (view.navigationContent
+					&& view.navigationContent.length == 1
+					&& view.navigationContent[0] == backButton)
+				{
+					view.navigationContent = [];
+				}
+			}
+			
+		]]>
+	</fx:Script>
+    
+	<fx:Declarations>
+		<s:Button id="backButton" label="Back" click="backButton_clickHandler(event)"/>
+	</fx:Declarations>
+    
+	<s:ViewNavigator label="Home" firstView="{views.HomeView}" width="100%" height="100%">
+		<s:icon>
+			<s:MultiDPIBitmapSource source160dpi="@Embed('assets/Fx_32x24.png')"
+                                    source240dpi="@Embed('assets/Fx_48x36.png')"
+									source320dpi="@Embed('assets/Fx_56x42.png')"/>
+		</s:icon>
+	</s:ViewNavigator>
+	<s:ViewNavigator label="Pop Ups" firstView="{views.PopUpsView}" width="100%" height="100%">
+		<s:icon>
+			<s:MultiDPIBitmapSource source160dpi="@Embed('assets/Fx_32x24.png')"
+                                    source240dpi="@Embed('assets/Fx_48x36.png')"
+									source320dpi="@Embed('assets/Fx_56x42.png')"/>
+		</s:icon>
+	</s:ViewNavigator>
+	<s:ViewNavigator label="Item Renderers" firstView="{views.ItemRendererView}" width="100%" height="100%">
+		<s:icon>
+			<s:MultiDPIBitmapSource source160dpi="@Embed('assets/Fx_32x24.png')"
+                                    source240dpi="@Embed('assets/Fx_48x36.png')"
+									source320dpi="@Embed('assets/Fx_56x42.png')"/>
+		</s:icon>
+	</s:ViewNavigator>
+</s:TabbedViewNavigatorApplication>

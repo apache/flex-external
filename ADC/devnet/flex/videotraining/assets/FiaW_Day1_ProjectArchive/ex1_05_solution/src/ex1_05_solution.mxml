@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+    xmlns:s="library://ns.adobe.com/flex/spark" 
+    xmlns:mx="library://ns.adobe.com/flex/mx" 
+    minWidth="1024" minHeight="768" 
+    xmlns:components="components.*">
+    
+    <!-- Exercise 1.05: Experimenting with container layouts -->
+    
+    <!-- Properties of the parent ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+	<!--
+	The layout property is a property of the Application container.
+	Its value is the VerticalLayout class, which directs the application
+	to vertically stack all UI elements.
+	-->
+    <s:layout>
+        <s:VerticalLayout/>
+    </s:layout>
+    
+    <!-- Metadata ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    
+    
+    <!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    
+    
+    <!-- Script ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    
+    
+    <!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    
+    
+    <!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    
+    <s:Label text="Employee Directory" 
+        color="#0B85B7" 
+        fontSize="36" 
+        fontStyle="normal" 
+        fontWeight="normal"/>
+          
+    <s:BorderContainer borderColor="#0b85b7" 
+        cornerRadius="8" 
+        borderWeight="4">
+   
+        <s:Group id="employeeGroup" 
+            height="300" width="250">
+             
+            <!--
+            The layout property here is a property of the Group container.
+            Its value is the TileLayout class, which directs the Group container
+            to lay out all of its child UI elements, in this case the EmployeeDisplay
+            custom component instances, in a tiled layout.
+            -->
+            
+            <s:layout>
+                <s:TileLayout/>
+            </s:layout>
+            
+            <components:EmployeeDisplay empImage="images/bvanbrocklin.jpg" 
+                empName="Brad VanBrocklin" 
+                empTitle="Instructional Designer" 
+                y="46"/>
+            
+            <components:EmployeeDisplay empImage="images/abrilliam.jpg"
+                empName="Andrew Brilliam"
+                empTitle="Senior Hardware Engineer"
+                x="138" y="157"/>
+            
+            <components:EmployeeDisplay empImage="images/akotter.jpg" 
+                empName="Annette Kotter" 
+                empTitle="Vice President of Market Development" 
+                x="267" y="267"/>
+            
+            <components:EmployeeDisplay empImage="images/rcrawley.jpg" 
+                empName="Rosco Crawley" 
+                empTitle="Regional Manager"
+                x="413" y="378"/> 
+            
+            <components:EmployeeDisplay empImage="images/mfields.jpg" 
+                empName="Mark Fields" 
+                empTitle="Graphic Designer" 
+                y="46"/>
+            
+            <components:EmployeeDisplay empImage="images/jproctor.jpg"
+                empName="Jeff Proctor"
+                empTitle="Sales Manager"
+                x="138" y="157"/>
+            
+            <components:EmployeeDisplay empImage="images/twong.jpg" 
+                empName="Tim Wong" 
+                empTitle="President of Human Resource Development"
+                x="267" y="267"/>
+            
+            <components:EmployeeDisplay empImage="images/ptranep.jpg" 
+                empName="Paul Tranep" 
+                empTitle="Technical Support"
+                x="413" y="378"/>
+            
+        </s:Group>
+        
+        <s:Scroller viewport="{employeeGroup}"/>
+        
+    </s:BorderContainer>
+    
+</s:Application>

@@ -1,0 +1,92 @@
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="EmployeeService">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">HTTPMultiService</item>
+      <item name="Package">services.employeeservice</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">HTTPService</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="LINKED_FILE"></item>
+    </annotation>
+    <function name="getEmployees" return-type="Employee[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ActionScriptGeneration">
+        <item name="SerializationFilter">com.adobe.serializers.xml.XMLSerializationFilter</item>
+        <item name="method">GET</item>
+        <item name="url">http://adobetes.com/f45iaw100/remoteData/employees.xml</item>
+      </annotation>
+      <annotation name="url group">
+        <item name="completeURL">http://adobetes.com/f45iaw100/remoteData/employees.xml</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">firstName,lastName,id,title,email,managerID,department,location,phone,directDial,deskLocation,city,state,countryCode,postalCode,hireDate,evaluation</item>
+      </annotation>
+      <annotation name="Properties">
+        <item name="xPath">/::employee</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+  </service>
+  <entity name="Employee">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Employee</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EmployeeService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getEmployees">
+      <item name="propertySpecifier">firstName,lastName,id,title,email,managerID,department,location,phone,directDial,deskLocation,city,state,countryCode,postalCode,hireDate,evaluation</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="firstName" type="string" required="true"/>
+    <property name="lastName" type="string" required="true"/>
+    <property name="id" type="string" required="true"/>
+    <property name="title" type="string" required="true"/>
+    <property name="email" type="string" required="true"/>
+    <property name="managerID" type="string" required="true"/>
+    <property name="department" type="string" required="true"/>
+    <property name="location" type="string" required="true"/>
+    <property name="phone" type="string" required="true"/>
+    <property name="directDial" type="string" required="true"/>
+    <property name="deskLocation" type="string" required="true"/>
+    <property name="city" type="string" required="true"/>
+    <property name="state" type="string" required="true"/>
+    <property name="countryCode" type="string" required="true"/>
+    <property name="postalCode" type="string" required="true"/>
+    <property name="hireDate" type="string" required="true"/>
+    <property name="evaluation" type="string" required="true"/>
+  </entity>
+</model>

@@ -1,0 +1,108 @@
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		title="Sample Zoom">
+	
+	<fx:Script>
+		<![CDATA[
+			import spark.effects.easing.Bounce;
+			import spark.effects.easing.Elastic;
+			import spark.transitions.ViewTransitionDirection;
+			import spark.transitions.ZoomViewTransition;
+			import spark.transitions.ZoomViewTransitionMode;
+			
+			public var zoomTrans:ZoomViewTransition = new ZoomViewTransition();
+			
+			protected function onZoom():void 
+			{
+				if (txtDuration.text!=null && txtDuration.text.length>0)
+					zoomTrans.duration = parseInt(txtDuration.text)*1000;
+				
+				if (rgEasing.selectedValue=="Bounce")
+					zoomTrans.easer = new Bounce();
+				else if (rgEasing.selectedValue=="Elastic")
+					zoomTrans.easer = new Elastic();
+				zoomTrans.mode = rgMode.selectedValue as String;
+				navigator.pushView(views.SampleView,views.ZoomView,null,zoomTrans);
+			}
+			
+			protected function add_clickHandler(event:MouseEvent):void
+			{
+				var n:int = parseInt(txtDuration.text);
+				txtDuration.text = new String(n+1);
+			}
+			protected function subtract_clickHandler(event:MouseEvent):void
+			{
+				
+				var n:int = parseInt(txtDuration.text);
+				txtDuration.text = new String(n-1);
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:RadioButtonGroup id="rgEasing"/>
+		<s:RadioButtonGroup id="rgMode"/>
+	</fx:Declarations>
+	
+	<s:VGroup width="100%" height="100%" horizontalAlign="center" verticalAlign="middle" gap="30">
+		
+		<s:Label text="Zoom Mode" color="0x294867"/>
+		<s:HGroup>
+			<s:RadioButton label="{ZoomViewTransitionMode.IN}" groupName="rgMode" selected="true"/>
+			<s:RadioButton label="{ZoomViewTransitionMode.OUT}" groupName="rgMode"/>
+		</s:HGroup>
+		<s:Line width="90%">
+			<s:stroke>
+				<s:SolidColorStroke color="0x336699" weight="4"/>
+			</s:stroke>
+		</s:Line>
+		<s:Label text="Easing function" color="0x294867"/>
+		<s:VGroup verticalAlign="middle" gap="25">
+			<s:HGroup>
+				<s:RadioButton id="bounceOpt" label="Bounce" groupName="rgEasing"/>
+				<s:RadioButton id="elasticOpt" label="Elastic" groupName="rgEasing"/>
+			</s:HGroup>
+		</s:VGroup>
+		<s:Line width="90%">
+			<s:stroke>
+				<s:SolidColorStroke color="0x336699" weight="4"/>
+			</s:stroke>
+		</s:Line>
+		<s:HGroup verticalAlign="middle" top="50">
+			<s:Label text="Duration (seconds)" color="0x294867"/>
+			<s:HGroup>
+				<s:Button id="addBtn" label="+" click="add_clickHandler(event)"/>
+				<s:TextInput id="txtDuration" width="{addBtn.width}" height="{addBtn.height}" restrict="0-9" text="1"
+							 textAlign="center"/>
+				
+				<s:Button id="subtractBtn" label="-" click="subtract_clickHandler(event)"/>
+			</s:HGroup>  
+		</s:HGroup>
+		
+		
+		<s:HGroup>
+			<s:Button width="269" label="Start" height="110" click="onZoom()" color="0xFFFFFF"/>
+		</s:HGroup>
+	</s:VGroup>  
+	
+</s:View>

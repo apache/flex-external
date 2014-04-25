@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:employeeservice="services.employeeservice.*"
+			   minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			protected function empDg_creationCompleteHandler(event:FlexEvent):void
+			{
+				getEmployeesResult.token = employeeService.getEmployees();
+			}		
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getEmployeesResult"/>
+		<employeeservice:EmployeeService id="employeeService"
+										 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+										 showBusyCursor="true"/>
+	</fx:Declarations>
+	<s:Label x="50" y="50" color="maroon" fontSize="20" fontWeight="bold"
+			 text="XYZ Corporation Directory"/>
+	<s:Button id="empBtn" x="50" y="100" label="Employees"/>
+	<s:Button id="deptBtn" x="140" y="100" label="Departments"/>
+	<s:DataGrid id="empDg" x="50" y="130" width="650"
+				creationComplete="empDg_creationCompleteHandler(event)" requestedRowCount="4">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="lastname" headerText="Last Name" width="110"></s:GridColumn>
+				<s:GridColumn dataField="firstname" headerText="First Name" width="110"></s:GridColumn>
+				<s:GridColumn dataField="title" headerText="Title" width="170"></s:GridColumn>
+				<s:GridColumn dataField="cellphone" headerText="Cell Phone" width="110"></s:GridColumn>
+				<s:GridColumn dataField="email" headerText="Email"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+		<s:typicalItem>
+			<fx:Object id="id1" cellphone="cellphone1" city="city1" departmentid="departmentid1"
+					   email="email1" firstname="firstname1" lastname="lastname1" office="office1"
+					   officephone="officephone1" photofile="photofile1" state="state1"
+					   street="street1" title="title1" zipcode="zipcode1"></fx:Object>
+		</s:typicalItem>
+		<s:AsyncListView list="{getEmployeesResult.lastResult}"/>
+	</s:DataGrid>
+</s:Application>

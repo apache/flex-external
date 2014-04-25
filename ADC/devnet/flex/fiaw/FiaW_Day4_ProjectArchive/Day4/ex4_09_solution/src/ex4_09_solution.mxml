@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   currentState="loginState">
+	
+	<!-- Exercise 4.09: Animating components with effects -->
+	
+	<!-- Properties of the parent ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:layout>	
+		<s:BasicLayout />
+	</s:layout>
+	
+	<s:states>
+		<s:State name="portalState"/>
+		<s:State name="loginState"/>
+	</s:states>
+	
+	<!-- Metadata ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Style source="Styles.css"/>
+	
+	<!-- Script ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Script>
+		<![CDATA[
+			
+			/* The checkLogin function is called with the click event of the Submit button on the Login panel */
+			private function checkLogin():void
+			{
+				if(username.text == "flex" && password.text == "hero")
+				{
+					currentState='portalState';
+				}
+				else
+				{
+					/* The shake.play() function is only called when it is not already running. This is to prevent the panel container from
+					walking to the right. */
+					if(!shake.isPlaying)
+					{
+						shake.play();
+					}
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Declarations>
+
+		<!--
+		The Move effects are played in sequence. Each effect is played for a duration of 20 ms.
+		The effects are applied to the login panel container.
+		-->
+		
+		<s:Sequence id="shake"
+					target="{login}"
+					duration="20">
+
+			<s:Move xBy="20"/>
+			<s:Move xBy="-20"/>
+			<s:Move xBy="20"/>
+			<s:Move xBy="-20"/>
+			<s:Move xBy="20"/>
+			<s:Move xBy="-20"/>
+			<s:Move xBy="20"/>
+			<s:Move xBy="-20"/>
+			
+		</s:Sequence>
+		
+	</fx:Declarations>
+	
+	<!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:Label text="Employee Portal"
+			 x="24" y="25"
+			 width="800" height="45" 
+			 styleName="titleHeader"/>
+	
+	<s:Panel id="employeeOfTheMonth" 
+			 title="EMPLOYEE OF THE MONTH"
+			 x="24" y="95"
+			 width="250" 
+			 x.loginState="434" y.loginState="95"
+			 width.loginState="390" height.loginState="200">
+		
+		<s:layout>
+			<s:VerticalLayout gap="15" 
+							  paddingTop="15" paddingLeft="15" paddingRight="15" paddingBottom="15"/>
+		</s:layout>
+		
+		<s:HGroup gap="15"
+				  width="100%">
+			
+			<s:BitmapImage source="assets/aparker.jpg"/>
+			
+			<s:VGroup>
+				
+				<s:Label text="ATHENA PARKER"  
+						 fontWeight="bold" /> 
+				
+				<s:Label text="Hardware Engineering Product Manager"  
+						 width="128" height="30"/>
+				
+			</s:VGroup>	
+			
+		</s:HGroup>
+		
+		<s:Label width="100%"
+				 text.loginState="Congratulations to Athena Parker! She has been ranked #1 by our customers three months in a row.">Congratulations to Athena our Employee of the Month. Athena has been instrumental in planning and overseeing our new wind power unit development.
+				 
+Her dedication and infectious enthusiasm has helped to increase our wind-powered sales by 8% throughout the nation."
+		</s:Label>
+		
+	</s:Panel>
+
+	<s:Panel id="search" 
+			 includeIn="portalState" 
+			 x="24" y="410" 
+			 width="250" height="160"
+			 title="EMPLOYEE DIRECTORY">
+		
+		<s:layout>
+			<s:VerticalLayout gap="15" 
+							  paddingTop="15" paddingLeft="15" paddingRight="15" paddingBottom="15"/>
+		</s:layout>
+		
+		<s:Label text="SEARCH:"  
+				 fontWeight="bold"/>
+		
+		<s:TextInput width="139"/>
+		
+		<s:Button label="SUBMIT" 
+				  fontWeight="bold"/>
+		
+	</s:Panel>
+
+	<s:Panel id="cafeteriaSpecial" 
+			 includeIn="portalState" 
+			 x="299" y="95" 
+			 width="250" height="475"
+			 title="CAFETERIA SPECIAL">
+		
+		<s:layout>
+			<s:VerticalLayout gap="10"
+							  paddingTop="15" paddingLeft="15" paddingRight="15" paddingBottom="15"/>
+		</s:layout>
+		
+		<s:BitmapImage source="assets/app_chixSatay.jpg"/>
+		
+		<s:Label fontWeight="bold" 
+				 text="CHICKEN SATAY"/>
+		
+		<s:Label fontWeight="bold" 
+				 text="Calorie Information"/>
+		
+		<s:Label width="220">Water content (grams per 100g): 47.31
+Calorie content of Food (kcals per 3.5oz): 283
+Protein content (grams per 100g): 13.25
+Fat content (lipids) (grams per 100g): 16.18
+Ash content (grams per 100g): 2
+Carbohydrate content (grams per 100g): 21.26
+Dietary Fiber content (grams per 100g): N/A
+Sugar content (grams per 100g): N/A
+		</s:Label>	
+		
+		<s:Button label="DESKTOP DELIVERY" 
+				  fontWeight="bold"/>
+		
+	</s:Panel>
+
+	<s:Panel id="monthlyEvents" 
+			 includeIn="portalState" 
+			 x="574" y="95" 
+			 width="250" height="475"
+			 title="MONTHLY EVENTS">
+		
+		<s:layout>
+			<s:VerticalLayout gap="15" 
+							  paddingTop="15" paddingLeft="15" paddingRight="15" paddingBottom="15"/>
+		</s:layout>
+		
+		<s:Label width="200" height="407">Remember that our annual company picnic is this weekend at Osage Park.  If you have not picked up your tickets yet please make sure to pick them up by Friday no later than 3 PM.  We are expecting to have the largest turn out this year and are excited that almost all of our employees and their families and friends will be joining us.
+			
+There are lots of different activities including, baseball, rock climbing, gyro ride, swimming and water slide.  For the younger children we have face painting, balloon animals, arts and crafts booths and much much more!  Sally L., Lucy B. and Violet P. have spent a lot of time organizing all of the events to ensure that everyone will have a great time.  
+			
+As usual, due to the great response from our previous company picnics we will be offering an all you can eat catered buffet of short ribs, rib eye, filet mignon, roasted chicken, barbeque pork, hot dogs, some dim sum samplings, a bevy of salads and vegetarian dishes and lots more.  We decided to also add shaved ice to the large repertoire of the dessert bar as well.  
+			
+This year's raffle is filled with wonderful prizes donated by our partners and the grand prize is a first class trip for two to Africa to any 2 cities of your choice as well as an African Safari!   We look forward to spending a fun filled Saturday with our dedicated and hard working employees.
+		</s:Label>
+		
+	</s:Panel>
+
+	<s:Button label="LOGOUT"  
+			  x="730" y="37" 
+			  fontWeight="bold"
+			  excludeFrom="loginState"
+			  click="currentState='loginState'"/>
+
+	<s:Panel id="login" 
+			 title="Login"
+			 includeIn="loginState" 
+			 x="24" y="95" 
+			 width="390" height="200">
+		
+		<s:layout>
+			<s:VerticalLayout gap="10" 
+							  paddingTop="15" paddingLeft="15" paddingRight="15" paddingBottom="15"/>
+		</s:layout>
+		
+		<s:Label text="Username:"/>
+		
+		<s:TextInput id="username"/>
+		
+		<s:Label text="Password:"/>
+		
+		<s:TextInput id="password"
+					 displayAsPassword="true"/>
+		
+		<!--
+		The checkLogin function is executed when the Submit button is clicked.
+		-->
+		
+		<s:Button label="Submit"
+				  click="checkLogin()"/>
+		
+	</s:Panel>
+	
+</s:Application>

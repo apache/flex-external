@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<employees>
+	<employee>
+		<firstName>Athena</firstName>
+		<lastName>Parker</lastName>
+		<id>aparker</id>
+		<title>Hardware Engineering Product Manager</title>
+		<email>aparker@xyzcompany.com</email>
+		<managerID>dtownson</managerID>
+		<department>Hardware Engineering</department>
+		<location>San Francisco</location>
+		<phone>415-555-1216</phone>
+		<directDial>34310</directDial>
+		<deskLocation>10-5</deskLocation>
+		<city>San Francisco</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>94103</postalCode>
+		<hireDate>05/23/2005</hireDate>
+		<evaluation>9</evaluation>
+	</employee>
+	<employee>
+		<firstName>Saul</firstName>
+		<lastName>Tucker</lastName>
+		<id>stucker</id>
+		<title>Flex Engineer</title>
+		<email>stucker@xyzcompany.com</email>
+		<managerID>svis</managerID>
+		<department>Software Engineering</department>
+		<location>San Francisco</location>
+		<phone>415-555-1223</phone>
+		<directDial>64470</directDial>
+		<deskLocation>10-12</deskLocation>
+		<city>San Francisco</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>94103</postalCode>
+		<hireDate>01/01/2000</hireDate>
+		<evaluation>8</evaluation>
+	</employee>
+	<employee>
+		<firstName>Samuel</firstName>
+		<lastName>Ang</lastName>
+		<id>sang</id>
+		<title>Vice President Creative Services</title>
+		<email>sang@xyzcompany.com</email>
+		<managerID>rdriefus</managerID>
+		<department>Corporate Team</department>
+		<location>Los Angeles</location>
+		<phone>310-555-1222</phone>
+		<directDial>34220</directDial>
+		<deskLocation>13-18</deskLocation>
+		<city>Los Angeles</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>95110</postalCode>
+		<hireDate>08/06/2001</hireDate>
+		<evaluation>8</evaluation>
+	</employee>
+	<employee>
+		<firstName>Dianna</firstName>
+		<lastName>Beers</lastName>
+		<id>dbeers</id>
+		<title>Copyrighter</title>
+		<email>dbeers@xyzcompany.com</email>
+		<managerID>dcarar</managerID>
+		<department>Marketing</department>
+		<location>Chicago</location>
+		<phone>310-555-1220</phone>
+		<directDial>34321</directDial>
+		<deskLocation>12-1</deskLocation>
+		<city>Chicago</city>
+		<state>Illinois</state>
+		<countryCode>US</countryCode>
+		<postalCode>66101</postalCode>
+		<hireDate>03/16/2008</hireDate>
+		<evaluation>6</evaluation>
+	</employee>
+	<employee>
+		<firstName>Eric</firstName>
+		<lastName>Doral</lastName>
+		<id>edoral</id>
+		<title>Vice President of Information Technology</title>
+		<email>edoral@xyzcompany.com</email>
+		<managerID>rdriefus</managerID>
+		<department>Corporate Team</department>
+		<location>Los Angeles</location>
+		<phone>310-555-1227</phone>
+		<directDial>34567</directDial>
+		<deskLocation>13-2</deskLocation>
+		<city>Los Angeles</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>95110</postalCode>
+		<hireDate>06/06/2004</hireDate>
+		<evaluation>6</evaluation>
+	</employee>
+	<employee>
+		<firstName>Galen</firstName>
+		<lastName>Thompson</lastName>
+		<id>gthompson</id>
+		<title>Help Desk Specialist</title>
+		<email>gthompson@xyzcompany.com</email>
+		<managerID>cryder</managerID>
+		<department>Information Technology</department>
+		<location>Los Angeles</location>
+		<phone>310-555-1215</phone>
+		<directDial>66262</directDial>
+		<deskLocation>13-11</deskLocation>
+		<city>Los Angeles</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>95110</postalCode>
+		<hireDate>01/01/2009</hireDate>
+		<evaluation>3</evaluation>
+	</employee>
+	<employee>
+		<firstName>Tory</firstName>
+		<lastName>Forrester</lastName>
+		<id>tforrester</id>
+		<title>Engineer</title>
+		<email>tforrester@xyzcompany.com</email>
+		<managerID>nrein</managerID>
+		<department>Software Engineering</department>
+		<location>San Francisco</location>
+		<phone>415-555-1225</phone>
+		<directDial>42438</directDial>
+		<deskLocation>10-14</deskLocation>
+		<city>San Francisco</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>94103</postalCode>
+		<hireDate>07/28/2003</hireDate>
+		<evaluation>10</evaluation>
+	</employee>
+	<employee>
+		<firstName>Alyssa</firstName>
+		<lastName>Le</lastName>
+		<id>ale</id>
+		<title>Help Desk Specialist</title>
+		<email>ale@xyzcompany.com</email>
+		<managerID>ccarpenter</managerID>
+		<department>Information Technology</department>
+		<location>San Francisco</location>
+		<phone>415-555-1216</phone>
+		<directDial>57808</directDial>
+		<deskLocation>13-7</deskLocation>
+		<city>San Francisco</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>94103</postalCode>
+		<hireDate>05/16/2001</hireDate>
+		<evaluation>10</evaluation>
+	</employee>
+	<employee>
+		<firstName>Leo</firstName>
+		<lastName>Benson</lastName>
+		<id>lbenson</id>
+		<title>Director of Software Engineering</title>
+		<email>lbenson@xyzcompany.com</email>
+		<managerID>pdempsey</managerID>
+		<department>Corporate Team</department>
+		<location>San Francisco</location>
+		<phone>415-555-1214</phone>
+		<directDial>34101</directDial>
+		<deskLocation>10-3</deskLocation>
+		<city>San Francisco</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>94103</postalCode>
+		<hireDate>02/18/2004</hireDate>
+		<evaluation>7</evaluation>
+	</employee>
+	<employee>
+		<firstName>Simon</firstName> 
+		<lastName>Fore</lastName> 
+		<id>sfore</id> 
+		<title>Information Technology Manager</title> 
+		<email>sfore@xyzcompany.com</email> 
+		<managerID>bleporte</managerID> 
+		<department>Information Technology</department> 
+		<location>San Francisco</location> 
+		<phone>415-555-1212</phone> 
+		<directDial>33784</directDial> 
+		<deskLocation>13-3</deskLocation> 
+		<city>San Francisco</city> 
+		<state>California</state> 
+		<countryCode>US</countryCode> 
+		<postalCode>94103</postalCode> 
+		<hireDate>10/15/2004</hireDate>
+		<evaluation>8</evaluation>
+  </employee>
+  	<employee>
+		<firstName>Ellen</firstName>
+		<lastName>Vernon</lastName>
+		<id>evernon</id>
+		<title>Print Marketing Director</title>
+		<email>evernon@xyzcompany.com</email>
+		<managerID>dmapper</managerID>
+		<department>Marketing</department>
+		<location>Chicago</location>
+		<phone>310-555-1213</phone>
+		<directDial>25332</directDial>
+		<deskLocation>11-14</deskLocation>
+		<city>Chicago</city>
+		<state>Illinois</state>
+		<countryCode>US</countryCode>
+		<postalCode>66101</postalCode>
+		<hireDate>11/15/2005</hireDate>
+		<evaluation>9</evaluation>
+	</employee>
+	<employee>
+		<firstName>Josh</firstName>
+		<lastName>Cavil</lastName>
+		<id>jcavil</id>
+		<title>Sales Executive</title>
+		<email>jcavil@xyzcompany.com</email>
+		<managerID>nmcafey</managerID>
+		<department>Sales</department>
+		<location>Los Angeles</location>
+		<phone>310-555-1220</phone>
+		<directDial>33709</directDial>
+		<deskLocation>12-15</deskLocation>
+		<city>Los Angeles</city>
+		<state>California</state>
+		<countryCode>US</countryCode>
+		<postalCode>95110</postalCode>
+		<hireDate>01/15/2006</hireDate>
+		<evaluation>6</evaluation>
+	</employee>
+</employees>

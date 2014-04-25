@@ -1,0 +1,153 @@
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		title="Sample Slide" creationComplete="view1_creationCompleteHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import spark.effects.easing.Bounce;
+			import spark.effects.easing.Elastic;
+			import spark.events.IndexChangeEvent;
+			import spark.transitions.SlideViewTransition;
+			import spark.transitions.SlideViewTransitionMode;
+			import spark.transitions.ViewTransitionDirection;
+			
+			public var slideTrans:SlideViewTransition = new SlideViewTransition();
+			
+			protected function onSlide():void 
+			{
+				validateDirection();
+				 if (txtDuration.text!=null && txtDuration.text.length>0)
+				{
+					trace(parseInt(txtDuration.text));
+					slideTrans.duration = parseInt(txtDuration.text)*1000;
+				} 
+				
+				if (rgEasing.selectedValue=="Bounce")
+					slideTrans.easer = new Bounce();
+				else if (rgEasing.selectedValue=="Elastic")
+					slideTrans.easer = new Elastic();
+				slideTrans.mode = rgMode.selectedValue as String;
+				navigator.pushView(views.SampleView,views.SlideView,null,slideTrans);
+			}
+			
+			protected function add_clickHandler(event:MouseEvent):void
+			{
+				var n:int = parseInt(txtDuration.text);
+				txtDuration.text = new String(n+1);
+			}
+			protected function subtract_clickHandler(event:MouseEvent):void
+			{
+				
+				var n:int = parseInt(txtDuration.text);
+				txtDuration.text = new String(n-1);
+			}
+			
+			protected function validateDirection():void
+			{
+				slideTrans.direction = direction.selectedItem as String;
+				
+			} 
+			
+			protected function direction_changeHandler(event:IndexChangeEvent):void
+			{
+				trace(direction.dataProvider.length);
+				this.direction.dataProvider = dirList;
+			}
+			
+			protected function view1_creationCompleteHandler(event:FlexEvent):void
+			{
+				trace(this.direction.height);
+				trace(direction.dataProvider.length);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:RadioButtonGroup id="rgEasing"/>
+		<s:RadioButtonGroup id="rgMode"/>
+		<s:ArrayList id="dirList">
+			<fx:String>{ViewTransitionDirection.LEFT}</fx:String>
+			<fx:String>{ViewTransitionDirection.RIGHT}</fx:String>
+			<fx:String>{ViewTransitionDirection.UP}</fx:String>
+			<fx:String>{ViewTransitionDirection.DOWN}</fx:String>
+		</s:ArrayList>
+	</fx:Declarations>
+	
+	<s:VGroup width="100%" height="100%" horizontalAlign="center" top="20" gap="20">
+		<s:HGroup verticalAlign="middle">
+			<s:RadioButton id="pushMode" label="{SlideViewTransitionMode.PUSH}" groupName="rgMode" selected="true"/>
+			<s:RadioButton id="coverMode" label="{SlideViewTransitionMode.COVER}" groupName="rgMode" />
+			<s:RadioButton id="uncoverMode" label="{SlideViewTransitionMode.UNCOVER}" groupName="rgMode"/>
+		</s:HGroup>
+		<s:Line width="90%">
+			<s:stroke>
+				<s:SolidColorStroke color="0x336699" weight="4"/>
+			</s:stroke>
+		</s:Line>
+		
+		<s:VGroup horizontalAlign="center" width="100%">
+			<s:Label text="Select Direction" color="0x294867"/>
+			<s:List id="direction" allowMultipleSelection="false" borderVisible="true" borderColor="0x294867"
+					dataProvider="{dirList}"  selectedIndex="0" width="65%">
+				<s:layout>
+					<s:HorizontalLayout gap="4"/>
+				</s:layout>
+			</s:List>
+		</s:VGroup>  
+		
+		
+		<s:Line width="90%">
+			<s:stroke>
+				<s:SolidColorStroke color="0x336699" weight="4"/>
+			</s:stroke>
+		</s:Line>
+		<s:Label text="Easing Function" color="0x294867"/>
+		
+		<s:HGroup verticalAlign="middle">
+			<s:RadioButton id="bounceOpt" label="Bounce" groupName="rgEasing"/>
+			<s:RadioButton id="elasticOpt" label="Elastic" groupName="rgEasing"/>	
+		</s:HGroup>
+		<s:Line width="90%">
+			<s:stroke>
+				<s:SolidColorStroke color="0x336699" weight="4"/>
+			</s:stroke>
+		</s:Line>
+		
+		<s:HGroup verticalAlign="middle">
+			<s:Label text="Duration (seconds)" color="0x294867"/>
+			<s:HGroup>
+				<s:Button id="addBtn" label="+" click="add_clickHandler(event)"/>
+				<s:TextInput id="txtDuration" width="{addBtn.width}" height="{addBtn.height}" restrict="0-9" text="1"
+							 textAlign="center"/>
+				
+				<s:Button id="subtractBtn" label="-" click="subtract_clickHandler(event)"/>
+			</s:HGroup>  
+		</s:HGroup>		
+		
+		<s:HGroup>
+			<s:Button width="269" label="Start" height="110" click="onSlide()" color="0xFFFFFF"/>
+		</s:HGroup>
+	</s:VGroup>  
+	
+</s:View>

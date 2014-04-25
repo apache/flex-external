@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:employeeservice="services.employeeservice.*"
+			   xmlns:valueObjects="valueObjects.*"
+			   minWidth="955" minHeight="700">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			import spark.events.GridSelectionEvent;
+			
+			protected function empDg_creationCompleteHandler(event:FlexEvent):void
+			{
+				getEmployeesResult.token = employeeService.getEmployees();
+			}
+			protected function deptDg_creationCompleteHandler(event:FlexEvent):void
+			{
+				getDepartmentsResult.token = employeeService.getDepartments();
+			}	
+			protected function deptBtn_clickHandler(event:MouseEvent):void
+			{
+				currentState="Departments";	
+			}	
+			protected function empBtn_clickHandler(event:MouseEvent):void
+			{
+				currentState="Employees";
+			}	
+			protected function empDg_selectionChangeHandler(event:GridSelectionEvent):void
+			{
+				currentState="EmployeeDetails";
+			}		
+			protected function searchBtn_clickHandler(event:Event):void
+			{
+				if(searchTxt.text!=""){
+					getEmployeesResult.token = employeeService.getEmployeesByName(searchTxt.text);
+				}
+				else{
+					getEmployeesResult.token = employeeService.getEmployees();
+				}
+				currentState="Employees";
+			}				
+			protected function toggleBtn_clickHandler(event:MouseEvent):void
+			{
+				if(toggleBtn.selected){
+					deptDg.setStyle("fontSize",14);
+					toggleBtn.label="Smaller Text";
+				}
+				else{
+					deptDg.setStyle("fontSize",12);
+					toggleBtn.label="Bigger Text";
+				}
+			}	
+			protected function button_clickHandler(event:MouseEvent):void
+			{
+				employee.lastname = lastnameTextInput.text;
+				employee.firstname = firstnameTextInput.text;
+				employee.title = titleTextInput.text;
+				employee.departmentid = parseInt(departmentidTextInput.text);
+				employee.cellphone = cellphoneTextInput.text;
+				employee.officephone = officephoneTextInput.text;
+				employee.email = emailTextInput.text;
+				employee.office = officeTextInput.text;
+				employee.street = streetTextInput.text;
+				employee.city = cityTextInput.text;
+				employee.state = stateTextInput.text;
+				employee.zipcode = zipcodeTextInput.text;
+				employee.photofile = photofileTextInput.text;
+				createEmployeeResult.token = employeeService.createEmployee(employee);
+			}					
+			protected function addBtn_clickHandler(event:MouseEvent):void
+			{
+				currentState="EmployeeAdd";
+				employee=new Employee();
+			}		
+			protected function createEmployeeResult_resultHandler(event:ResultEvent):void
+			{
+				currentState="EmployeeDetails";
+				employee.id=event.result as int;
+				empDg.dataProvider.addItem(employee);
+				empDg.setSelectedIndex(empDg.dataProvider.getItemIndex(employee));
+				empDg.ensureCellIsVisible(empDg.selectedIndex);
+			}			
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="Employees"/>
+		<s:State name="Departments"/>
+		<s:State name="EmployeeDetails"/>
+		<s:State name="EmployeeAdd"/>
+	</s:states>
+	<fx:Declarations>
+		<s:CallResponder id="getEmployeesResult"
+						 result="employee = getEmployeesResult.lastResult[0] as Employee;employee = getEmployeesResult.lastResult[0] as Employee"/>
+		<employeeservice:EmployeeService id="employeeService"
+										 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+										 showBusyCursor="true"/>
+		<s:CallResponder id="getDepartmentsResult"/>
+		<valueObjects:Employee id="employee"/>
+		<s:CallResponder id="createEmployeeResult" result="createEmployeeResult_resultHandler(event)"/>
+	</fx:Declarations>
+	<fx:Binding source="empDg.selectedItem as Employee" destination="employee"/>
+	
+	<s:Label x="50" y="50" color="#1239E3" fontSize="20" fontWeight="bold"
+			 text="XYZ Corporation Directory"/>
+	<s:Button id="empBtn" x="50" y="100" label="Employees"
+			  click.Departments="empBtn_clickHandler(event)"
+			  enabled.EmployeeAdd="false"
+			  enabled.EmployeeDetails="false"
+			  enabled.Employees="false"/>
+	<s:Button id="deptBtn" x="140" y="100" label="Departments"
+			  enabled.Departments="false"
+			  click="deptBtn_clickHandler(event)"/>
+	
+	<s:DataGrid id="empDg" includeIn="EmployeeAdd,EmployeeDetails,Employees" x="50" y="130" width="650"
+				creationComplete="empDg_creationCompleteHandler(event)" requestedRowCount="4"
+				selectionChange="empDg_selectionChangeHandler(event)">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn dataField="lastname" headerText="Last Name" width="110"></s:GridColumn>
+				<s:GridColumn dataField="firstname" headerText="First Name" width="110"></s:GridColumn>
+				<s:GridColumn dataField="title" headerText="Title" width="170"></s:GridColumn>
+				<s:GridColumn dataField="cellphone" headerText="Cell Phone" width="110"></s:GridColumn>
+				<s:GridColumn dataField="email" headerText="Email"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+		<s:typicalItem>
+			<fx:Object id="id1" cellphone="cellphone1" city="city1" departmentid="departmentid1"
+					   email="email1" firstname="firstname1" lastname="lastname1" office="office1"
+					   officephone="officephone1" photofile="photofile1" state="state1"
+					   street="street1" title="title1" zipcode="zipcode1"></fx:Object>
+		</s:typicalItem>
+		<s:AsyncListView list="{getEmployeesResult.lastResult}"/>
+	</s:DataGrid>
+	
+	<s:DataGrid id="deptDg" includeIn="Departments" x="50" y="130" width="650"
+				creationComplete="deptDg_creationCompleteHandler(event)" requestedRowCount="4">
+		<s:columns>
+			<s:ArrayList>
+				<s:GridColumn width="150" dataField="name" headerText="Name"></s:GridColumn>
+				<s:GridColumn width="100" dataField="id" headerText="ID"></s:GridColumn>
+				<s:GridColumn width="150" dataField="manager" headerText="Manager"></s:GridColumn>
+				<s:GridColumn width="100" dataField="budget" headerText="Budget"></s:GridColumn>
+				<s:GridColumn dataField="actualexpenses" headerText="Expenses"></s:GridColumn>
+			</s:ArrayList>
+		</s:columns>
+		<s:typicalItem>
+			<fx:Object id="id2" actualcontractors="actualcontractors1"
+					   actualexpenses="actualexpenses1" actualsalary="actualsalary1"
+					   actualsupplies="actualsupplies1" actualtravel="actualtravel1"
+					   budget="budget1" businessunit="businessunit1" costcenter="costcenter1"
+					   estcontractors="estcontractors1" estsalary="estsalary1"
+					   estsupplies="estsupplies1" esttravel="esttravel1" hrrep="hrrep1"
+					   locationcity="locationcity1" locationstate="locationstate1"
+					   locationstreet="locationstreet1" locationzipcode="locationzipcode1"
+					   manager="manager1" name="name1"></fx:Object>
+		</s:typicalItem>
+		<s:AsyncListView list="{getDepartmentsResult.lastResult}"/>
+	</s:DataGrid>
+	
+	<s:Form includeIn="EmployeeDetails" x="36" y="310">
+		<s:FormItem label="Last Name">
+			<s:Label id="lastnameLabel" text="{employee.lastname}"/>
+		</s:FormItem>
+		<s:FormItem label="First Name">
+			<s:Label id="firstnameLabel" text="{employee.firstname}"/>
+		</s:FormItem>
+		<s:FormItem label="Title">
+			<s:Label id="titleLabel" text="{employee.title}"/>
+		</s:FormItem>
+		<s:FormItem label="Department ID">
+			<s:Label id="departmentidLabel" text="{employee.departmentid}"/>
+		</s:FormItem>
+		<s:FormItem label="Cell Phone">
+			<s:Label id="cellphoneLabel" text="{employee.cellphone}"/>
+		</s:FormItem>
+		<s:FormItem label="Office Phone">
+			<s:Label id="officephoneLabel" text="{employee.officephone}"/>
+		</s:FormItem>
+		<s:FormItem label="Email">
+			<s:Label id="emailLabel" text="{employee.email}"/>
+		</s:FormItem>
+	</s:Form>
+	<s:Form includeIn="EmployeeDetails" x="323" y="310">
+		<s:FormItem label="Office">
+			<s:Label id="officeLabel" text="{employee.office}"/>
+		</s:FormItem>
+		<s:FormItem label="Street">
+			<s:Label id="streetLabel" text="{employee.street}"/>
+		</s:FormItem>
+		<s:FormItem label="City">
+			<s:Label id="cityLabel" text="{employee.city}"/>
+		</s:FormItem>
+		<s:FormItem label="State">
+			<s:Label id="stateLabel" text="{employee.state}"/>
+		</s:FormItem>
+		<s:FormItem label="Zipcode">
+			<s:Label id="zipcodeLabel" text="{employee.zipcode}"/>
+		</s:FormItem>
+		<s:FormItem label="Photo File">
+			<s:Label id="photofileLabel" text="{employee.photofile}"/>
+		</s:FormItem>
+	</s:Form>
+	
+	<s:Button id="addBtn" includeIn="EmployeeAdd,EmployeeDetails,Employees" x="630" y="268"
+			  label="Add"
+			  enabled.EmployeeAdd="false"
+			  click="addBtn_clickHandler(event)"/>
+	<s:Button id="deleteBtn" includeIn="EmployeeAdd,EmployeeDetails" x="554" y="268" label="Delete"
+			  enabled.EmployeeAdd="false"/>
+	<s:Button id="updateBtn" includeIn="EmployeeAdd,EmployeeDetails" x="476" y="268" label="Update"
+			  enabled.EmployeeAdd="false"/>
+	<s:TextInput id="searchTxt" includeIn="EmployeeAdd,EmployeeDetails,Employees" x="494" y="100"
+				 prompt="Last Name" enter="searchBtn_clickHandler(event)"/>
+	<s:Button id="searchBtn" includeIn="EmployeeAdd,EmployeeDetails,Employees" x="630" y="100" label="Search"
+			  click="searchBtn_clickHandler(event)"/>
+	<s:ToggleButton id="toggleBtn" includeIn="Departments" x="600" y="100" width="100"
+					label="Bigger Text" click="toggleBtn_clickHandler(event)"/>
+	
+	<s:Form includeIn="EmployeeAdd" x="36" y="310" defaultButton="{button}">
+		<s:FormItem label="Last Name">
+			<s:TextInput id="lastnameTextInput" text="{employee.lastname}"/>
+		</s:FormItem>
+		<s:FormItem label="First Name">
+			<s:TextInput id="firstnameTextInput" text="{employee.firstname}"/>
+		</s:FormItem>
+		<s:FormItem label="Title">
+			<s:TextInput id="titleTextInput" text="{employee.title}"/>
+		</s:FormItem>
+		<s:FormItem label="Department ID">
+			<s:TextInput id="departmentidTextInput" text="{employee.departmentid}"/>
+		</s:FormItem>
+		<s:FormItem label="Cell Phone">
+			<s:TextInput id="cellphoneTextInput" text="{employee.cellphone}"/>
+		</s:FormItem>
+		<s:FormItem label="Office Phone">
+			<s:TextInput id="officephoneTextInput" text="{employee.officephone}"/>
+		</s:FormItem>
+		<s:FormItem label="Email">
+			<s:TextInput id="emailTextInput" text="{employee.email}"/>
+		</s:FormItem>
+	</s:Form>
+	<s:Form includeIn="EmployeeAdd" x="323" y="310">
+		<s:FormItem label="Office">
+			<s:TextInput id="officeTextInput" text="{employee.office}"/>
+		</s:FormItem>
+		<s:FormItem label="Street">
+			<s:TextInput id="streetTextInput" text="{employee.street}"/>
+		</s:FormItem>
+		<s:FormItem label="City">
+			<s:TextInput id="cityTextInput" text="{employee.city}"/>
+		</s:FormItem>
+		<s:FormItem label="State">
+			<s:TextInput id="stateTextInput" text="{employee.state}"/>
+		</s:FormItem>
+		<s:FormItem label="Zipcode">
+			<s:TextInput id="zipcodeTextInput" text="{employee.zipcode}"/>
+		</s:FormItem>
+		<s:FormItem label="Photo File">
+			<s:TextInput id="photofileTextInput" text="{employee.photofile}"/>
+		</s:FormItem>
+		<s:FormItem>
+			<s:Button id="button" label="Add" click="button_clickHandler(event)"/>
+		</s:FormItem>
+	</s:Form>
+</s:Application>

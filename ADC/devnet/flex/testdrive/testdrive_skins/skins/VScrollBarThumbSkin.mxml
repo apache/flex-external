@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+
+
+<!--- The default skin class for the thumb of a Spark VScrollBar component.  
+
+       @see spark.components.VScrollBar
+        
+      @langversion 3.0
+      @playerversion Flash 10
+      @playerversion AIR 1.5
+      @productversion Flex 4
+-->
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+    xmlns:fb="http://ns.adobe.com/flashbuilder/2009">
+
+    <fx:Metadata>
+        [HostComponent("spark.components.Button")]
+    </fx:Metadata> 
+    
+	<fx:Declarations>
+		<s:SolidColor id="upFill" color="0x555555"/>
+		<s:SolidColor id="downFill" color="0x444444"/>
+		<s:SolidColor id="disabledFill" color="0x999999"/>
+		<s:LinearGradient id="overFill" rotation="90">
+			<s:GradientEntry color="0x444444" ratio="0"/>
+			<s:GradientEntry  color="0x666666" ratio=".5"/>
+		</s:LinearGradient>
+	</fx:Declarations>
+	
+    <s:states>
+        <s:State name="up" />
+        <s:State name="over" />
+        <s:State name="down" />
+        <s:State name="disabled" />
+    </s:states>
+
+    <!-- fill -->
+    <s:Rect left="0" top="0" right="0" bottom="0" minWidth="14" minHeight="14"
+			fill="{upFill}" fill.down="{downFill}" fill.over="{overFill}" fill.disabled="{disabledFill}" >
+		<s:stroke>
+			<s:SolidColorStroke color="0x1A1A1A"/>
+		</s:stroke>
+    </s:Rect>
+    
+</s:SparkSkin>

@@ -1,0 +1,173 @@
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="EmployeeService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">TestDrive.services.EmployeeService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.employeeservice</item>
+      <item name="Endpoint">http://localhost:8500/flex2gateway/</item>
+      <item name="Destination">ColdFusion</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">ColdFusion</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="COLDFUSION_SERVER_ROOT_URL">http://localhost:8500/</item>
+      <item name="LINKED_FILE">EmployeeService.cfc</item>
+      <item name="COLDFUSION_SERVER_CONTEXT_ROOT"></item>
+      <item name="CFC_CLASS_NAME">EmployeeService</item>
+      <item name="CFC_RELATIVE_LOCATION">TestDrive/services/EmployeeService.cfc</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:8500/flex2gateway/</item>
+      <item name="CFC_LOCATION">/Applications/ColdFusion9/wwwroot/TestDrive/services/EmployeeService.cfc</item>
+    </annotation>
+    <function name="updateEmployee" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+      </annotation>
+      <parameter name="item" type="opaque"/>
+    </function>
+    <function name="deleteEmployee" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">float</item>
+      </annotation>
+      <parameter name="itemID" type="float"/>
+    </function>
+    <function name="getEmployees" return-type="opaque">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getDepartments" return-type="opaque">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getEmployeesByID" return-type="Employee">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">float</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,officephone,email,cellphone</item>
+      </annotation>
+      <parameter name="itemID" type="integer"/>
+    </function>
+    <function name="getEmployeesSummaryByName" return-type="Employee[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="searchStr" type="string"/>
+    </function>
+    <function name="getEmployeesSummary" return-type="Employee[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getEmployeesByName" return-type="opaque">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="searchStr" type="string"/>
+    </function>
+    <function name="createEmployee" return-type="float">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">float</item>
+      </annotation>
+      <parameter name="item" type="opaque"/>
+    </function>
+  </service>
+  <entity name="Employee">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Employee</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EmployeeService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getEmployeesSummary">
+      <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="getEmployeesSummaryByName">
+      <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+    </annotation>
+    <annotation name="getEmployeesByID">
+      <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,officephone,email,cellphone</item>
+    </annotation>
+    <property name="office" type="string" required="true"/>
+    <property name="departmentid" type="integer" required="true"/>
+    <property name="street" type="string" required="true"/>
+    <property name="zipcode" type="string" required="true"/>
+    <property name="state" type="string" required="true"/>
+    <property name="lastname" type="string"/>
+    <property name="firstname" type="string"/>
+    <property name="photofile" type="string"/>
+    <property name="city" type="string" required="true"/>
+    <property name="id" type="integer"/>
+    <property name="title" type="string"/>
+    <property name="officephone" type="string" required="true"/>
+    <property name="email" type="string" required="true"/>
+    <property name="cellphone" type="string" required="true"/>
+  </entity>
+</model>

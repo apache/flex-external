@@ -1,0 +1,175 @@
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="EmployeeService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">EmployeeService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.employeeservice</item>
+      <item name="Endpoint">http://localhost:10088/TestDrive/public/gateway.php</item>
+      <item name="Destination">EmployeeService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">com.zend.php.flashbuilder.php</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">TestDrive/services/EmployeeService.php</item>
+      <item name="PHP_SERVER_ROOT">/usr/local/zend/apache2/htdocs</item>
+      <item name="PHP_WORKSPACE_LOCATION">/TestDrive/services/EmployeeService.php</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">/Users/russellbrandes/Documents/Adobe Flash Builder 4.5/FlexMobileTestDrive_connect_data_PHP/bin-debug/services</item>
+      <item name="PHP_LOCATION">/usr/local/zend/apache2/htdocs/TestDrive/services/EmployeeService.php</item>
+      <item name="LINKED_FILE">EmployeeService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost:10088</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:10088/TestDrive/public/gateway.php</item>
+      <item name="PHP_CLASS_NAME">EmployeeService</item>
+    </annotation>
+    <function name="getEmployees" return-type="opaque[]">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getEmployeesSummary" return-type="Employee[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getDepartments" return-type="opaque[]">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getEmployeesByID" return-type="Employee">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+        <item name="inputParams">integer</item>
+        <item name="inputParamNames">itemID</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,email,officephone,cellphone</item>
+      </annotation>
+      <parameter name="itemID" type="integer"/>
+    </function>
+    <function name="getEmployeesByName" return-type="opaque[]">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="searchStr" type="opaque"/>
+    </function>
+    <function name="getEmployeesSummaryByName" return-type="Employee[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParamNames">searchStr</item>
+        <item name="inputParams">string</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="searchStr" type="string"/>
+    </function>
+    <function name="createEmployee" return-type="opaque">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="item" type="opaque"/>
+    </function>
+    <function name="deleteEmployee" return-type="opaque">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="itemID" type="opaque"/>
+    </function>
+    <function name="updateEmployee" return-type="opaque">
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="item" type="opaque"/>
+    </function>
+  </service>
+  <entity name="Employee">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Employee</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EmployeeService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getEmployeesSummaryByName">
+      <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="getEmployeesSummary">
+      <item name="propertySpecifier">id,title,lastname,firstname,photofile</item>
+    </annotation>
+    <annotation name="getEmployeesByID">
+      <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,email,officephone,cellphone</item>
+    </annotation>
+    <property name="office" type="string" required="true"/>
+    <property name="departmentid" type="integer" required="true"/>
+    <property name="street" type="string" required="true"/>
+    <property name="zipcode" type="string" required="true"/>
+    <property name="state" type="string" required="true"/>
+    <property name="lastname" type="string"/>
+    <property name="firstname" type="string"/>
+    <property name="photofile" type="string"/>
+    <property name="city" type="string" required="true"/>
+    <property name="id" type="integer"/>
+    <property name="title" type="string"/>
+    <property name="email" type="string" required="true"/>
+    <property name="officephone" type="string" required="true"/>
+    <property name="cellphone" type="string" required="true"/>
+  </entity>
+</model>

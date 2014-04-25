@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:TabbedViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+								  xmlns:s="library://ns.adobe.com/flex/spark" applicationComplete="tabbedviewnavigatorapplication1_applicationCompleteHandler(event)">
+	
+	<fx:Style source="styles.css"/>
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import views.SlideView;
+			
+			protected function tabbedviewnavigatorapplication1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				this.tabbedNavigator.addEventListener(IndexChangeEvent.CHANGE,onChange);
+			}
+			
+			protected function onChange(event:IndexChangeEvent):void
+			{
+				if (event.newIndex == 0)
+					seqEffect.play([v1.activeView]); 
+				else if (event.newIndex == 1)
+					moveEffect.play([v2.activeView]); 
+				else if (event.newIndex == 2)
+					fadeEffect.play([v3.activeView]); 
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:Sequence id="seqEffect">
+			<s:Parallel>
+				<s:Scale duration="800" id="scaleUp" scaleXBy=".8"/>
+				<s:Rotate3D angleYFrom="0.0" angleYTo="360" 
+							duration="1600"
+							repeatCount="{2}" repeatBehavior="reverse"/>
+			</s:Parallel>
+			<s:Scale duration="300" id="scaleDown" scaleXBy="-.8"/>
+		</s:Sequence>
+		<s:Move3D id="moveEffect" duration="300" xFrom="400" xTo="0"/>
+		<s:Fade duration="800" id="fadeEffect" alphaFrom="0" alphaTo="1.0"/>
+	</fx:Declarations>
+	
+	<s:ViewNavigator id="v1" label="Welcome" width="100%" height="100%" firstView="views.WelcomeView" activate="seqEffect.play([v1.activeView])"/>
+	<s:ViewNavigator id="v2" label="Slide" width="100%" height="100%" firstView="views.SlideView" />
+	<s:ViewNavigator id="v3" label="Fade In" width="100%" height="100%" firstView="views.FadeInView" />
+	
+</s:TabbedViewNavigatorApplication>

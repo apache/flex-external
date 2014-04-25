@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+   xmlns:s="library://ns.adobe.com/flex/spark" 
+   xmlns:mx="library://ns.adobe.com/flex/mx" 
+   minWidth="955" minHeight="600" 
+   skinClass="skins.AppSkin">
+	
+	<!-- Exercise 1.2: Creating an application UI -->
+	
+	<!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+    <fx:Style source="Styles.css" />
+	
+	<!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+    <fx:Declarations>
+	
+    </fx:Declarations>
+	
+	<!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+    <s:Label text="Company Vehicle Request Form" 
+		x="63" y="38" 
+        styleName="addHeader"/>
+	
+	<mx:Form x="63" y="77">
+		
+        <mx:FormItem label="Employee:">
+			
+            <s:DropDownList></s:DropDownList>
+		
+        </mx:FormItem>
+		
+        <mx:FormHeading label="Personal Information"/>
+		
+        <mx:FormItem label="Office Phone:">
+		
+            <s:TextInput/>
+		
+        </mx:FormItem>
+		
+        <mx:FormItem label="Mobile Phone:">
+		
+            <s:TextInput/>
+		
+        </mx:FormItem>
+		
+        <mx:FormHeading label="Dates Requested"/>
+		
+        <mx:FormItem label="Pickup Date:">
+		
+            <mx:DateChooser/>
+		
+        </mx:FormItem>
+		
+        <mx:FormItem label="Return Date:">
+		
+            <mx:DateChooser/>
+		
+        </mx:FormItem>
+		
+        <mx:FormItem>
+            
+            <s:Button label="Submit Request"/>
+            
+        </mx:FormItem>
+       
+	</mx:Form>
+	
+    <s:VideoDisplay x="376" y="231" 
+        width="325" height="267" 
+        source="http://www.adobetes.com/f4iaw100/ex1_02_video.flv"/>
+	
+</s:Application>

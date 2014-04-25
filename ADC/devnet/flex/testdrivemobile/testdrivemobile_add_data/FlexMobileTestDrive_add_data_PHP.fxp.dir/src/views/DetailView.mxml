@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:employeeservice="services.employeeservice.*"
+		title="{getEmployeesByIDResult.lastResult.firstname} {getEmployeesByIDResult.lastResult.lastname}" 
+		viewActivate="view1_viewActivateHandler(event)" 
+		gestureSwipe="view1_gestureSwipeHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.net.navigateToURL;
+			
+			import spark.events.ViewNavigatorEvent;
+			protected function getEmployeesByID(itemID:int):void
+			{
+				getEmployeesByIDResult.token = employeeService.getEmployeesByID(itemID);
+			}
+			protected function view1_viewActivateHandler(event:ViewNavigatorEvent):void
+			{
+				getEmployeesByID(data as int);
+			}
+			protected function view1_gestureSwipeHandler(event:TransformGestureEvent):void
+			{
+				if(event.offsetX == 1)navigator.popView();
+			}
+			protected function emailIcon_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest("mailto:"+getEmployeesByIDResult.lastResult.email));
+			}
+			protected function textIcon_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest("sms:"+getEmployeesByIDResult.lastResult.cellphone));
+			}
+			protected function textIcon2_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest("sms:"+getEmployeesByIDResult.lastResult.officephone));
+			}
+			protected function phoneIcon_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest("tel:"+getEmployeesByIDResult.lastResult.cellphone));				
+			}
+			protected function phoneIcon2_clickHandler(event:MouseEvent):void
+			{
+				navigateToURL(new URLRequest("tel:"+getEmployeesByIDResult.lastResult.officephone));		
+			}
+			protected function isTablet():Boolean
+			{
+				var screenDiagonal:Number=Math.sqrt(Math.pow(Capabilities.screenResolutionX/Capabilities.screenDPI,2) + 
+					Math.pow(Capabilities.screenResolutionY/Capabilities.screenDPI,2));
+				return (screenDiagonal > 6);
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getEmployeesByIDResult"/>
+		<employeeservice:EmployeeService id="employeeService"/>
+	</fx:Declarations>
+	<s:actionContent>
+		<s:Button id="editBtn">
+			<s:icon>
+				<s:MultiDPIBitmapSource source160dpi="@Embed('assets/edit160.png')"
+										source240dpi="@Embed('assets/edit240.png')"
+										source320dpi="@Embed('assets/edit320.png')"/>
+			</s:icon>
+		</s:Button>
+		<s:Button id="deleteBtn">
+			<s:icon>
+				<s:MultiDPIBitmapSource source160dpi="@Embed('assets/delete160.png')"
+										source240dpi="@Embed('assets/delete240.png')"
+										source320dpi="@Embed('assets/delete320.png')"/>
+			</s:icon>
+		</s:Button>
+	</s:actionContent>
+	<s:Image x="10" y="10" height="100" width="100" 
+			 source="http://localhost:10088/TestDrive/photos/{getEmployeesByIDResult.lastResult.photofile}"/>
+	<s:Scroller height="100%" width="100%">
+		<s:VGroup height="100%" width="100%" gap="10" paddingLeft="120">
+			<s:Label fontWeight="bold" paddingTop="10" text="Title"/>
+			<s:Label text="{getEmployeesByIDResult.lastResult.title}"/>
+			<s:Group width="100%">
+				<s:Label fontWeight="bold" paddingTop="10" text="Cell Phone"/>
+				<s:HGroup right="5">
+					<s:Image id="phoneIcon" click="phoneIcon_clickHandler(event)"  visible="{!isTablet()}">
+						<s:source>
+							<s:MultiDPIBitmapSource source160dpi="@Embed('assets/phone160.png')"
+													source240dpi="@Embed('assets/phone240.png')"
+													source320dpi="@Embed('assets/phone320.png')"/>
+						</s:source>
+					</s:Image>
+					<s:Image id="textIcon" click="textIcon_clickHandler(event)"  visible="{!isTablet()}">
+						<s:source>
+							<s:MultiDPIBitmapSource source160dpi="@Embed('assets/text160.png')"
+													source240dpi="@Embed('assets/text240.png')"
+													source320dpi="@Embed('assets/text320.png')"/>
+						</s:source>
+					</s:Image>
+				</s:HGroup>
+			</s:Group>
+			<s:Label text="{getEmployeesByIDResult.lastResult.cellphone}"/>
+			<s:Group width="100%">
+				<s:Label fontWeight="bold" paddingTop="10" text="Office Phone"/>
+				<s:HGroup right="5">
+					<s:Image id="phoneIcon2" click="phoneIcon2_clickHandler(event)"  visible="{!isTablet()}">
+						<s:source>
+							<s:MultiDPIBitmapSource source160dpi="@Embed('assets/phone160.png')"
+													source240dpi="@Embed('assets/phone240.png')"
+													source320dpi="@Embed('assets/phone320.png')"/>
+						</s:source>
+					</s:Image>
+					<s:Image id="textIcon2" click="textIcon2_clickHandler(event)"  visible="{!isTablet()}">
+						<s:source>
+							<s:MultiDPIBitmapSource source160dpi="@Embed('assets/text160.png')"
+													source240dpi="@Embed('assets/text240.png')"
+													source320dpi="@Embed('assets/text320.png')"/>
+						</s:source>
+					</s:Image>
+				</s:HGroup>
+			</s:Group>
+			<s:Label text="{getEmployeesByIDResult.lastResult.officephone}"/>
+			<s:HGroup width="100%" paddingRight="5">
+				<s:Label fontWeight="bold" paddingTop="10" text="Email"/>
+				<s:Spacer width="100%" includeInLayout="{!isTablet()}"/>
+				<s:Image id="emailIcon" click="emailIcon_clickHandler(event)">
+					<s:source>
+						<s:MultiDPIBitmapSource source160dpi="@Embed('assets/email160.png')"
+												source240dpi="@Embed('assets/email240.png')"
+												source320dpi="@Embed('assets/email320.png')"/>
+					</s:source>
+				</s:Image>
+			</s:HGroup>
+			
+			<s:Label id="emailLbl" text="{getEmployeesByIDResult.lastResult.email}"/>
+			<s:Label fontWeight="bold" paddingTop="10" text="Office"/>
+			<s:Label text="{getEmployeesByIDResult.lastResult.office}"/>
+		</s:VGroup>
+	</s:Scroller>
+</s:View>

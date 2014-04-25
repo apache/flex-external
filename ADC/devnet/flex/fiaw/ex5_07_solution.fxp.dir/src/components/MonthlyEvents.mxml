@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 width="100%" height="100%">
+	
+	<!-- Properties of the parent ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<!-- Metadata ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Script ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		
+	<s:Scroller width="100%" height="100%"
+				horizontalScrollPolicy="off">
+		
+		<s:RichEditableText editable="false"
+							paragraphSpaceBefore="10"
+							paddingTop="15" paddingLeft="15" paddingRight="15" paddingBottom="15">
+			
+			<s:p fontWeight="bold">COMPANY PICNIC</s:p>
+			
+			<s:p>Remember that our annual company picnic is this weekend at Osage Park. If you have not picked up your tickets yet please make sure to pick them up by Friday no later than 3 PM. We are expecting to have the largest turn out this year and are excited that almost all of our employees and their families and friends will be joining us. </s:p>
+			<s:p>There are lots of different activities including, baseball, rock climbing, gyro ride, swimming and water slide. For the younger children we have face painting, balloon animals, arts and crafts booths and much much more! Sally L., Lucy B. and Violet P. have spent a lot of time organizing all of the events to ensure that everyone will have a great time.</s:p> 
+			<s:p>As usual, due to the great response from our previous company picnics we will be offering an all you can eat catered buffet of short ribs, rib eye, filet mignon, roasted chicken, barbeque pork, hot dogs, some dim sum samplings, a bevy of salads and vegetarian dishes and lots more.  We decided to also add shaved ice to the large repertoire of the dessert bar as well.</s:p> 
+			<s:p>This year's raffle is filled with wonderful prizes donated by our partners and the grand prize is a first class trip for two to Africa to any 2 cities of your choice as well as an African Safari! We look forward to spending a fun filled Saturday with our dedicated and hard working employees.</s:p>	
+			
+			<s:p fontWeight="bold">FAMILY DAY AT THE BALL PARK</s:p>
+			
+			<s:p>Our monthly Sales and Leadership meeting is open to all employees who can attend this month. This month we will hold our meeting at the W Hotel from 12:00 PM - 2:00 PM. Lunch will be served and we will have several guest speakers from corporate including the President of Sales, Europe Division and President of Sales, Asia Division.</s:p> 
+			<s:p>We will kick off the second part of the meeting with a leadership workshop and take our current economic issues and sales performance as a case study to find ways to increase our sales. We will break employees into different groups and present our ideas during next month's Sales and Leadership meeting.</s:p>
+			
+		</s:RichEditableText>
+		
+	</s:Scroller>
+	
+</s:Group>

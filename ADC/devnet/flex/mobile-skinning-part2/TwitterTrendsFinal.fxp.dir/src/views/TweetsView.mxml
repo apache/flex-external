@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:twitterservice="services.twitterservice.*"
+		title="Tweets for {data}"
+		viewActivate="refresh()">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serializers.utility.TypeUtility;
+			
+			import spark.events.IndexChangeEvent;
+			protected function getTweets(q:String, result_type:String):void
+			{
+				getTweetsResult.token = twitterService.getTweets(q, result_type);
+			}
+			
+			public function refresh(): void {
+				getTweets(String(data), "recent");
+			}
+			
+			protected function list_changeHandler(event:IndexChangeEvent):void
+			{
+				navigator.pushView(UserInfoView, list.selectedItem.from_user);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:CallResponder id="getTweetsResult"/>
+		<twitterservice:TwitterService id="twitterService"/>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:List id="list" left="0" right="0" top="0" bottom="0" change="list_changeHandler(event)">
+		<s:AsyncListView list="{TypeUtility.convertToCollection(getTweetsResult.lastResult.results)}"/>
+		<s:itemRenderer>
+			<fx:Component>
+				<s:IconItemRenderer 
+					iconField="profile_image_url" 
+					iconWidth="48" iconHeight="48"
+					labelField="" messageFunction="getTweetText"
+					verticalAlign="top"
+					iconPlaceholder="{assets.LoadingIcon}">
+					<fx:Script>
+						<![CDATA[
+							import assets.LoadingIcon;
+							private function getTweetText(item: Object): String
+							{
+								return item.from_user + ": " + item.text;
+							}
+						]]>
+					</fx:Script>
+				</s:IconItemRenderer>			</fx:Component>
+		</s:itemRenderer>
+	</s:List>
+</s:View>

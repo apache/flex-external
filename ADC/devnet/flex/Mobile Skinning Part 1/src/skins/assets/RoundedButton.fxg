@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<Graphic version="2.0" xmlns="http://ns.adobe.com/fxg/2008" scaleGridLeft="22" scaleGridRight="198" scaleGridTop="1" scaleGridBottom="43">
+        <Path x="0.5" y="1" winding="nonZero" data="M21.5 43C9.64502 43 0 33.355 0 21.5 0 9.64502 9.64502 0 21.5 0L197.5 0C209.355 0 219 9.64502 219 21.5 219 33.355 209.355 43 197.5 43L21.5 43Z">
+          <fill>
+            <LinearGradient x="109.5" y="0" scaleX="43" rotation="90">
+              <GradientEntry ratio="0" color="#F0F0F0"/>
+              <GradientEntry ratio="0.478788" color="#C8C8C8"/>
+              <GradientEntry ratio="0.50303" color="#BBBBBB"/>
+              <GradientEntry ratio="1" color="#F0F0F0"/>
+            </LinearGradient>
+          </fill>
+        </Path>
+        <Path winding="nonZero" data="M198 1C209.58 1 219 10.4204 219 22 219 33.5796 209.58 43 198 43L22 43C10.4204 43 1 33.5796 1 22 1 10.4204 10.4204 1 22 1L198 1M198 0 22 0C9.8999 0 0 9.8999 0 22 0 34.1001 9.8999 44 22 44L198 44C210.1 44 220 34.1001 220 22 220 9.8999 210.1 0 198 0L198 0Z">
+          <fill>
+            <SolidColor color="#DDDDDD"/>
+          </fill>
+        </Path>
+        <!-- scale grid fix -->
+        <Rect x="0" y="0" width="220" height="44">
+          <fill>
+            <SolidColor color="#000000" alpha="0"/>
+          </fill>
+        </Rect>
+</Graphic>

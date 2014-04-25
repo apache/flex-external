@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:employeeservice="services.employeeservice.*"
+			   xmlns:valueObjects="valueObjects.*"
+			   minWidth="955" minHeight="600">
+	
+	<!-- Exercise 3.08: Creating a master/detail interface with a wizard -->
+	
+	<!-- Properties of the parent ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Metadata ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Style source="Styles.css"/>
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			// variable declarations ------------------------------------
+			
+			
+			
+			// getter/setters -------------------------------------------
+			
+			
+			
+			// helper methods -------------------------------------------
+			
+			
+			
+			// event handlers -------------------------------------------
+			
+			protected function dropDownList_creationCompleteHandler(event:FlexEvent):void
+			{
+				getEmployeesResult.token = employeeService.getEmployees();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<!-- Script ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Declarations>
+		
+		<s:CallResponder id="getEmployeesResult"/>
+		
+		<employeeservice:EmployeeService id="employeeService"
+										 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+										 showBusyCursor="true"/>
+		
+		<valueObjects:Employee id="employee"/>
+		
+	</fx:Declarations>
+	
+	<fx:Binding destination="employee" source="dropDownList.selectedItem as Employee"/>
+	
+	<!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:Label x="10" y="10" 
+			 width="500" height="40" 
+			 text="Employee Portal: Employee Information"
+			 styleName="titleHeader"/>
+	
+	<s:DropDownList id="dropDownList" x="10" y="58"
+					creationComplete="dropDownList_creationCompleteHandler(event)"
+					labelField="lastName">
+		
+		<s:AsyncListView list="{getEmployeesResult.lastResult}"/>
+		
+	</s:DropDownList>
+	
+	<s:Form x="175" y="60">
+		
+		<s:FormItem label="FirstName">
+			<s:Label id="firstNameLabel" 
+					 text="{employee.firstName}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Id">
+			<s:Label id="idLabel" 
+					 text="{employee.id}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Title">
+			<s:Label id="titleLabel" 
+					 text="{employee.title}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Email">
+			<s:Label id="emailLabel" 
+					 text="{employee.email}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="ManagerID">
+			<s:Label id="managerIDLabel" 
+					 text="{employee.managerID}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Department">
+			<s:Label id="departmentLabel" 
+					 text="{employee.department}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Location">
+			<s:Label id="locationLabel" 
+					 text="{employee.location}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Phone">
+			<s:Label id="phoneLabel" 
+					 text="{employee.phone}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="DirectDial">
+			<s:Label id="directDialLabel" 
+					 text="{employee.directDial}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="DeskLocation">
+			<s:Label id="deskLocationLabel" 
+					 text="{employee.deskLocation}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="City">
+			<s:Label id="cityLabel" 
+					 text="{employee.city}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="State">
+			<s:Label id="stateLabel" 
+					 text="{employee.state}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="CountryCode">
+			<s:Label id="countryCodeLabel" 
+					 text="{employee.countryCode}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="PostalCode">
+			<s:Label id="postalCodeLabel" 
+					 text="{employee.postalCode}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="HireDate">
+			<s:Label id="hireDateLabel" 
+					 text="{employee.hireDate}"/>
+		</s:FormItem>
+		
+		<s:FormItem label="Evaluation">
+			<s:Label id="evaluationLabel" 
+					 text="{employee.evaluation}"/>
+		</s:FormItem>
+		
+	</s:Form>
+	
+</s:Application>

@@ -1,0 +1,93 @@
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		title="Sample Fade">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import spark.effects.easing.Bounce;
+			import spark.effects.easing.Elastic;
+			import spark.events.ViewNavigatorEvent;
+			import spark.transitions.CrossFadeViewTransition;
+			import spark.transitions.FlipViewTransition;
+			import spark.transitions.SlideViewTransition;
+			import spark.transitions.ViewTransitionDirection;
+			
+			public var fadeTrans:CrossFadeViewTransition = new CrossFadeViewTransition();
+			
+			protected function onFade():void 
+			{
+				if (txtDuration.text!=null && txtDuration.text.length>0)
+					fadeTrans.duration = parseInt(txtDuration.text)*1000;
+				if (rgEasing.selectedValue=="Bounce")
+					fadeTrans.easer = new Bounce();
+				else if (rgEasing.selectedValue=="Elastic")
+					fadeTrans.easer = new Elastic();
+				navigator.pushView(views.SampleView,views.FadeView,null,fadeTrans);
+			}
+			
+			protected function add_clickHandler(event:MouseEvent):void
+			{
+				var n:int = parseInt(txtDuration.text);
+				txtDuration.text = new String(n+1);
+			}
+			
+			protected function subtract_clickHandler(event:MouseEvent):void
+			{
+				var n:int = parseInt(txtDuration.text);
+				txtDuration.text = new String(n-1);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:RadioButtonGroup id="rgEasing"/>
+	</fx:Declarations>
+	
+	<s:VGroup width="100%" height="100%" horizontalAlign="center" verticalAlign="middle" gap="30">
+		
+		<s:HGroup verticalAlign="middle" top="50">
+			<s:Label text="Duration (seconds)" color="0x294867"/>
+			<s:HGroup>
+				<s:Button id="addBtn" label="+" click="add_clickHandler(event)"/>
+				<s:TextInput id="txtDuration" width="{addBtn.width}" height="{addBtn.height}" restrict="0-9" text="1"
+							 textAlign="center"/>
+				<s:Button id="subtractBtn" label="-" click="subtract_clickHandler(event)"/>
+			</s:HGroup>  
+		</s:HGroup>
+		<s:Line width="90%">
+			<s:stroke>
+				<s:SolidColorStroke color="0x336699" weight="4"/>
+			</s:stroke>
+		</s:Line>
+		<s:Label text="Easing function" color="0x294867"/>
+		<s:VGroup verticalAlign="middle" paddingLeft="45">
+			<s:HGroup>
+				<s:RadioButton id="bounceOpt" label="Bounce" groupName="rgEasing"/>
+				<s:RadioButton id="elasticOpt" label="Elastic" groupName="rgEasing"/>
+			</s:HGroup>
+		</s:VGroup>	
+		<s:HGroup horizontalAlign="center">
+			<s:Button width="269" label="Start" height="110" click="onFade()" color="0xFFFFFF"/>
+		</s:HGroup>		
+	</s:VGroup>  
+</s:View>

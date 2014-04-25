@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<index>
+	<title>Source of ex5_10_solution</title>
+	<nodes>
+		<node label="html-template">
+			<node label="history">
+				<node icon="cssIcon" label="history.css" url="source/html-template/history/history.css.html"/>
+				<node label="history.js" url="source/html-template/history/history.js.txt"/>
+				<node icon="htmlIcon" label="historyFrame.html" url="source/html-template/history/historyFrame.html"/>
+			</node>
+			<node icon="htmlIcon" label="index.template.html" url="source/html-template/index.template.html"/>
+			<node icon="swfIcon" label="playerProductInstall.swf" url="source/html-template/playerProductInstall.swf"/>
+			<node label="swfobject.js" url="source/html-template/swfobject.js.txt"/>
+		</node>
+		<node label="libs">
+		</node>
+		<node label="src">
+			<node label="assets">
+				<node icon="imageIcon" label="aparker.jpg" url="source/assets/aparker.jpg.html"/>
+				<node icon="imageIcon" label="app_chixSatay.jpg" url="source/assets/app_chixSatay.jpg.html"/>
+				<node icon="imageIcon" label="logo.png" url="source/assets/logo.png.html"/>
+			</node>
+			<node icon="packageIcon" label="components" expanded="true">
+				<node icon="mxmlIcon" label="Cafeteria.mxml" url="source/components/Cafeteria.mxml.html"/>
+				<node icon="mxmlIcon" label="EmployeeDirectory.mxml" url="source/components/EmployeeDirectory.mxml.html"/>
+				<node icon="mxmlIcon" label="EmployeeOfTheMonth.mxml" url="source/components/EmployeeOfTheMonth.mxml.html"/>
+				<node icon="mxmlIcon" label="EmployeePortalPanel.mxml" url="source/components/EmployeePortalPanel.mxml.html"/>
+				<node icon="mxmlIcon" label="MonthlyEvents.mxml" url="source/components/MonthlyEvents.mxml.html"/>
+			</node>
+			<node icon="packageIcon" label="skins" expanded="true">
+				<node icon="mxmlIcon" label="ApplicationContainerSkin.mxml" url="source/skins/ApplicationContainerSkin.mxml.html"/>
+				<node icon="mxmlIcon" label="ButtonWithStatesSkin.mxml" url="source/skins/ButtonWithStatesSkin.mxml.html"/>
+				<node icon="mxmlIcon" label="PanelContainerSkin.mxml" url="source/skins/PanelContainerSkin.mxml.html"/>
+				<node label="PanelSkin.fxg" url="source/skins/PanelSkin.fxg"/>
+				<node icon="mxmlIcon" label="TopContainerSkin.mxml" url="source/skins/TopContainerSkin.mxml.html"/>
+				<node label="TopSkin.fxg" url="source/skins/TopSkin.fxg"/>
+			</node>
+			<node icon="cssIcon" label="ex5_10_solution.css" url="source/ex5_10_solution.css.html"/>
+			<node icon="mxmlAppIcon" selected="true" label="ex5_10_solution.mxml" url="source/ex5_10_solution.mxml.html"/>
+		</node>
+	</nodes>
+	<zipfile label="Download source (ZIP, 46K)" url="ex5_10_solution.zip">
+	</zipfile>
+	<sdklink label="Download Flex SDK" url="http://www.adobe.com/go/flex4_sdk_download">
+	</sdklink>
+</index>

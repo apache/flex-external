@@ -1,0 +1,117 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+<head><title></title>
+<meta name="viewport" content="width=880" />
+<link rel="stylesheet" href="http://wwwimages.adobe.com/www.adobe.com/include/style/compressed.css"/>
+<link rel="stylesheet" href="http://wwwimages.adobe.com/www.adobe.com/include/jmvc/adobe-configurator-compressed.css" media="screen"/>
+<script src="http://wwwimages.adobe.com/www.adobe.com/include/script/compressed.js"></script>
+</head>
+<body class="Text"><script>
+	if(deepLinkMap != null) {
+		deepLinkMap['#bodycontent1_videomodal_0_split_bodycontent1_videomodal_0'] = 'bodycontent1_videomodal_0_split_bodycontent1_videomodal_0';
+  	}
+</script>
+<a name="bodycontent1_videomodal_0_split_bodycontent1_videomodal_0"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="bodycontent1_videomodal_0" class="LayoutImage">
+    <span style="width:880px;height:494px;" class="FlashAltCanvas">
+        <span class="FlashAltLayoutOverlay FlashAltLayoutBody FlashAltText">
+            <span class="FlashAltLayoutRow FlashAltTextLarge">
+                This content requires Flash</span>
+            <span class="FlashAltLayoutRow FlashAltRequires">
+                    To view this content, JavaScript must be enabled, and you need the latest version of the Adobe Flash Player.</span>
+            <span class="FlashAltLayoutRow FlashAltButton">
+                    <a href="/go/getflashplayer/" class="FlashAltButton">To view this content, JavaScript must be enabled, and you need the latest version of the Adobe Flash Player.</a></span>
+            </span>
+</span>
+</div>
+    <script>
+        //<![CDATA[
+        var attributes =         {
+                'id':'bodycontent1_videomodal_0','name':'bodycontent1_videomodal_0','class':'LayoutImage'
+            };
+		
+        var params =         {play: "true",
+                loop: "true",
+                menu: "true",
+                scale: "noscale",
+                salign: "tl",
+                wmode: "opaque",
+                swliveconnect: "false",
+                devicefont: "false",
+                allowscriptaccess: "always",
+                seamlesstabbing: "true",
+                allowfullscreen: "true",
+                allownetworking: "all"
+            };
+
+        var flashvars =         {
+                locale: "",expandFunction: "",account: "",debug: "false",live: "",configPath: "/content/dotcom/en/devnet/flex/testdrivemobile/_jcr_content/bodycontent1/videomodal_0.config.__autoinvalidate.xml"
+            };
+
+        if (swfobject.getQueryParamValue( 'autoPlay').length) flashvars.autoPlay = swfobject.getQueryParamValue( 'autoPlay' ); 
+        if (swfobject.getQueryParamValue( 'allowFullScreen').length) flashvars.allowFullScreen = swfobject.getQueryParamValue( 'allowFullScreen' );
+
+        var hash = location.hash;
+        var chapterIdDeepLink = '';
+        if(hash != null && hash != '') {
+			var hashArray = hash.split("_split_");
+			if(hashArray != null && hashArray.length >= 2) {
+				if(hashArray[0] == '#bodycontent1_videomodal_0') {
+					chapterIdDeepLink = hashArray[hashArray.length-1];
+					flashvars.chapterID = chapterIdDeepLink;
+				}
+			}
+        }
+        
+        swfobject.embedSWF("/include/flash/neroli/neroli.swf",
+                "bodycontent1_videomodal_0",
+                "880",
+                "494",
+                "10",
+                "/include/flash/expressInstall.swf",
+        flashvars, params, attributes);
+        //]]>
+    </script>
+    
+<script>
+            (function(yes) {
+                if(!yes) { return; }
+                adobe.fn.embedVideo([{src: "http://av.adobe.com/devnet/flex/mtd/mtd_overview_880x494Med.mp4"}],
+                    "bodycontent1_videomodal_0", {
+                    autoplay: "autoplay",controls: "controls",height: "494",width: "880",
+                    id: "bodycontent1_videomodal_0"
+                });
+            })(!swfobject.getFlashPlayerVersion().major);
+        </script>
+    </body>
+</html>

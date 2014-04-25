@@ -1,0 +1,204 @@
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="EmployeeService">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.employeeservice</item>
+      <item name="Destination">employeeService</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="contextRoot">/testdrive</item>
+      <item name="rootUrl">http://localhost:8400/testdrive</item>
+      <item name="LINKED_FILE"></item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost:8400/testdrive/messagebroker/amf</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">BlazeDS</item>
+    </annotation>
+    <function name="updateEmployee" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Employee</item>
+      </annotation>
+      <parameter name="arg0" type="Employee"/>
+    </function>
+    <function name="getEmployeesByName" return-type="Employee[]">
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,email,officephone,cellphone</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getEmployeesSummaryByName" return-type="opaque[]">
+      <annotation name="original signature">
+        <item name="inputParams">string</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+      <parameter name="arg0" type="string"/>
+    </function>
+    <function name="getDepartments" return-type="Department[]">
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">businessunit,budget,manager,locationstate,locationcity,locationstreet,actualcontractors,actualsalary,esttravel,estcontractors,actualexpenses,hrrep,locationzipcode,id,estsalary,actualsupplies,name,costcenter,actualtravel,estsupplies</item>
+      </annotation>
+    </function>
+    <function name="getEmployeesSummary" return-type="opaque[]">
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+      <annotation name="analyze group">
+        <item name="analyzed">false</item>
+      </annotation>
+    </function>
+    <function name="getEmployees" return-type="Employee[]">
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,email,officephone,cellphone</item>
+      </annotation>
+    </function>
+    <function name="createEmployee" return-type="integer">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">Employee</item>
+        <item name="returnType">integer</item>
+      </annotation>
+      <parameter name="arg0" type="Employee"/>
+    </function>
+    <function name="deleteEmployee" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">integer</item>
+      </annotation>
+      <parameter name="arg0" type="integer"/>
+    </function>
+    <function name="getEmployeesByID" return-type="Employee">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">integer</item>
+        <item name="returnType">Employee</item>
+      </annotation>
+      <parameter name="arg0" type="integer"/>
+    </function>
+  </service>
+  <entity name="Department">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Department</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">services.Department</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EmployeeService</item>
+    </annotation>
+    <annotation name="getDepartments">
+      <item name="propertySpecifier">businessunit,budget,manager,locationstate,locationcity,locationstreet,actualcontractors,actualsalary,esttravel,estcontractors,actualexpenses,hrrep,locationzipcode,id,estsalary,actualsupplies,name,costcenter,actualtravel,estsupplies</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="businessunit" type="string" required="true"/>
+    <property name="budget" type="string" required="true"/>
+    <property name="manager" type="string" required="true"/>
+    <property name="locationstate" type="string" required="true"/>
+    <property name="locationcity" type="string" required="true"/>
+    <property name="locationstreet" type="string" required="true"/>
+    <property name="actualcontractors" type="opaque" required="true"/>
+    <property name="actualsalary" type="string" required="true"/>
+    <property name="esttravel" type="string" required="true"/>
+    <property name="estcontractors" type="string" required="true"/>
+    <property name="actualexpenses" type="string" required="true"/>
+    <property name="hrrep" type="string" required="true"/>
+    <property name="locationzipcode" type="string" required="true"/>
+    <property name="id" type="integer" required="true"/>
+    <property name="estsalary" type="string" required="true"/>
+    <property name="actualsupplies" type="string" required="true"/>
+    <property name="name" type="string" required="true"/>
+    <property name="costcenter" type="integer" required="true"/>
+    <property name="actualtravel" type="string" required="true"/>
+    <property name="estsupplies" type="string" required="true"/>
+  </entity>
+  <entity name="Employee">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Employee</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">services.Employee</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EmployeeService,EmployeeServiceDummy</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="getEmployees">
+      <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,email,officephone,cellphone</item>
+    </annotation>
+    <annotation name="getEmployeesByName">
+      <item name="propertySpecifier">office,departmentid,street,zipcode,state,lastname,firstname,photofile,city,id,title,email,officephone,cellphone</item>
+    </annotation>
+    <property name="office" type="string"/>
+    <property name="departmentid" type="integer"/>
+    <property name="street" type="string"/>
+    <property name="zipcode" type="string"/>
+    <property name="state" type="string"/>
+    <property name="lastname" type="string"/>
+    <property name="firstname" type="string"/>
+    <property name="photofile" type="string"/>
+    <property name="city" type="string"/>
+    <property name="id" type="integer"/>
+    <property name="title" type="string"/>
+    <property name="email" type="string"/>
+    <property name="officephone" type="string"/>
+    <property name="cellphone" type="string"/>
+  </entity>
+</model>

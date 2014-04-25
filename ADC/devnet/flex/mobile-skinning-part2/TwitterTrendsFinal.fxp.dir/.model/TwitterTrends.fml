@@ -1,0 +1,292 @@
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<model xmlns="http://ns.adobe.com/Fiber/1.0">
+  <annotation name="ActionScriptGeneration">
+    <item name="FullyQualifyReferences">true</item>
+  </annotation>
+  <service name="TwitterService">
+    <annotation name="ActionScriptGeneration">
+      <item name="ServiceType">HTTPMultiService</item>
+      <item name="Package">services.twitterservice</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">HTTPService</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="LINKED_FILE"></item>
+    </annotation>
+    <function name="getTrends" return-type="Trends">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ActionScriptGeneration">
+        <item name="SerializationFilter">com.adobe.serializers.json.JSONSerializationFilter</item>
+        <item name="method">GET</item>
+        <item name="url">http://api.twitter.com/1/trends.json</item>
+      </annotation>
+      <annotation name="url group">
+        <item name="completeURL">http://api.twitter.com/1/trends.json</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">trends,as_of</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getTweets" return-type="Tweets">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ActionScriptGeneration">
+        <item name="SerializationFilter">com.adobe.serializers.json.JSONSerializationFilter</item>
+        <item name="method">GET</item>
+        <item name="url">http://search.twitter.com/search.json</item>
+      </annotation>
+      <annotation name="url group">
+        <item name="completeURL">http://search.twitter.com/search.json</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">since_id,max_id,results,page,query,refresh_url,max_id_str,results_per_page,next_page,since_id_str,completed_in</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+        <item name="inputParamNames">q,result_type</item>
+        <item name="inputParams">string,string</item>
+      </annotation>
+      <parameter name="q" type="string"/>
+      <parameter name="result_type" type="string"/>
+    </function>
+    <function name="getUserInfo" return-type="User">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ActionScriptGeneration">
+        <item name="SerializationFilter">com.adobe.serializers.xml.XMLSerializationFilter</item>
+        <item name="method">GET</item>
+        <item name="url">http://api.twitter.com/1/users/show.xml</item>
+      </annotation>
+      <annotation name="url group">
+        <item name="completeURL">http://api.twitter.com/1/users/show.xml</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">id,name,screen_name,location,description,profile_image_url,url,_protected,followers_count,profile_background_color,profile_text_color,profile_link_color,profile_sidebar_fill_color,profile_sidebar_border_color,friends_count,created_at,favourites_count,utc_offset,time_zone,profile_background_image_url,profile_background_tile,profile_use_background_image,notifications,geo_enabled,verified,following,statuses_count,lang,contributors_enabled,follow_request_sent,listed_count,show_all_inline_media,default_profile,default_profile_image,is_translator,status</item>
+      </annotation>
+      <annotation name="Properties">
+        <item name="xPath">/</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+        <item name="inputParamNames">screen_name</item>
+        <item name="inputParams">string</item>
+      </annotation>
+      <parameter name="screen_name" type="string"/>
+    </function>
+  </service>
+  <entity name="User">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">User</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">TwitterService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getUserInfo">
+      <item name="propertySpecifier">id,name,screen_name,location,description,profile_image_url,url,_protected,followers_count,profile_background_color,profile_text_color,profile_link_color,profile_sidebar_fill_color,profile_sidebar_border_color,friends_count,created_at,favourites_count,utc_offset,time_zone,profile_background_image_url,profile_background_tile,profile_use_background_image,notifications,geo_enabled,verified,following,statuses_count,lang,contributors_enabled,follow_request_sent,listed_count,show_all_inline_media,default_profile,default_profile_image,is_translator,status</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="id" type="string" required="true"/>
+    <property name="name" type="string" required="true"/>
+    <property name="screen_name" type="string" required="true"/>
+    <property name="location" type="string" required="true"/>
+    <property name="description" type="string" required="true"/>
+    <property name="profile_image_url" type="string" required="true"/>
+    <property name="url" type="string" required="true"/>
+    <property name="_protected" type="string" required="true"/>
+    <property name="followers_count" type="string" required="true"/>
+    <property name="profile_background_color" type="string" required="true"/>
+    <property name="profile_text_color" type="string" required="true"/>
+    <property name="profile_link_color" type="string" required="true"/>
+    <property name="profile_sidebar_fill_color" type="string" required="true"/>
+    <property name="profile_sidebar_border_color" type="string" required="true"/>
+    <property name="friends_count" type="string" required="true"/>
+    <property name="created_at" type="string" required="true"/>
+    <property name="favourites_count" type="string" required="true"/>
+    <property name="utc_offset" type="string" required="true"/>
+    <property name="time_zone" type="string" required="true"/>
+    <property name="profile_background_image_url" type="string" required="true"/>
+    <property name="profile_background_tile" type="string" required="true"/>
+    <property name="profile_use_background_image" type="string" required="true"/>
+    <property name="notifications" type="string" required="true"/>
+    <property name="geo_enabled" type="string" required="true"/>
+    <property name="verified" type="string" required="true"/>
+    <property name="following" type="string" required="true"/>
+    <property name="statuses_count" type="string" required="true"/>
+    <property name="lang" type="string" required="true"/>
+    <property name="contributors_enabled" type="string" required="true"/>
+    <property name="follow_request_sent" type="string" required="true"/>
+    <property name="listed_count" type="string" required="true"/>
+    <property name="show_all_inline_media" type="string" required="true"/>
+    <property name="default_profile" type="string" required="true"/>
+    <property name="default_profile_image" type="string" required="true"/>
+    <property name="is_translator" type="string" required="true"/>
+    <property name="status" type="Status" required="true"/>
+  </entity>
+  <entity name="Status">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Status</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">TwitterService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="created_at" type="string" required="true"/>
+    <property name="id" type="string" required="true"/>
+    <property name="text" type="string" required="true"/>
+    <property name="source" type="string" required="true"/>
+    <property name="truncated" type="string" required="true"/>
+    <property name="favorited" type="string" required="true"/>
+    <property name="in_reply_to_status_id" type="string" required="true"/>
+    <property name="in_reply_to_user_id" type="string" required="true"/>
+    <property name="in_reply_to_screen_name" type="string" required="true"/>
+    <property name="retweet_count" type="string" required="true"/>
+    <property name="retweeted" type="string" required="true"/>
+    <property name="geo" type="string" required="true"/>
+    <property name="coordinates" type="string" required="true"/>
+    <property name="place" type="string" required="true"/>
+    <property name="contributors" type="string" required="true"/>
+  </entity>
+  <entity name="Tweet">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Results</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">TwitterService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="text" type="string" required="true"/>
+    <property name="from_user_id" type="integer" required="true"/>
+    <property name="geo" type="opaque" required="true"/>
+    <property name="iso_language_code" type="string" required="true"/>
+    <property name="to_user_id" type="integer" required="true"/>
+    <property name="id" type="long" required="true" default="0"/>
+    <property name="to_user_id_str" type="string" required="true"/>
+    <property name="source" type="string" required="true"/>
+    <property name="from_user_id_str" type="string" required="true"/>
+    <property name="from_user" type="string" required="true"/>
+    <property name="created_at" type="string" required="true"/>
+    <property name="to_user" type="string" required="true"/>
+    <property name="id_str" type="string" required="true"/>
+    <property name="profile_image_url" type="string" required="true"/>
+    <property name="metadata" type="Metadata" required="true"/>
+  </entity>
+  <entity name="Metadata">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Metadata</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">TwitterService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="result_type" type="string" required="true"/>
+  </entity>
+  <entity name="Trends">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Trends</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">TwitterService,TwitterServiceDummy</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getTrends">
+      <item name="propertySpecifier">trends,as_of</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="trends" type="Trend[]" required="true"/>
+    <property name="as_of" type="string" required="true"/>
+  </entity>
+  <entity name="Tweets">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Tweets</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">TwitterService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getTweets">
+      <item name="propertySpecifier">since_id,max_id,results,page,query,refresh_url,max_id_str,results_per_page,next_page,since_id_str,completed_in</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="since_id" type="integer" required="true"/>
+    <property name="max_id" type="long" required="true" default="0"/>
+    <property name="results" type="Tweet[]" required="true"/>
+    <property name="page" type="integer" required="true"/>
+    <property name="query" type="string" required="true"/>
+    <property name="refresh_url" type="string" required="true"/>
+    <property name="max_id_str" type="string" required="true"/>
+    <property name="results_per_page" type="integer" required="true"/>
+    <property name="next_page" type="string" required="true"/>
+    <property name="since_id_str" type="string" required="true"/>
+    <property name="completed_in" type="double" required="true" default="0"/>
+  </entity>
+  <entity name="Trend">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Trends</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">TwitterService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="name" type="string" required="true"/>
+    <property name="url" type="string" required="true"/>
+  </entity>
+</model>

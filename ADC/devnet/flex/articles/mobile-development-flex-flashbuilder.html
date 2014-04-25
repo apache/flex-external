@@ -1,0 +1,1789 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE html>
+<html xml:lang="EN" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<title>Mobile development using Adobe Flex 4.5 SDK and Flash Builder 4.5 | Adobe Developer Connection</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="noodp" />
+	<meta name="keywords" content="mobile,Android" />
+	<meta name="description" content="Use the new features that enable you to build Adobe AIR applications for mobile devices." /><meta name="creationDate" content="2011-08-23 @ 13:30:13" />
+	<meta name="lastModifiedDate" content="2011-08-23 @ 13:30:13" />
+	<meta name="viewport" content="width=device-width" />
+<meta name="page" content="main" />
+<meta name="shortTitle" content="Mobile development using Adobe Flex 4.5 SDK and Flash Builder 4.5"/>
+<meta name="blurb" content="Use the new features that enable you to build Adobe AIR applications for mobile devices." />
+<meta name="author" content="Narciso Jaramillo" />
+<meta name="area" content="devnet" />
+<link rel="icon" href="http://wwwimages.adobe.com/www.adobe.com/include/img/favicon.ico" type="image/x-icon"/>
+	<link rel="shortcut icon" href="http://wwwimages.adobe.com/www.adobe.com/include/img/favicon.ico" type="image/x-icon"/>
+<link rel="canonical" href="http://www.adobe.com/devnet/flex/articles/mobile-development-flex-flashbuilder.html"/>
+       <link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/style/adobe-light-compressed.css"/>
+<!--[if !IE]><!-->
+		<link rel="stylesheet" media="screen,print" href="http://wwwimages.adobe.com/www.adobe.com/include/style/compressed.css"/>
+	<!--<![endif]-->
+	<!--[if IE]>
+		<link rel="stylesheet" media="screen,print" href="/include/style/dotcom-css-compressed.css" />
+		<link rel="stylesheet" media="screen,print" href="/include/style/default/SearchBuddy.css" />
+		<link rel="stylesheet" media="screen,print" href="/include/style/dotcom-css-modes.css" />
+	<![endif]-->
+    <link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/jmvc/adobe-configurator-compressed.css"/>
+    <link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/bach/bach-1.0.1.min.css"/>
+	<!--[if lt IE 10]>
+		<link rel="stylesheet" media="screen" href="/include/style/modes/MirrorIE.css" />
+	<![endif]-->
+	<script>
+	function createNs ( ns )
+	{
+		var o, a;			
+		a = ns.split(".");			
+		o = window[a[0]] = window[a[0]] || {};			
+		for(i=1; i < a.length; i++)
+		{
+			o = o[a[i]] = o[a[i]] || {};	
+		}
+		return o;		
+	}
+
+	createNs("Adobe.PageInfo");
+	createNs("Adobe.Tokens");
+	createNs("Adobe.UserInfo");
+	Adobe.PageInfo.AuthenticatedState = false;
+	Adobe.PageInfo.localeCode = "en";
+	Adobe.PageInfo.accountPageName = "";
+	Adobe.PageInfo.productKey = "";
+	Adobe.PageInfo.catalogName = "";
+	Adobe.PageInfo.countryCode = "US";
+    Adobe.PageInfo.localeString = "en_us";
+	Adobe.PageInfo.marketSegment = "COM";
+	Adobe.PageInfo.sitecatalystMarketSegment = "COM";
+	Adobe.PageInfo.akamaiURLPrefix = "http://wwwimages.adobe.com/www.adobe.com";
+	Adobe.PageInfo.pageLevel = "7";
+</script>
+<script src="http://wwwimages.adobe.com/www.adobe.com/include/script/compressed.js"></script>
+	<script src="http://wwwimages.adobe.com/www.adobe.com/include/jmvc/adobe-store-compressed.js"></script>
+	<script src="http://wwwimages.adobe.com/www.adobe.com/include/bach/bach-1.0.1.min.js"></script>
+    <script src="http://wwwimages.adobe.com/www.adobe.com/uber/js/VisitorAPI.js"></script>
+	<script src="http://wwwimages.adobe.com/www.adobe.com/uber/js/omniture/mbox.js"></script>
+	<!--[if IE 6]>
+    <script>
+        try{void(document.execCommand("BackgroundImageCache",false,true));} catch(e) {}
+    </script>
+    <![endif]-->
+	<script>
+	//<![CDATA[
+	$(window).bind("hashchange load", adobe.fn.focusHashElement);
+	cart = new adobe.ui.CartFacade("cart-dialog", "cart-dialog-flash");
+	cart.setRequiredFlashVersion("9.0.115");
+	cart.setDefaultCountry("");
+	cart.setDomain(".adobe.com"); // set this to ".adobe.com"
+	cart.setContextPath(""); // set this to empty when web context is '/'
+	// Possibly add the .edu selector or override market segment
+	Adobe.Product.Controller.CPod.EduController.processLocation(true);
+	if(cart.isOverlaySupported()) {
+		var PromoIDReport = new Array();
+		var prmid = window.location.search.match(/\bpromoid\=([^&#$]+)/);
+		if(prmid) {
+			prmid[1]=prmid[1].toUpperCase();
+			cart.setEmailTrackingId(prmid[1]);
+		}
+		// if a promo code is pass thru the URL, set the promo in the cart and the cookie
+		prmid = window.location.search.match(/\bpromocode\=([^&#$]+)/) || null;
+		if(prmid) {
+			if (Adobe && Adobe.Cart && Adobe.Cart.Models && Adobe.Cart.Models.Cart) {
+				var cart = Adobe.Cart.Models.Cart;
+				var marketSegment = cart.getMarketSegment() || Adobe.Product.Controller.CPod.EduController.COM;
+				cart.addPromotion({code:prmid[1], marketSegment:marketSegment});
+				cart.savePromoCode(prmid[1]);
+			}
+		}
+	}
+	//]]>
+</script>
+<script>
+	$(document).ready(function()
+	{
+		adobe.dom.param("wcmmode=disabled");
+		adobe.dom.param("compress=false");
+	});
+</script>
+<script>
+    var locales = {"cn":true,"us":true,"en_xx":true,"mena_fr":true,"tw":true};
+    var tokens = document.location.pathname.split('/');
+    var locale = ((tokens.length < 2) || ((locales[tokens[1]] == undefined) && tokens[1]!='content')) ? 'us' : tokens[1];
+    var geoCook = 'international=';
+    var cookies = document.cookie.split(';');
+    for(var i=0;i < cookies.length;i++) {
+        var c = cookies[i];
+        if ((c.indexOf(geoCook) >= 0) && !(locale=='content') ){
+            var preferredLocale = c.substring(c.indexOf(geoCook) + geoCook.length,c.length);
+            if ((preferredLocale != locale)&&(locales[preferredLocale])){
+                var url = document.location.pathname + document.location.search;
+                if (locale == 'us'){
+                    url = '/' + preferredLocale + url;
+                } else {
+                    var suffix = url.substring(locale.length + 1);
+                    if ((suffix == null) || (suffix == ""))
+                    { 
+                    	suffix = "/";
+                    }
+                    if (preferredLocale != 'us'){
+                        url = '/' + preferredLocale + suffix;
+                    } else {
+                        url = suffix;
+                    }
+                }
+                window.location.replace(url);
+            }
+        }
+    }
+</script>
+<!--[if (gte IE 9)|(IEMobile)]><!-->
+    <link rel="stylesheet" media="only screen" href="/etc/pagetables/reflowtypes/adobe_adc_article.css"/>
+    <script src="/etc/pagetables/reflowtypes/adobe_adc_article.js"></script>
+    <!--<![endif]-->
+<script>
+    //<![CDATA[
+    if(typeof jQuery != 'undefined'){
+        (function($) {
+            var dispatcher = (adobe.vrbl("reflowDispatcher") || adobe.vrbl("reflowDispatcher", adobe.reflow.createDispatcher("width", window.document))),
+                    viewport = $(window),
+                    viewportWidth = NaN,
+                    meta = window.document.getElementsByName("viewport")[0],
+                    metaContent;
+
+            $(window).bind("resize orientationchange", setRenderMode);
+
+            if(meta) {
+                $(window.document).bind("adobe.reflow.LayoutChange", snapViewportToMaxWidth);
+            }
+
+            setRenderMode();
+
+            function snapViewportToMaxWidth(event, layout_event) {
+                if (layout_event.snapView && layout_event.active) {
+                    var widthSetter = "width=",
+                            width = widthSetter+layout_event.maxRange,
+                            content = meta.getAttribute("content");
+
+                    if(content.indexOf(widthSetter) > -1) {
+                        content = content.replace(/width=[^,$]+/, width);
+                    } else {
+                        content = width;
+                    }
+                    meta.setAttribute("content", content);
+                }
+            }
+
+            function setRenderMode() {
+                var currentViewportWidth = viewport.width();
+                if (viewportWidth == currentViewportWidth) {
+                    return;
+                } //trottle noisy event
+                viewportWidth = currentViewportWidth;
+                dispatcher.updateLayout(viewportWidth);
+            }
+        })(jQuery);
+    }
+    //]]>
+</script>
+<link rel="stylesheet" media="screen" href="http://wwwimages.adobe.com/www.adobe.com/include/style/article-compressed.css"/>
+<script src="http://community.adobe.com/help/badge/v4/ionLoader.js"></script>
+	<script src="http://community.adobe.com/help/badge/v4/ionSupport.js"></script>
+	<script src="http://community.adobe.com/help/badge/v4/ionBadge.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/jquery.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/utils.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/jquery/granite.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/jquery.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/shared.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/personalization/kernel.js"></script>
+<link rel="stylesheet" href="/apps/dotcom/ag-widgets.css" type="text/css">
+<script type="text/javascript">
+    $CQ(function() {
+        CQ_Analytics.SegmentMgr.loadSegments("/etc/segmentation");
+        CQ_Analytics.ClientContextUtils.init("/etc/clientcontext/default","/content/dotcom/en/devnet/flex/articles/mobile-development-flex-flashbuilder");
+
+        
+    });
+</script><script type="text/javascript" src="/etc/clientlibs/granite/jquery-ui.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/jquery-ui.js"></script>
+<script type="text/javascript" src="/etc/designs/dotcom/clientlib/stores.js"></script>
+<link rel="stylesheet" href="/etc/clientlibs/granite/jquery-ui.css" type="text/css">
+<link rel="stylesheet" href="/etc/clientlibs/foundation/jquery-ui/themes/default.css" type="text/css">
+<script src="http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/typekit/yoe7ink.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
+    </head>
+<body class="Text TextMedium Link">
+<div class="ArticleGrid ArticleWideGrid LayoutSlimGrid LayoutCenter PanelDiffuseShadow PanelFillExtraLight LayoutP">
+    <div class="PrintLayoutHide">
+        <!--googleoff: all--><div class="sitenav"><script>
+    //<![CDATA[
+	if (navigator.userAgent.match(/iPad/i) != null){
+		adobe.dom.createStyleSheet($('head').get(0), "/include/style/default/SiteHeader-iPad.css");
+	}
+
+    $(document).ready(adobe.fn.initGlobalNav);
+    //]]>
+</script>
+<!--googleoff: index-->
+<!-- $Id: //depot/projects/dylan/releases/rc_13_11/ubi/globalnav/en_us/globalnav_ssi.html#1 $ -->
+<form id="globalnav-search" class="searchbuddy LayoutSlimHidden" name="globalnav-search" method="get" action="/go/gnav_search" accept-charset="utf-8">
+    <div id="SiteHeader" class="SiteHeader Text TextSmall">
+        <span id="globalnav"></span>
+        <a href="/" id="shHome" class="SiteHeaderHome">Adobe</a>
+        <div class="SiteHeaderBar" id="shBar">
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem SiteHeaderBarItemFirst" id="shProducts">
+                <a href="/products/catalog.html?promoid=KAWQI" id="shProductsLink" class="SiteHeaderBarLink">Products</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Full" id="ProductsPanel">
+                    <div class="SiteHeaderColumnSingle">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Top destinations</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud.html?promoid=JQPEQ" id="Products_Topdestinations_AdobeCreativeCloud">Adobe Creative Cloud</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/teams.html?promoid=KFKQF" id="Products_Topdestinations_CreativeCloudforteams">Creative Cloud for teams</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/cs6.html?promoid=JOLIS" id="Product_Topdestinationss_CreativeSuite6">Creative Suite 6</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/marketing?promoid=JOLIT" id="Products_Topdestinations_AdobeMarketingCloud">Adobe Marketing Cloud</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/acrobat.html?promoid=JOLIR" id="Products_Topdestinations_Acrobat">Acrobat</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/photoshop.html?promoid=JOLIW" id="Products_Topdestinations_Photoshop">Photoshop</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/sitecatalyst.html?promoid=KAWQH" id="Product_Topdestinationss_SiteCatalyst">SiteCatalyst</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/education/students.html?marketSegment=EDU&promoid=KFKQD" id="Product_Topdestinationss_Students">Students</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/elements-family.html?promoid=JOLIV" id="Product_Topdestinationss_Elementsfamily">Elements family</a></li>
+                            </ul>
+                        </div>
+                    </div>
+            
+                    <div class="SiteHeaderColumnDouble SiteHeaderShadowLeft">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Adobe Creative Cloud</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud.html?promoid=KAUBZ" id="Products_AdobeCreativeCloud_WhatisAdobeCreativeCloud">What is Adobe Creative Cloud?</a></li>
+                            </ul>
+
+                            <div class="SiteHeaderColumn-1">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/design.html?promoid=KFKPZ" id="Products_AdobeCreativeCloud_Design">Design</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/web.html?promoid=KFKQC" id="Products_AdobeCreativeCloud_Web">Web</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/photography.html?promoid=KFKQA" id="Products_AdobeCreativeCloud_Photography">Photography</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/video.html?promoid=KFKQB" id="Products_AdobeCreativeCloud_Video">Video</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/students.html?marketSegment=EDU&promoid=JUTMG" id="Products_AdobeCreativeCloud_Students">Students</a></li>
+                                </ul>
+							</div>            
+
+                            <div class="SiteHeaderColumn-2">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/teams.html?promoid=JZVVU" id="Products_AdobeCreativeCloud_Teams">Teams</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/enterprise.html?promoid=KFKPX" id="Products_AdobeCreativeCloud_Enterprise">Enterprise</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/enterprise/education.html?promoid=KFKQE" id="Products_AdobeCreativeCloud_Educationalinstitutions">Educational institutions</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/enterprise.html?promoid=KFKPY" id="Products_AdobeCreativeCloud_Government">Government</a></li>
+                                </ul>
+							</div>            
+
+                            <div class="SiteHeaderColumn-1">
+                                <p class="SiteHeaderPanelHeaderSmall">Design and photography</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/photoshop.html?promoid=KAUCA" id="Products_DesignandPhotography_Photoshop">Photoshop</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/illustrator.html?promoid=KAUCB" id="Products_DesignandPhotography_Illustrator">Illustrator</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/indesign.html?promoid=KAUCC" id="Products_DesignandPhotography_InDesign">InDesign</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/muse.html?promoid=KAUCE" id="Products_DesignandPhotography_AdobeMuse">Adobe Muse</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/photoshop-lightroom.html?promoid=KAUCD" id="Products_DesignandPhotography_Lightroom">Lightroom</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Video</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="/products/premiere.html?promoid=KAUCJ" id="Products_Video_AdobePremiere">Adobe Premiere</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/aftereffects.html?promoid=KAUCK" id="Products_Video_AfterEffects">After Effects</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-2">
+                                <p class="SiteHeaderPanelHeaderSmall">Web development and HTML5</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="http://html.adobe.com/edge/?promoid=KAGMS" target="_blank" id="Products_WebdevelopmentHTML5_EdgeToolsServices">Edge Tools &amp; <span class="SiteHeaderIconNewWindowNoWrap">Services<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/dreamweaver.html?promoid=KAUCF" id="Products_WebdevelopmentHTML5_Dreamweaver">Dreamweaver</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="http://gaming.adobe.com/?promoid=KAUCG" target="_blank" id="Products_WebdevelopmentHTML5_Gaming"><span class="SiteHeaderIconNewWindowNoWrap">Gaming<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="SiteHeaderColumnDouble SiteHeaderShadowLeft">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Adobe Marketing Cloud</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-marketing.html?promoid=KAUCL" id="Products_AdobeMarketingCloud_WhatisAdobeMarketingCloud">What is Adobe Marketing Cloud?</a></li>
+                            </ul>
+            
+                            <div class="SiteHeaderColumn-1">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/digital-analytics.html?promoid=KAVVU" id="Products_AdobeMarketingCloud_Digitalanalytics">Digital analytics</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/social-marketing.html?promoid=KAVVV" id="Products_AdobeMarketingCloud_Socialmarketing">Social marketing</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/web-experience-management.html?promoid=KAVVX" id="Products_AdobeMarketingCloud_Webexperiencemanagement">Web experience management</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-2">
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/testing-targeting.html?promoid=KAVVW" id="Products_AdobeMarketingCloud_Testingandtargeting">Testing and targeting</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/media-optimization.html?promoid=KAVVY" id="Products_AdobeMarketingCloud_Mediaoptimization">Media optimization</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/campaign-management.html?promoid=KFKQH" id="Products_AdobeMarketingCloud_Campaignmanagement">Campaign management</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-1">
+                                <p class="SiteHeaderPanelHeaderSmall">Analytics</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/sitecatalyst.html?promoid=KAUCM" id="Products_Analytics_SiteCatalyst">SiteCatalyst</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/discover.html?promoid=KAUCN" id="Products_Analytics_AdobeDiscover">Adobe Discover</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/insight.html?promoid=KAUCO" id="Products_Analytics_Insight">Insight</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Social</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/social-marketing.html?promoid=KAUCP" id="Products_Social_AdobeSocial">Adobe Social</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Experience Manager</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="/products/cq.html?promoid=KAUCQ" id="Products_ExperienceManager_CQ">CQ</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/scene7.html?promoid=KAUCR" id="Products_ExperienceManager_Scene7">Scene7</a></li>
+                                </ul>
+                            </div>
+            
+                            <div class="SiteHeaderColumn-2">
+                                <p class="SiteHeaderPanelHeaderSmall">Target</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/testandtarget.html?promoid=KAUCS" id="Products_Target_TestTarget">Test&amp;Target</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/recommendations.html?promoid=KAUCT" id="Products_Target_Recommendations">Recommendations</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/searchandpromote.html?promoid=KAUCU" id="Products_Target_SearchPromote">Search&amp;Promote</a></li>
+                                </ul>
+            
+                                <p class="SiteHeaderPanelHeaderSmall">Media Optimizer</p>
+                                <ul>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/adlens.html?promoid=KAUCV" id="Products_MediaOptimizer_AdLens">AdLens</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/audiencemanager.html?promoid=KAUCW" id="Products_MediaOptimizer_AudienceManager">AudienceManager</a></li>
+                                    <li class="SiteHeaderPanelLink"><a href="/products/audienceresearch.html?promoid=KAUCX" id="Products_MediaOptimizer_AudienceResearch">AudienceResearch</a></li>
+                                </ul>
+                                
+                                <p class="SiteHeaderPanelHeaderSmall">Campaign management</p>
+                                <ul class="SiteHeaderPanelLinkNoBottom">
+                                    <li class="SiteHeaderPanelLink"><a href="/solutions/campaign-management.html?promoid=KFKQI" id="Products_Campaignmanagement_AdobeCampaign">Adobe Campaign</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="SiteHeaderColumnSingle SiteHeaderShadowLeft">
+                        <div class="SiteHeaderRow">
+                            <p class="SiteHeaderPanelHeader">Document services</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/products/acrobat.html?promoid=KAUCY" id="Products_DocumentServices_Acrobat">Acrobat</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.echosign.adobe.com/en/home.html?promoid=KAUDB" target="_blank" class="SiteHeaderLinkNewWindow" id="Products_DocumentServices_EchoSign"><span class="SiteHeaderIconNewWindowNoWrap">EchoSign<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.acrobat.com/formscentral/en/home.html?promoid=KAUCZ" target="_blank" id="Products_DocumentServices_FormsCentral"><span class="SiteHeaderIconNewWindowNoWrap">FormsCentral<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.acrobat.com/sendnow/en/home.html?promoid=KAUDA" target="_blank" id="Products_DocumentServices_SendNow"><span class="SiteHeaderIconNewWindowNoWrap">SendNow<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="https://www.acrobat.com/welcome/en/home.html?promoid=KAUDC" target="_blank" id="Products_DocumentServices_Acrobatcom"><span class="SiteHeaderIconNewWindowNoWrap">Acrobat.com<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                            </ul>
+            
+                            <p class="SiteHeaderPanelHeader">Publishing</p>
+                            <ul class="SiteHeaderPanelLinkNoBottom">
+                                <li class="SiteHeaderPanelLink"><a href="/products/digital-publishing-suite-family.html?promoid=JOLIU" id="Products_Publishing_DigitalPublishingSuite">Digital Publishing Suite</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br style="clear: both" />
+            
+                    <div class="SiteHeaderRow">
+                        <ul class="SiteHeaderRightLink">
+                            <li class="SiteHeaderPanelLink"><a href="/products/catalog.html?promoid=JOOTH" id="Products_Seeallproducts">See all products</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shBusinessSolutions">
+                <a href="/solutions.html?promoid=KAWQJ" id="shBusinessSolutionsLink" class="SiteHeaderBarLink">Business solutions</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Double" id="BusinessSolutionsPanel">
+                    <div class="SiteHeaderRow">
+                        <div class="SiteHeaderColumn-1">
+                            <p class="SiteHeaderPanelHeaderSmall">By business need</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-analytics.html?promoid=JOLJB" id="BusinessSolutions_Bybusinessneed_Digitalanalytics">Digital analytics</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-publishing.html?promoid=JOLJA" id="BusinessSolutions_Bybusinessneed_Digitalpublishing">Digital publishing</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/acrobat.html?promoid=KAWSC" id="BusinessSolutions_Bybusinessneed_Documentmanagement">Document management</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/media-optimization.html?promoid=JOLIX" id="BusinessSolutions_Bybusinessneed_Mediaoptimization">Media optimization</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/social-marketing.html?promoid=JZPNO" id="BusinessSolutions_Bybusinessneed_Socialmarketing">Social marketing</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/testing-targeting.html?promoid=KAXLU" id="BusinessSolutions_Bybusinessneed_Testingandtargeting">Testing and targeting</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/products/creativecloud/video.html?promoid=KAUDD" id="BusinessSolutions_Bybusinessneed_Videoeditingandserving">Video editing and serving</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="http://html.adobe.com?promoid=JZEFF" target="_blank" class="SiteHeaderLinkNewWindow" id="BusinessSolutions_Bybusinessneed_Webdevelopment">Web <span class="SiteHeaderIconNewWindowNoWrap">development<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/web-experience-management.html?promoid=JOOYM" id="BusinessSolutions_Bybusinessneed_Webexperiencemanagement">Web experience management</a></li>
+                            </ul>
+            
+                            <ul class="SiteHeaderPanelLinkNoBottom">
+                                <li class="SiteHeaderPanelLink"><a href="/solutions.html?promoid=JOOTI" id="BusinessSolutions_Seeallbusinessneeds">See all business needs</a></li>
+                            </ul>
+                         </div>
+            
+                        <div class="SiteHeaderColumn-2">
+                            <p class="SiteHeaderPanelHeaderSmall">By industry</p>
+                            <ul>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/broadcasting.html?promoid=JOLIY" id="BusinessSolutions_Byindustry_Broadcast">Broadcast</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/education.html?marketSegment=EDU&promoid=JOLIZ" id="BusinessSolutions_Byindustry_Education">Education</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/financial-services.html?promoid=KAUDE" id="BusinessSolutions_Byindustry_Financialservices">Financial services</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/government.html?promoid=KAUDF" id="BusinessSolutions_Byindustry_Government">Government</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/digital-publishing.html?promoid=KAUDG" id="BusinessSolutions_Byindustry_Publishing">Publishing</a></li>
+                                <li class="SiteHeaderPanelLink"><a href="/solutions/retail.html?promoid=KAWSD" id="BusinessSolutions_Byindustry_Retail">Retail</a></li>
+                            </ul>
+            
+                            <ul class="SiteHeaderPanelLinkNoBottom">
+                                <li class="SiteHeaderPanelLink"><a href="/solutions.html?promoid=KAUDH" id="BusinessSolutions_Seeallindustries">See all industries</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shSupportLearning">
+                <a href="http://helpx.adobe.com/support/?promoid=KAWQK" id="shSupportLearningLink" class="SiteHeaderBarLink">Support &amp; Learning</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="SupportLearningPanel">
+                    <div class="SiteHeaderRow">
+                        <p class="SiteHeaderPanelHeaderSmall">I need help</p>
+                        <ul>
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/support/?promoid=JZEFP" id="SupportLearning_Ineedhelp_Products">Products</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/creative-cloud/topics/getting-started.html?promoid=JZEFO" id="SupportLearning_Ineedhelp_AdobeCreativeCloud">Adobe Creative Cloud</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/marketing-cloud.html?promoid=KAWSE" id="SupportLearning_Ineedhelp_AdobeMarketingCloud">Adobe Marketing Cloud</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://forums.adobe.com/index.jspa?promoid=JZEFM" target="_blank" id="SupportLearning_Ineedhelp_Forums"><span class="SiteHeaderIconNewWindowNoWrap">Forums<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                        </ul>
+            
+                        <p class="SiteHeaderPanelHeaderSmall">I want to learn</p>
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="http://helpx.adobe.com/learning.html?promoid=KAUDK" id="SupportLearning_Iwanttolearn_Trainingandtutorials">Training and tutorials</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://training.adobe.com/certification.html?promoid=KAUDM" target="_blank" id="SupportLearning_Iwanttolearn_Certification"><span class="SiteHeaderIconNewWindowNoWrap">Certification<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/devnet.html?promoid=KAUDN" id="SupportLearning_Iwanttolearn_AdobeDeveloperConnection">Adobe Developer Connection</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/designcenter.html?promoid=KAUDO" id="SupportLearning_Iwanttolearn_AdobeDesignCenter">Adobe Design Center</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://tv.adobe.com?promoid=KFELF" target="_blank" id="SupportLearning_Iwanttolearn_AdobeTV">Adobe <span class="SiteHeaderIconNewWindowNoWrap">TV<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/solutions/digital-marketing/guides.html?promoid=KAWSF" id="SupportLearning_Iwanttolearn_AdobeMarketingCenter">Adobe Marketing Center</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://labs.adobe.com/?promoid=JZEFQ" target="_blank" id="SupportLearning_Iwanttolearn_AdobeLabs">Adobe <span class="SiteHeaderIconNewWindowNoWrap">Labs<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shDownload">
+                <a href="/downloads/?promoid=KAWQL" id="shDownloadLink" class="SiteHeaderBarLink">Download</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="DownloadPanel">
+                    <div class="SiteHeaderRow">
+                        <ul>
+                            <li class="SiteHeaderPanelLink"><a href="/downloads/?promoid=JZEFS" id="Download_Producttrials">Product trials</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://get.adobe.com/flashplayer/?promoid=JZEFT" id="Download_AdobeFlashPlayer">Adobe Flash Player</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://get.adobe.com/reader/?promoid=JZEFU" id="Download_AdobeReader">Adobe Reader</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://get.adobe.com/air/?promoid=JZEFV" id="Download_AdobeAIR">Adobe AIR</a></li>
+                        </ul>
+            
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="/downloads/?promoid=JZEFW" id="Download_Seealldownloads">See all downloads</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shCompany">
+                <a href="/company.html?promoid=KAWQM" id="shCompanyLink" class="SiteHeaderBarLink">Company</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="CompanyPanel">
+                    <div class="SiteHeaderRow">
+                        <ul>
+                            <li class="SiteHeaderPanelLink"><a href="/careers.html?promoid=JZEFX" id="Company_CareersatAdobe">Careers at Adobe</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/aboutadobe/invrelations/?promoid=JZEFZ" id="Company_InvestorRelations">Investor Relations</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/aboutadobe/pressroom/?promoid=JZEGA" id="Company_Newsroom">Newsroom</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/privacy.html?promoid=JZEGB" id="Company_Privacy">Privacy</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/corporate-responsibility.html?promoid=JZEFY" id="Company_CorporateResponsibility">Corporate Responsibility</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/customershowcase.html?promoid=KEWBG" id="Company_CustomerShowcase">Customer Showcase</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/company/contact.html?promoid=JZEGC" id="Company_Contactus">Contact us</a></li>
+                        </ul>
+            
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="/company.html?promoid=JZPLK" id="Company_Morecompanyinfo">More company info</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="SiteHeaderDropdownLink SiteHeaderBarItem" id="shBuy">
+                <a href="/products/catalog/software._sl_id-contentfilter_sl_catalog_sl_software_sl_mostpopular.html?promoid=KAWQN" id="shBuyLink" class="SiteHeaderBarLink">Buy</a>
+                <div class="SiteHeaderDropPanel SiteHeaderDropdown-Single" id="BuyPanel">
+                    <div class="SiteHeaderRow">
+                        <ul class="SiteHeaderPanelLinkNoBottom">
+                            <li class="SiteHeaderPanelLink"><a href="/products/catalog/software.html?marketSegment=COM&promoid=KAWQO" id="Buy_Forpersonalandprofessionaluse">For personal and professional use</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/products/catalog/software._sl_id-contentfilter_sl_catalog_sl_education_sl_alledu.html?marketSegment=EDU&promoid=KAWQP" id="Buy_Forstudentseducatorsandstaff">For students, educators, and staff</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/products/small-business-pricing/software-catalog._sl_id-contentfilter_sl_catalog_sl_software_sl_creativecloudmembership.html?marketSegment=COM&promoid=JOLJE" id="Buy_Forsmallandmediumbusinesses">For small and medium businesses</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/volume-licensing.html?promoid=KAWQQ" id="Buy_VolumeLicensing">Volume Licensing</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="/products/discount-software-coupons.html?promoid=KAWQR" id="Buy_Specialoffers">Special offers</a></li>
+                            <li class="SiteHeaderPanelLink"><a href="http://success.adobe.com/en/na/programs/rfi/dm_sales_inquiries.html?promoid=KAWSG" target="_blank" id="Buy_AdobeMarketingCloudsales">Adobe Marketing Cloud <span class="SiteHeaderIconNewWindowNoWrap">sales<span class="SiteHeaderIconNewWindow"> [opens in a new window]</span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+			<!--
+            <div id="tooltipStrings" class="SiteHeaderTooltipStrings LayoutHidden">
+                <span id="tooltipStringExpandMenu">Expand menu</span>
+                <span id="tooltipStringOpenLink">Open link</span>
+            </div>
+			-->
+            
+            <a href="/go/gnav_search" id="shSearchButton" class="SiteHeaderBarItem SiteHeaderSearchButton" style="display: none;">Search</a>
+            <div class="SiteHeaderBarItem SiteHeaderBarItemLast">&nbsp;</div>
+            <div id="site-search" class="SiteHeaderSearch">
+                <input title="Search" type="text" id="search-input" name="term" maxlength="1000" />
+                <input type="hidden" id="searchbuddy-loc" name="loc" value="en_us" />
+                <button type="submit" id="search-submit" class="icon-replace search">Search</button>
+            </div>
+        </div>
+        <div class="SiteHeaderUser">
+            <div id="shSignInBlock">
+                <a id="shInfo" class="SiteHeaderUserItem SiteHeaderInfo">Info</a>
+                <a href="/account/sign-in.adobedotcom.html" id="shSignIn" class="SiteHeaderUserItem LinkStrong">Sign in</a>
+                <div class="SiteHeaderPopPanelShadow width-250" id="InfoPanelShadow" style="display: none;"></div>
+                <div class="SiteHeaderPopPanel width-250" id="InfoPanel" style="display: none;">
+                    <div class="SiteHeaderPanelRow">
+                        <span class="SiteHeaderPanelHeader">Why sign in?</span>
+                        Sign in to manage your account and access trial downloads, product extensions, community areas, and more.
+                    </div>
+                </div>
+            </div>
+        
+            <a href="/account.html" id="shWelcome" class="SiteHeaderUserItem SiteHeaderArrow LinkStrong" style="display: none;">Welcome, <span id="screenName"></span></a>
+        
+            <div class="SiteHeaderPopPanelShadow" id="WelcomePanelShadow" style="display: none;"></div>
+            <div class="SiteHeaderPopPanel" id="WelcomePanel" style="display: none;">
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyAccount">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_en_us">My Adobe</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyOrders">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_myorders_en_us">My orders</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyInformation">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_myinformation_en_us">My information</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyPreferences">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_mypreferences_en_us">My preferences</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shMyProductsServices">
+                    <a class="SiteHeaderPanelHeader" href="/go/gnavtray_myadobe_myproducts_services_en_us">My products and services</a>
+                </div>
+                <div class="SiteHeaderPanelRow SiteHeaderPanelLink" id="shSignOut">
+                    <a class="SiteHeaderPanelHeader" id="shSignOutLink" href="/cfusion/membership/logout.cfm">Sign out</a>
+                </div>
+            </div>
+        
+            <div id="MyCartLinkContainer">
+                <a href="/go/gnav_mycart_en_us" id="shMyCart" class="SiteHeaderUserItem SiteHeaderCart">My cart<span id="cartQuantity"></span></a>
+            </div>
+        
+            <a href="/privacy.html" id="shPrivacy" class="SiteHeaderUserItem">Privacy</a>
+            <a href="/go/gnav_myadobe_en_us" id="shMyAdobe" class="SiteHeaderUserItem">My Adobe</a>
+        </div>
+    </div>
+</form>
+
+<div id="SiteHeaderMobile" class="SiteHeaderMobile LayoutHidden LayoutSlim Text TextSmall">
+    <a href="/go/gnav_adobe_logo_en_us" id="shHomeMobile" class="SiteHeaderHome SiteHeaderHomeMobile">Adobe</a>
+
+    <div class="SiteHeaderBar SiteHeaderBarMobile" id="shBarMobile">
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoLeftBorder" id="shProductsMobileSpan"><a href="/go/gnav_products_en_us" id="shProductsMobile" class="SiteHeaderBarLink">Products</a></span>
+        <span class="SiteHeaderBarItemMobile" id="shSectionsMobileSpan"><a href="#" id="shSectionsMobile" class="SiteHeaderArrowMobile SiteHeaderBarLink">Sections</a></span>
+        <span class="SiteHeaderBarItemMobile" id="shSectionsMobileBuy"><a href="/go/gnav_store_en_us" id="shBuyMobile" class="SiteHeaderBarLink">Buy</a></span>
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoRightBorder SiteHeaderBarItemMobileNoPadding">&nbsp;</span>
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoRightBorder SiteHeaderBarItemFloatRight" id="shSearchMobileSpan"><a href="/go/gnav_search" id="shSearchMobile" class="SiteHeaderSearchButtonMobile">Search</a></span>
+        <span class="SiteHeaderBarItemMobile SiteHeaderBarItemMobileNoLeftBorder SiteHeaderBarItemFloatRight SiteHeaderBarItemMobileNoPadding">&nbsp;</span>
+    </div>
+    <div class="SiteHeaderBarMobileExtend" id="shBarExtend">
+        <div id="shBarExtendSections" style="display: none;">
+            <div id="shBarExtendSections1" class="SiteHeaderBarMobileExtendSections">
+                <a href="/go/gnav_solutions_en_us" id="shSectionsSolutionsMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Solutions</a>
+                <a href="/go/gnav_company_en_us" id="shSectionsCompanyMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Company</a>
+            </div>
+            <div id="shBarExtendSections2" class="SiteHeaderBarMobileExtendSections">
+                <a href="/go/gnav_help_en_us" id="shSectionsHelpMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Help</a>
+                <a href="/go/gnav_learning_en_us" id="shSectionsLearningMobile" class="SiteHeaderBarExtendSectionsItem SiteHeaderBarLink">Learning</a>
+            </div>
+        </div>
+        <div id="shBarExtendSearch" style="display: none;">
+            <form id="globalnav-search-mobile" class="SiteHeaderSearchMobileForm" name="globalnav-search-mobile" method="get" action="/go/gnav_search" accept-charset="utf-8">
+                <input title="Search" type="text" id="search-input-mobile" name="term" maxlength="1000" />
+                <button type="submit" id="search-submit-mobile">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="SiteHeaderUser">
+        <a href="/cfusion/membership/index.cfm?loc=en_us&amp;nl=1" id="shSignInMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile LinkStrong">Sign in</a>
+        <a href="/cfusion/membership/logout.cfm" id="shSignOutMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile LinkStrong" style="display: none;">Sign out</a>
+        <a href="/privacy.html" id="shPrivacyMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile">Privacy</a>
+        <a href="/go/gnav_myadobe_en_us" id="shMyAdobeMobile" class="SiteHeaderUserItem SiteHeaderUserItemMobile">My Adobe</a>
+    </div>
+</div>
+<!--googleon: index--><div class="hovercart"><div id="HoverCartModal">
+		<div class="CartHeaderPopPanelShadow HoverCartwidth" id="CartPanelShadow" style="display: none;">
+		<div class="CartHeaderPopPanel HoverCart" id="CartPanel">
+			<div id="HoverCartItem" class="RuleHBottom HoverCart-1-3 LayoutBigRowTop" style="display: none">
+				<div class="LayoutBreakAfter">
+					<div class="HoverCart-1 LayoutHItem">
+						<div style="padding-left:60px;" class=" LayoutBreakAfter LayoutPullout">
+	<div id="HoverCartBoxShotxyz" class="HoverCartBoxShot">
+								<a href="">
+										<img src="" class="LayoutImage" alt=""/>
+									</a>
+								</div>
+							<div style="float:left;width:100%" class="CPodCostCell">
+							    <span class="TextStrong ProductName" id="HoverCartHeaderxyz"> 
+							    	<a href="#">
+							        	</a>
+							    </span>
+								<div class="LayoutBigRowBottom" id="HoverCartDescriptionxyz">
+									</div>
+                                <span id="HoverCartPreOrderHardGoodMsgxyz" style="display:none;" class="TextWarning TextPostScript">Preorder Estimated Availability <span id="HoverCartPreOrderHardGoodMsgDatexyz">Date</span>. Your credit card will not be charged until the product is shipped. Estimated availability date is subject to change.</span>
+                                <span id="HoverCartPreOrderSoftGoodMsgxyz" style="display:none;" class="TextWarning TextPostScript">Preorder Estimated Availability <span id="HoverCartPreOrderSoftGoodMsgDatexyz">Date</span>. Your credit card will not be charged until the product is ready to download. Estimated availability date is subject to change.</span>
+
+							</div>
+						</div>
+</div>
+					<div class="LayoutHItem HoverCart-2">
+						<div class="HoverCartQty">
+							Qty: 
+							<span id="HoverCartQtyxyz">
+								</span>
+						</div>
+					</div>
+                    <div class="LayoutRight">
+						<div class="CheckoutCostDark LayoutRight TextRight">
+							<span id="HoverCartPricexyz"> 
+							</span>
+								<span id="HoverCartSubscriptionxyz" class="CheckoutSubscription"> 
+								</span>						
+                            <div id="HoverCartVatPercentageLabelxyz" class="TextEm TextSmall" style="display:none; max-width: 100px;"><span id="HoverCartVatPercentagePreTextxyz"></span>
+                                    <span id="HoverCartVatPercentagexyz"></span></div>                  
+                        </div>
+					</div>
+					
+				</div>
+				<div class="HoverCartEDUMessage LayoutBigCellBottom" style="display:none">Purchase requires verification of academic eligibility</div>
+			</div>
+			<div id="HoverCartContainer" class="LayoutBreakAfter" style=""></div>
+			<a id="HoverCartMoreItems" class="LayoutBreakAfter" style="text-align: center;" href="/cart.html"></a>
+            <div  id="HoverCartButtons" class="HoverCart-1-3">
+                <table border="0" align="right" width="70%">
+                    <tr>
+                        <td>
+                            <div class="TextRight HoverCartSubTotal">Subtotal</div>
+                            <div id="ExVatLabel" style="display:none" class="TextEm TextSmall TextRight"></div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartSubTotal">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="HoverCartPromotionsRow">
+                        <td>
+                            <div class="TextRight HoverCartPromotionsLabel HoverCartSubTotal">Promotions</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartPromotions">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="HoverCartShippingRow">
+                        <td>
+                            <div class="TextRight HoverCartShippingLabel HoverCartSubTotal">Estimated shipping</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartShipping">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="HoverCartVATRow">
+                        <td>
+                            <div class="TextRight HoverCartVATLabel HoverCartSubTotal">Tax</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartVat">
+                                    </span>
+                                        </div>
+                                <div id="CartTaxHeader">
+                                    Calculated at checkout</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><div class="RuleH"></div></td>
+                        <td><div class="RuleH"></div></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="TextRight HoverCartTotalLabel HoverCartSubTotal">Total</div>
+                        </td>
+                        <td>
+                            <div class="LayoutRight TextRight">
+                                <div class="CheckoutCostDark">
+                                    <span id="HoverCartTotal">
+                                    </span>
+                                        </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+				<div class="LayoutBreak"></div>		
+				
+				<div class="HoverCart-1-3 LayoutRight LayoutCellTop LayoutBreakAfter">
+						<a href="/cart.html" id="HoverCartCheckOut" class="CartButtonYellow CartShopCheckOut LayoutRight"><span class="CartBuyIconText">Review and Checkout</span></a>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+<script>
+	/*global jQuery,adobe*/
+	jQuery.createNs("Adobe.Cart.ShoppingCart");
+
+	Adobe.Cart.ShoppingCart.HoverCart = {
+			
+		MaxItems: "4",
+
+		DisplayTime: "5000",
+
+		MoreItemsTextSingular: "() more item in your cart",
+
+		MoreItemsTextPlural: "() more items in your cart",
+
+		MonthToMonthText: "per month",
+
+		YearlyText: "per year"
+    };
+
+    Adobe.Cart.TaxLabels = {
+            TaxInclusiveText    : "",
+            TaxNotApplicable    : "Tax not applicable"
+	};
+
+	Adobe.Cart.ShoppingCart.GlobalVars = {
+			
+		CountryCode: 			"US",
+
+		MarketSegment: 			"COM",
+
+		AkamaiURLPrefix: 		"http://wwwimages.adobe.com/www.adobe.com",
+
+		PriceMonthText:			"per month",
+
+		PriceYearText:			"per year",
+
+		FullSubMonthText:		"Month-to-month",
+
+		FullSubYearText:		"One-year",
+
+		SubMonthText:			"Monthly",
+
+		SubYearText:			"Annual",
+
+		SubscriptionItemText:	"NONE",
+
+		TermTypeMonth:			"MONTH",
+
+		TermTypeYear:			"YEAR",
+
+		BackupDVDParent:		"_PARENT",
+		/*
+			params: {
+				cart,
+				price,
+				categoryPath,
+				originalPrice,
+				storeName,
+				locale,
+				usePrecision,
+				type,
+				taxCode,
+				delimiter,
+				showCentDelim,
+				distributionMethod
+			}
+		*/
+		getPriceLabel: function(params) {
+			var currency = params.cart.currency;
+			var params = {
+				storeName: params.storeName,
+				locale: params.locale,
+				productKey: params.categoryPath,
+				priceObject: {
+					price: {
+						orginalPriceWithoutTax: params.originalPrice,
+						priceWithoutTax: params.price,
+						taxCode: params.taxCode || ""
+					},
+					priceTypeKey: params.distributionMethod
+				},
+				currencyObject: {
+					delimiter: params.delimiter || ",",
+					formatString: currency.FORMATSTRING,
+					iso3Code: currency.CODE,
+					symbol: currency.SYMBOL,
+					usePrecision: params.usePrecision
+				},
+				showCentDelim : params.showCentDelim || false,
+				type: params.type
+			};
+			return params;
+		},
+
+		isSubscription: function(serviceCommitment, termType) {
+			return (serviceCommitment == this.SubscriptionItemText && 
+					(termType == this.TermTypeMonth || termType == this.TermTypeYear));
+		},
+
+		subscriptionItem: function(serviceCommitment, termType) {
+			return (termType == this.TermTypeMonth && 
+					(serviceCommitment == this.TermTypeMonth || serviceCommitment == this.TermTypeYear));
+		},
+
+		getSubscriptionText: function(serviceCommitment, termType) {
+			if (this.isSubscription(serviceCommitment, termType)) {
+				if (termType === this.TermTypeMonth) {
+					return this.SubMonthText;
+				} else if (termType === this.TermTypeYear) {
+					return this.SubYearText;
+				}	
+			} else if (this.subscriptionItem(serviceCommitment, termType)) {
+				if (serviceCommitment === this.TermTypeMonth) {
+					return this.FullSubMonthText;
+				} else if (serviceCommitment === this.TermTypeYear) {
+					return this.FullSubYearText;
+				}	
+			}
+			return "";
+		},
+
+		getSubscriptionPriceText: function(serviceCommitment, termType) {
+			if (this.isSubscription(serviceCommitment, termType)) {
+				if (termType === this.TermTypeMonth) {
+					return this.PriceMonthText;
+				} else if (termType === this.TermTypeYear) {
+					return this.PriceYearText;
+				}	
+			} else if (this.subscriptionItem(serviceCommitment, termType)) {
+				return this.PriceMonthText;	
+			}
+			return "";
+		}
+		
+	};
+</script>
+</div>
+<div id="modalContent" style="display:none;"></div>
+</div>
+<!--googleon: all--></div>
+    <div class="Link" id="top">
+    <div class="Link LayoutBreakAfter">
+        <div class="parbase compbase breadcrumb"><div class="LayoutHeader LayoutBreakAfter Link">
+	<div class="LayoutHeaderPath">
+		<div class="LayoutCellSides LinkStrong LayoutH IconAlign">
+			<span class="LayoutHItem LayoutSmallGutterRight">
+						<a href="/devnet.html">
+							Adobe Developer Connection</a>
+					</span>
+					<span class="LayoutSmallGutterRight LayoutHItem">/</span>
+				<span class="LayoutHItem LayoutSmallGutterRight">
+						<a href="/devnet/flex.html">
+							Flex Developer Center</a>
+					</span>
+					<span class="LayoutSmallGutterRight LayoutHItem">/</span>
+				</div>
+	</div>
+</div>
+</div>
+<div class="LayoutGrid-1-3 LayoutSlimGrid-1-2">
+            <h1 class="LayoutCellSides LayoutSmallRow TextH1">
+                Mobile development using Adobe Flex 4.5 SDK and Flash Builder 4.5</h1>
+        </div>
+    </div>
+</div>
+<div class="LayoutRow Link RuleH">
+    <div class="LayoutBreakAfter">
+        <!-- Article Leaf -->
+        <div class="ArticleGrid-1 LayoutSlimGrid-1-2 ArticleWideGrid-1 TextSmall">
+                <div class="LayoutCellSides LayoutRow">
+                    <div class="articleAuthorDisplay authordisplay"><h2 class="TextH5 LayoutRow">
+        by&nbsp;<a href="/devnet/author_bios/narciso_jaramillo.html">Narciso Jaramillo</a></h2>
+    <div class="LayoutRow">
+        <img title="narciso_jaramillo_bio" alt="Narciso Jaramillo" class="ImageShadow LayoutImage" src="devnet/authors/bio/n/narciso_jaramillo_bio.jpg.adimg.mw.160.png"/></div>
+    <div class="LayoutRow">
+                 <ul>
+            <li><a href="http://notwebsafe.com/" title="notwebsafe.com" target="_blank">notwebsafe.com</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                    <div class="parbase compbase articleTOC singlepagetoc"><div class="LayoutRow">
+            <h2 class="TextH5 LayoutSmallRow">Content</h2>
+            <ul class="LayoutSmallRow">
+                <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader">
+                                Overview of mobile development with Flex</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_0">
+                                Considerations for mobile design and development</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_1">
+                                Developing mobile applications with Flex 4.5 SDK</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_2">
+                                Streamlining the mobile workflow with Flash Builder 4.5</a>
+                        </li>
+                    <li class="LayoutSmallRow ListItemIndent">
+                            <a href="#articlecontentAdobe_numberedheader_3">
+                                Where to go from here</a>
+                        </li>
+                    </ul>
+        </div>
+
+    </div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                    <div class="articleTools articletools"><div class="LayoutRow LayoutCellVSides">
+                    <h2 class="TextH5 LayoutSmallRow">Modified</h2>
+                    <p>20 June 2011</p>
+                </div>
+            <ul class="LayoutRow">
+            </ul>
+     </div>
+</div>
+                <div class="LayoutRow">
+                    <div class="articleCommentSummary commentsummary"><div class="LayoutRow LayoutCellSides">
+    <div id="articleRankAndCommentSummary"></div>
+</div>
+</div>
+</div>
+                <div class="LayoutRow">
+                    <!-- Page Tools -->
+                    <div class="pagetools pageTools"><div class="LayoutBreakAfter">
+    <div class="LayoutRow LayoutBreakAfter TextH5">
+	<table class="LayoutMaxH">
+        <tbody>
+            <tr>
+                <td class="PanelFillDark">
+					<h2 class="TextH5 LayoutCellSides LayoutSmallCellVSides">
+                        		Page tools</h2>
+					    </td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+<div class="LayoutCellSides">
+            <div class="LayoutRow">
+                    <div id="PageTools" style="padding-left:23px;" class=" LayoutBreakAfter LayoutPullout">
+	<div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Facebook-button Icon IconFacebook" href="http://www.facebook.com/sharer.php"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a href="http://www.facebook.com/sharer.php" class="Facebook-button" title="Share on Facebook" target="_blank">Share on Facebook</a></div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Twitter-button Icon IconTwitter" href="http://twitter.com/"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a href="http://twitter.com/" class="Twitter-button" title="Share on Twitter" target="_blank">Share on Twitter</a></div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="LinkedIn-button Icon IconLinkedIn" href="http://www.linkedin.com/"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a href="http://www.linkedin.com/" class="LinkedIn-button" title="Share on LinkedIn" target="_blank">Share on LinkedIn</a></div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Bookmark-button Icon IconBookmark" href="#"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a class="Bookmark-button" href="#">Bookmark</a>
+                                </div>
+                            </div>
+                        <div class="LayoutSmallRowBottom LayoutBreakAfter">
+                                <div style="width:16px;float:left;clear:left;position:relative;left:-23px;margin-right:-23px">
+									<a class="Print-button Icon IconPrint" href="#"></a>
+                                </div>
+                                <div style="float:left;width:100%">
+                                    <a class="Print-button" href="#">Print</a>
+                                </div>
+                            </div>
+                        </div>
+</div>
+            </div>
+            </div>
+</div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                    <!-- Article Community -->
+                    <div class="articletags articleTags"><div class="LayoutRow">
+             	<div class="LayoutH LinkWeak TextTag">
+                <a href="/devnet/tagsearch.tsb.prod-_sl_adobe_air_v_.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="Adobe&nbsp;AIR">Adobe&nbsp;AIR</a><a href="/devnet/tagsearch.tsb.tag-ADC%2BKeywords_c_android.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="Android">Android</a><a href="/devnet/tagsearch.tsb.prod-_sl_flash_builder_v_.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="Flash&nbsp;Builder">Flash&nbsp;Builder</a><a href="/devnet/tagsearch.tsb.prod-_sl_flex_v_.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="Flex">Flex</a><a href="/devnet/tagsearch.tsb.tag-ADC%2BKeywords_c_mobile.tse.html" class="LayoutHItem LayoutHItem PanelFillMedium LayoutSmallGutterRight LayoutSmallRow LayoutSmallCellSides" title="mobile">mobile</a></div>
+            </div>
+        </div>
+</div>
+                <div class="LayoutCellSides LayoutRow">
+                          <div class="parbase adcFeedBack compbase adcfeedback"><script type="javascript">
+                //<![CDATA[
+                    s_tagEnv = 'dev';
+                //]]>
+              </script>
+        <script src="http://wwwimages.adobe.com/www.adobe.com/include/script/article-compressed.js"></script>
+
+        <div id="helpful-pod">
+            <div id="helpful" class="collapsed">
+              <div id="helpfulspan">Was this helpful?</div>
+              <input type="radio" name="feedback" id="radioyes" onClick="showForm();"/><span id="yesspan" class="radio-option">Yes</span> &#160;
+              <input type="radio" name="feedback" id="radiono" onClick="showForm();"/><span id="nospan" class="radio-option">No</span>
+              <textarea title="(Optional) Please let us know how we can improve this page. " id="feedbacktext" placeholder="" rows="5" cols="25" style="font-family:sans-serif;display:none"></textarea>
+              <button id="submitButton" onClick="submitForm();" style="display:none">Submit</button>
+              <button id="noCommentButton" onClick="hideForm();" style="display:none">No comment</button>
+              <br clear="both">
+              <div id="termsofuse"><p>By clicking Submit, you accept the <a href="/misc/terms.html">Adobe Terms of Use</a>.</p>
+</div>
+            </div>
+            <div id="fold">&nbsp;</div>
+        </div>
+        <div id="helpful-thankyou" class="thankyou">Thanks for your feedback.</div>
+
+        <script>
+        //<![CDATA[
+            // Send CHL-specific data to SiteCatalyst
+            var s_chl = s_gi("mxchlprod");
+            var urlMatch = /(https?:\/\/)([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*))(index.html)?(\?\S+)?(#\S+)?/;
+            var adobeMatch = /(https?:\/\/)([-\w\.]+)+(\.adobe\.com)/;
+            var adobeLocaleMatch = /^\/(ae|bg|cz|dk|de|gr|es|ee|fi|fr|il|hr|hu|it|jp|kr|lt|lv|no|nl|pl|br|ro|ru|sk|si|se|tr|ua|cn|tw)\/.+/;
+            var cqLocaleMatch = /^\/content\/help\/(ae|bg|cz|dk|de|gr|es|ee|fi|fr|il|hr|hu|it|jp|kr|lt|lv|no|nl|pl|br|ro|ru|sk|si|se|tr|ua|cn|tw)\/.+/;
+            var ua = navigator.userAgent.toLowerCase();
+            s_chl.channel = "helpx";
+            s_chl.eVar3 = window.location.toString().replace(/[\?,#](.*)/, "");
+            s_chl.pageName = s_chl.eVar11 = document.title;
+            if ( typeof(omtrPageName) != 'undefined' && omtrPageName.length > 0 ) {
+                s_chl.pageName = s_chl.eVar11 = omtrPageName;
+            }
+           // s_chl.list1 = omtrProductList.replace(/,/g,":");
+            var omtrLocale = "en";
+            if (adobeLocaleMatch.test(location.pathname)) {
+                var matchArray = adobeLocaleMatch.exec(location.pathname).slice();
+                omtrLocale = matchArray[1];
+                if ( typeof(matchArray[1]) != 'undefined') {
+                    omtrLocale = matchArray[1];
+                }
+            }
+            else if (cqLocaleMatch.test(location.pathname)) {
+                var matchArray = cqLocaleMatch.exec(location.pathname).slice();
+                omtrLocale = matchArray[1];
+                if ( typeof(matchArray[1]) != 'undefined') {
+                    omtrLocale = matchArray[1];
+                }
+            }
+
+            s_chl.eVar8 = omtrLocale;
+            if (omtrLocale != "en") {
+                s_chl.eVar9 = document.title;
+            }
+            // Transmit
+            // The s_gs() call in compressed.js causes problems with any .t() call in any report suite
+            function s_gs(){}
+            s_chl.t();
+
+            function showForm(){
+                if (ua.indexOf('msie 6') == -1 ){
+                    $('#helpfulspan').hide();
+                    $('#radioyes').hide();
+                    $('#radiono').hide();
+                    $('#yesspan').hide();
+                    $('#nospan').hide();
+                    $('#feedbacktext').autofill();
+                    $('#helpful').animate({width:'420px', height: '185px'});
+                    $('#helpful').removeClass('collapsed');
+                    $('#helpful').addClass('expanded');
+                    $('#fold').css('background-position', '-12px 0');
+                    displayTextField();
+                }else{
+                    submitForm();
+                }
+            }
+
+
+
+            $(document).ready(function() {
+                var feedbackLocales = "en, jp, fr, de, it, se, es, nl , dk, br, no, fi";
+                if ( feedbackLocales.indexOf( omtrLocale ) > -1 ){
+                $('#helpful-pod').fadeIn();
+                    $('#helpful-pod').animate({
+                    opacity: 1,
+                   top: '+=20'},
+                    1500);
+                }
+            });
+
+        // ]]>
+        </script>
+    </div>
+</div>
+                <div class="LayoutBreak"></div>
+        </div>
+        <!-- Main Content -->
+        <div class="LayoutSlimGrid-1-2 ArticleGrid-2-4 ArticleWideGrid-2-6">
+            <div class="ArticleWideGrid-2-4">
+                <div class="articlerequirements articlePrerequistes"><div class="PanelFillMedium PanelBorder LayoutRow TextSmall">
+			<div id="requirements-title" class="LayoutCell Link">
+				<h2 class="TextH5">
+					<span class="LayoutSmallGutterRight Icon IconSmallerAdd"></span>
+					Requirements</h2>
+			</div>
+			<div id="requirements-content" class="LayoutBreakAfter">
+				<div class="ArticleGrid-2">
+					<div class="LayoutCellSides">
+						<h3 class="TextH5 LayoutSmallRowTop">
+							User level</h3>
+						<p class="LayoutRowBottom">All</p>
+					</div>
+				</div>
+				<div class="ArticleGrid-3">
+						<div class="LayoutCellSides">
+							<h3 class="TextH5 LayoutSmallRowTop">
+									Required products</h3>
+								<ul class="LayoutSmallRowTop LayoutRowBottom">
+									<li class="LayoutSmallRow">
+												<span class="IconLeft IconSmallDownload"></span>Flash Builder<a href="/go/try_flashbuilder/"> (Download trial)</a></li>
+										<li class="LayoutSmallRow">
+												<span class="IconLeft IconSmallDownload"></span>Flex<a href="/go/tryflex/"> (Download trial)</a></li>
+										</ul>
+							</div>
+					</div>
+				</div>
+        </div>
+    <script>
+    adobe.fn.panelToggle("requirements-title", "requirements-content", true);
+</script>
+<script>
+    adobe.fn.panelToggle("requirements-title", "requirements-content", true);
+</script>
+</div>
+<div class="LayoutGrid-1-4 LayoutSlimGrid-1-2 LayoutBreakAfter">
+                    <div class="parsys articlecontentAdobe"><div id="articlecontentAdobe">
+<a name="articlecontentAdobe_text" style="visibility:hidden"></a><div class="text parbase section"></div>
+<a name="articlecontentAdobe_text_0" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p><b>Note:</b> This article has been updated&nbsp;to include information about the BlackBerry Tablet OS and Apple iOS support added in the Flex 4.5.1 and Flash Builder 4.5.1 updates.</p>
+<p>Ever since we first introduced Flex and Flash Builder, our core goal has been to provide a highly productive way to create rich applications across multiple platforms. Starting with Flash Player in the browser, and then with Adobe AIR on the desktop, Flex and Flash Builder have enabled developers to build applications that run across Windows, Mac OS, and Linux.</p>
+<p>With the Adobe Flex 4.5 SDK and Flash Builder 4.5 releases, Adobe is bringing the Flex SDK and Flash Builder to touchscreen smartphones and tablets as well. Leveraging the Adobe AIR runtime, you can now develop mobile ActionScript and Flex applications for Google Android, Apple iOS, and BlackBerry Tablet OS with the same ease and quality as on desktop platforms.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_numberedheader" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader"></a>
+        Overview of mobile development with Flex</h3>
+</div>
+<a name="articlecontentAdobe_text_1" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<h4>The initial release of mobile development with Flex involves three components:</h4>
+<ul>
+<li>Runtime: Adobe AIR on mobile devices</li>
+<li>Framework: Adobe Flex 4.5 SDK<br>
+</li>
+<li>Development environment: Adobe Flash Builder 4.5</li>
+</ul>
+<h4>The runtime: Adobe AIR on mobile devices</h4>
+<p>The initial versions of the mobile development features in the Flex SDK and Flash Builder&nbsp;are targeted at creating standalone installed applications using the Adobe AIR runtime for mobile devices. By focusing on AIR, Flex can take full advantage of the integration AIR provides with each mobile platform, such as the ability to handle hardware back and menu buttons and to access local storage.</p>
+<p>AIR for mobile devices allows developers to create applications that can be deployed (and, if desired, sold) the same way as native applications on each platform. This means that applications built with AIR can be posted to the Android Market, the iOS App Store, and BlackBerry App World.&nbsp;For more information on AIR for Mobile, see the&nbsp;<a href="/devnet/air.html">Adobe AIR Developer Center</a>.</p>
+<h4>The framework: Adobe Flex 4.5 SDK<br>
+</h4>
+<p>Building on top of the core runtime APIs provided by Flash Player and AIR, the Flex SDK provides a robust and productive framework for building application UI and connecting to server-side data. Flex includes a rich set of built-in UI components, data access components and data binding, declarative UI creation through MXML, dynamic layout, and an extensible component architecture.</p>
+<p>The mobile features in Adobe Flex 4.5 SDK build on these core Flex features in two ways. First, the existing components and their skins have been optimized and extended to be usable out-of-the-box on touchscreen devices. Second, new components have been added that encapsulate common application design patterns specific to smartphones. These additions to the framework are described in the section <a href="#articlecontentAdobe_numberedheader_1">Developing mobile applications with Flex SDK 4.5</a> below.</p>
+<h4>The development environment: Adobe Flash Builder 4.5</h4>
+<p>Finally, the 4.5 release of the Flash Builder IDE brings a productive design/build/debug workflow to mobile development. From project creation to visual layout to one-click debugging and deployment on devices, the aim of the mobile features in Flash Builder 4.5 is to make it just as easy to develop an ActionScript- or Flex-based mobile application as it is to develop a desktop or web application. For more detail, see <a href="#articlecontentAdobe_numberedheader_2">Streamlining the mobile workflow with Flash Builder 4.5</a> below.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_numberedheader_0" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_0"></a>
+        Considerations for mobile design and development</h3>
+</div>
+<a name="articlecontentAdobe_text_2" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>Applications for mobile touchscreen devices differ from desktop and web applications in several important ways:</p>
+<ul>
+<li>In order to be easily manipulated by touch input, components must generally have larger hit areas than in desktop-oriented applications. This is especially true because the pixel density of mobile device screens is much higher than that of desktop monitors.</li>
+<li>The interaction patterns for actions like scrolling are different on touchscreen devices.</li>
+<li>Because of the limited screen real estate, applications on smaller devices like smartphones need to be designed differently from desktop applications, with only a small amount of UI on the screen at a given time. Additionally, UI designs need to take into account differences in screen resolution and pixel density across devices.</li>
+<li>While mobile devices are becoming more and more capable, their CPU and GPU performance is still much more limited than their desktop counterparts.</li>
+<li>Different platforms have different hardware capabilities and UI conventions. For example, Android smartphones typically have a hardware Back button, whereas iOS devices do not.<br>
+</li>
+<li>Due to the limited memory available on mobile devices, applications need to be careful to conserve memory, and need to be aware that they can be quit and restarted at any time by the operating system.</li>
+</ul>
+<p>As a result, building an application for a mobile device is not simply a matter of taking a desktop application and &quot;scaling it down&quot; to a different screen size. Our goal is to make it so that developers can easily craft separate user interfaces appropriate for each form factor, while sharing underlying model and data access code between mobile- and desktop-oriented projects to minimize redundant development effort.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_numberedheader_1" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_1"></a>
+        Developing mobile applications with Flex 4.5 SDK</h3>
+</div>
+<a name="articlecontentAdobe_text_3" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>In order to address the design and development challenges listed above, the new mobile development features in Flex 4.5 augment the core features of the Flex SDK with skins and components that are optimized for mobile design and implementation patterns.</p>
+<h4>Mobile-ready core components</h4>
+<p>In Flex 4.5, we've taken a few steps to ensure that core Flex components work well on touchscreen devices.</p>
+<p>For simple components like Button, CheckBox, and TextInput, we've provided a mobile theme that contains skins that are appropriately sized for touch input. Because of the flexibility of the Spark component architecture introduced in Flex 4, we were able to do this without modifying the core component code. Additionally, <a href="#performance">as described in the performance section below</a>, the mobile skins we provide are built in ActionScript for optimal performance. Figure 1 shows some of the mobile skins provided in Flex 4.5.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_3" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Some of the mobile component skins in Flex 4.5." alt="Some of the mobile component skins in Flex 4.5." class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/articles/mobile-development-flex-flashbuilder/flex-mobile-skins.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 1. Some of the mobile component skins in Flex 4.5.</div>
+</div>
+<a name="articlecontentAdobe_text_4" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>Of course, you can leverage the same Spark architecture, styling and skinning the components in mobile applications in order to customize the look of the components to fit your branding and design. </p>
+<p>For more complex components, notably Scroller and List, we've added functionality to the core component to enable touch-and-throw scrolling, with bounce and pull effects at the ends of the scroll. Touch scrolling is enabled by setting the new <code>interactionMode</code>&nbsp;style on Scroller and List to <code>touch</code>. If you're using the mobile theme, this style is automatically set on all appropriate components for you, so you don't need to do anything to enable touch interaction.</p>
+<p>The initial version of the mobile theme will not have touch-enabled skins for all existing Spark components. Table 1 lists the set of components that are mobile-ready in Flex 4.5; we'll continue to make more components mobile-ready in subsequent releases.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_text_12" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p><b>Table 1.</b> Mobile-ready components in Flex 4.5</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_text_5" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<table cellpadding="1" cellspacing="1" border="1"><tbody>
+ <tr>
+ <th valign="top">Controls</th>
+ <td>BusyIndicator (new component)<br>
+ Button<br>
+ ButtonBar<br>
+ CheckBox<br>
+ HSlider<br>
+ Image (BitmapImage is also supported)<br>
+ Label<br>
+ List (supports touch scrolling, includes scroll indicator)<br>
+ RadioButton / RadioButtonGroup<br>
+ TextArea<br>
+ TextInput</td>
+ </tr>
+ <tr>
+ <th valign="top">Layout</th>
+ <td>DataGroup<br>
+ Group<br>
+ HGroup<br>
+ Scroller (supports touch scrolling, includes scroll indicator)<br>
+ Spacer<br>
+ TileGroup<br>
+ VGroup</td>
+ </tr>
+ <tr>
+ <th valign="top">Charts</th>
+ <td>All </td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+				</div>
+<a name="articlecontentAdobe_text_6" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<h4>Standard mobile application structure</h4>
+<p>In addition to skinning and extending the core components to work well on mobile devices, Flex 4.5 contains a set of new application components specifically designed to make it easy to build applications that follow standard design patterns for touchscreen smartphones.</p>
+<p>Because of the limited screen real estate, applications on these devices are typically structured as a series of views, each of which is focused on displaying a single list of data or details about a single data item. The user navigates between views by tapping on data items or other controls, and goes back by either using on-screen UI or a hardware &quot;Back&quot; button. Additional actions can be provided through on-screen UI or a menu overlay. Figure 2 illustrates this application design pattern.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_image" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Standard application structure for touchscreen smartphones" alt="Standard application structure for touchscreen smartphones" class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/articles/mobile_development_hero_burrito/fig2.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 2. Standard application structure for touchscreen smartphones</div>
+</div>
+<a name="articlecontentAdobe_text_7" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>We've added the following components to Flex in order to support this pattern.</p>
+<h5>View</h5>
+<p>The View component represents a single screen of UI. Typically, you'll create custom MXML or ActionScript components based on View, and add whatever components you want to appear within the content. For example, a shopping cart application might have a home view that displays a list of featured items and categories. Tapping on a category navigates to a product list view displaying items in a given category, and tapping on a product navigates to a product detail view showing information about the product.</p>
+<p>Each View has a <code>data</code> property that specifies the data that should appear in that view. Views can pass data to each other as the user navigates around the application. Additionally, the <code>data</code> property enables the ViewNavigator and ViewNavigatorApplication&nbsp;components, described below, to provide features for persisting data both in memory and between runs of the application.</p>
+<p>When the user rotates the screen between portrait and landscape orientations, the View is automatically resized by default to the appropriate aspect ratio. As a result, if you use the standard Flex layout managers, your application can handle orientation changes with little extra work on your part. For finer-grained control, you can use the Flex states mechanism to define portrait and landscape states that specify exactly how the View should look in each state.</p>
+<h5>ActionBar</h5>
+<p>ActionBar is a standard header component that appears above the Views in the application. It typically contains a title and one or more buttons that perform actions like refreshing the current view or creating a new item. You can fill the ActionBar with controls that are persistent across the entire application, or customize it for each individual view. For example, on the home screen of an application, you might put a search box in the ActionBar.</p>
+<h5>ViewMenu</h5>
+<p>ViewMenu provides a standard control that pops up from the bottom of the screen when the user presses the menu button on a device. In any view, you can add a <code>viewMenuItems</code> property containing a set of menu items, each of which specifies an icon, a label, and a click handler. ViewMenu takes care of showing and hiding itself and laying out the menu items appropriately.</p>
+<h5>ViewNavigator</h5>
+<p>ViewNavigator manages the ActionBar and the set of Views in your application using a stack-based history mechanism. When your application starts, the ViewNavigator shows the view specified by its <code>firstView</code> property. After that, you can call <code>pushView()</code> to navigate to a new view in response to user input, such as tapping on a list item, and call <code>popView()</code> to return to the previous view. Flex provides a set of optimized view transitions out of the box to help the user maintain context while navigating around the application.</p>
+<p>To conserve memory, ViewNavigator ensures that only one view is in memory at a given time by default. However, it maintains the data for previous views in the stack that have been disposed, so that when the user navigates back to a previous view, it can be reinstantiated with the appropriate data.</p>
+<p>In addition to the standard ViewNavigator, we also provide a TabbedViewNavigator that allows you to switch between different stacks of views by tapping on tabs at the bottom.</p>
+<h5>ViewNavigatorApplication</h5>
+<p>ViewNavigatorApplication wraps all this functionality together into a convenient application class. By basing your application on ViewNavigatorApplication, you automatically get a ViewNavigator for managing your views. For tabbed applications, you can use the analogous application class, TabbedViewNavigatorApplication. ViewNavigatorApplication also provides default behavior for the hardware back button, mapping it to ViewNavigator's <code>popView()</code> method, and handles device orientation change events by passing them to the ViewNavigator and its current view.</p>
+<p>Additionally, ViewNavigatorApplication provides a way to persist your application's view state and data when the application quits, so that the next time it starts, it can restore itself with the same current view and view history. This makes interruptions in your application's lifecycle completely transparent to the user—especially important on mobile devices, where the operating system can interrupt or kill an application at any time.</p>
+<p>Of course, you're free to create an application completely from scratch using the standard Spark Application class as well, and use the core mobile components and skins without using the View navigation pattern. For example, if you're writing a tablet application, you likely won't be structuring your entire application around small views; tablets have more screen real estate to take advantage of, and tablet applications are less navigation-heavy. In that case, you'll want to start from standard Spark Application rather than ViewNavigatorApplication, but still use the mobile theme in order to get the benefit of the mobile-optimized components and skins.</p>
+<h4><a name="performance"></a>Performance optimizations</h4>
+<p>Because the Flex SDK supports both mobile and desktop use cases in the same framework, all the functionality of Flex is available to you when building mobile applications. However, due to performance constraints on mobile devices, there are certain features you will need to be careful of when building mobile Flex applications, and other features we recommend you avoid entirely. Here are a few best practices to keep in mind.</p>
+<ul>
+<li><b>Use ActionScript rather than MXML to build item renderers.</b> Because list scrolling is highly performance-sensitive, it's important to create item renderers that are as efficient as possible. To aid in creating item renderers for mobile projects, Flex provides the LabelItemRenderer and IconItemRenderer classes. These item renderers are built in ActionScript, and IconItemRenderer can be configured to show one or two text items, an optional icon or image on the left, and an optional decorator on the right. If this doesn't meet your needs, you can subclass one of these classes instead, adding controls and laying them out in ActionScript yourself.</li>
+<li><b>Where possible, use ActionScript and compiled FXG graphics or bitmaps for component skins rather than MXML and runtime MXML graphics.</b> Similar to item renderers, it's best to ensure that your component skins are lightweight. The skins we provide in the mobile theme in Flex are all built directly in ActionScript, and you can subclass them in order to substitute your own FXG graphics or change the layout. That said, the performance issues with MXML skins are not as noticeable as with item renderers, so using a few MXML skins here and there throughout your application should not significantly impact performance.</li>
+<li><b>Charts are supported in mobile projects, but other MX components are not.</b> We don't recommend using MX components in mobile projects; use the Spark components instead. The one exception is the charting components, which are usable in mobile projects if care is taken to avoid displaying or animating too much data at once.</li>
+<li><b>In general, use Spark Label, TextInput and TextArea for text rather than RichText and RichTextEditable.</b> For most UI text, we recommend using TextField-based text for maximum performance, and the mobile skins and item renderers provided in the Flex SDK follow this guideline. It's possible to use the TLF-based RichText for cases where you need to display rich content, but we don't recommend using it for the bulk of your UI elements in mobile projects.</li>
+</ul>
+</div>
+				</div>
+<a name="articlecontentAdobe_text_14" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<h4>Adapting mobile applications to multiple pixel densities</h4>
+<p>Mobile devices come in a wide range of form factors, from phones with small screens to large-screen tablets. Simple variations in screen size and aspect ratio can be handled easily using the standard dynamic layout components, such as Group, VGroup, and HGroup, that are provided in Flex. However, devices also vary in pixel density—that is, the number of pixels in a given inch of the screen. For example, most tablets and some phones have a pixel density of 160 dots per inch (DPI), while other phones have pixel densities of 240 or 320 DPI. Variations in pixel density affect the visual size of individual elements in your user interface: all other things being equal, controls with a given pixel size will appear physically smaller on devices with higher pixel density. This is especially problematic for touchscreen interfaces, where controls need to be physically large enough to be targeted with a finger.</p>
+<p>Flex 4.5 provides several new features to help developers make their applications work well across multiple densities.</p>
+<p><b>Automatic scaling.</b> Developers can choose to specify a target DPI for their application by setting the applicationDPI property on the application. When this is explicitly set, developers should set up their skins and layout as if they were running on a device of the given DPI. At runtime, if the device has a different DPI from the specified target DPI, Flex will automatically scale the entire application to preserve the approximate physical size of the application and its controls. For example, if an application is targeted at 160 DPI, it will automatically scale by 1.5x on a 240 DPI device. If you choose not to use this feature, you'll need to make sure your custom skins and view layouts adapt properly to different pixel densities at runtime.</p>
+<p>Note that if you use automatic scaling, we recommend that you set applicationDPI to the lowest DPI you wish to support, and allow the application to scale up on devices with higher DPIs. This is because vector artwork tends to look better and be positioned more consistently when scaled upwards rather than downwards. For bitmaps, you'll need to take advantage of the multi-DPI bitmap support described below.</p>
+<p><b>DPI-aware mobile skins.</b> The built-in skins in the mobile theme that ships with Flex 4.5 automatically adapt to different DPIs. If you're using automatic scaling, the built-in skins will automatically configure themselves for your specified applicationDPI, and will then be scaled up by the automatic scaling feature. If you're not using automatic scaling, then the skins will adapt themselves to the actual runtime DPI of the device. By examining how the built-in skins work, you can follow the same pattern when you create your own custom skins.</p>
+<p><b>Multi-DPI bitmaps.</b> If you have any bitmap artwork in your application, you'll need to provide multiple resolutions of each bitmap for different DPIs in order to avoid scaling artifacts. To do so, you can take advantage of the MultiDPIBitmapSource class, which allows you to specify different bitmap files to be used at different DPIs for a given image. This class can be passed as the source property for components that display images, such as the BitmapImage or Image components, or as the icon property for Button. As with the mobile skins, these bitmaps are properly handled by the framework regardless of whether you're using automatic scaling, so that you're always seeing the appropriate-resolution bitmap for a given device DPI.</p>
+<p><b>Per-DPI CSS rules.</b> Flex 4.5 adds support for the CSS @media syntax to allow you to specify CSS rules that should only apply at a given DPI; the built-in skins take advantage of this to adapt font sizes and paddings for different DPIs. You can also specify per-platform CSS rules using this syntax.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_text_16" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<h4>Adapting mobile applications to different platforms</h4>
+ <p>In addition to handling different form factors, your application needs to account for different platform UI conventions. In general, the mobile Flex component skins and behaviors are intended to work well across different platforms. However, there are a few key platform differences that you will likely want to take into account in your UI:</p>
+ <ul>
+ <li>Because iOS and BlackBerry Tablet OS devices do not have a hardware back button, you will need to provide an on-screen back button in your views on those platforms.</li>
+ <li>The visual design of the action bar on iOS is noticeably different from other platforms; the title is centered, and the buttons have a beveled rather than flat look.</li>
+ </ul>
+ <p>In order to handle these kinds of platform differences, you can leverage the Flex states feature. For example, you can create states in a view for iOS, Android, and BlackBerry Tablet OS, and specify that the Back button should be visible in the iOS and BlackBerry Tablet OS states. You can also extend this strategy to take into account other UI variations, such as adapting your layout between phone and tablet form factors.</p>
+ <p>You can also take advantage of the CSS @media syntax, mentioned above, to provide per-platform CSS rules as well, in order to further customize the look and feel of your application on each platform.</p>
+ </div>
+				</div>
+<a name="articlecontentAdobe_text_13" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<h4>Running on AIR</h4>
+<p>Finally, it's important to realize that in addition to all the mobile Flex components listed above, you can also directly take advantage of all the APIs that are available in AIR on mobile devices—geolocation, accelerometer, camera integration, and so forth. While some of these features are not exposed as Flex components, they are easy to access directly using ActionScript. For more information on developing using the APIs provided by AIR on mobile devices, see&nbsp;the documentation for <a target="_blank" href="http://help.adobe.com/en_US/air/build/index.html">AIR on mobile devices</a>.<br>
+</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_numberedheader_2" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_2"></a>
+        Streamlining the mobile workflow with Flash Builder 4.5</h3>
+</div>
+<a name="articlecontentAdobe_text_8" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>Building on the mobile development features in Adobe Flex SDK 4.5, Flash Builder 4.5, extends the existing ActionScript and Flex development workflows to mobile development, from project creation through packaging the final application.</p>
+<h4>Managing mobile projects</h4>
+<p>Flash Builder 4.5 provides two new project types: ActionScript Mobile Project and Flex Mobile Project. Creating an ActionScript Mobile Project gives you a completely clean slate on which to write your application in pure ActionScript code. Conversely, creating a Flex Mobile Project gives you access to the Flex framework, including the mobile features described above, as well as the Flex-related features of Flash Builder, such as Design mode and the data connectivity features introduced in Flash Builder 4.</p>
+<p>When you create a project, you can specify which mobile platforms you want to target. By default, your project will target all supported platforms (currently Android, iOS, and BlackBerry Tablet OS).<br>
+</p>
+<p>If you're creating applications for multiple screens, such as a desktop/web application and a mobile application, your typical project structure will consist of an ordinary Flex or ActionScript project containing your desktop/web UI, a mobile Flex or ActionScript project containing your mobile UI, and a library project containing model and data access code that is shared between the two applications.</p>
+<h4>Designing views</h4>
+<p>For mobile Flex projects, we've extended Design mode in two ways. First, we've added controls to the Design toolbar (see Figure 3) that allow you to preview how the content of a view will look at different device screen sizes and in different orientations. You can add more device configurations yourself in Preferences &gt; Flash Builder &gt; Device Configurations.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_0" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Design mode controls for mobile device configurations" alt="Design mode controls for mobile device configurations" class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/articles/mobile_development_hero_burrito/fig3.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 3. Design mode controls for mobile device configurations</div>
+</div>
+<a name="articlecontentAdobe_text_9" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>Second, we've made it so that Design mode works well with the standard view navigation structure described above. When you edit a View in a project based on ViewNavigatorApplication, you see the View's content in the context of the overall application structure—so, for example, you see the ActionBar above the View, and the ActionBar is filled with the content appropriate to that View. You can drag and drop controls into the ActionBar just like any other container in order to customize it for a particular View. Figure 4 shows dropping a button into the actionContent area on the right end of the ActionBar.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_image_1" style="visibility:hidden"></a><div class="parbase image section"><div class="LayoutRow LayoutCellSides">
+	<img title="Dropping a button into the ActionBar using Design mode" alt="Dropping a button into the ActionBar using Design mode" class="cq-dd-image  LayoutImage LayoutRow " src="devnet/flex/articles/mobile_development_hero_burrito/fig4.jpg"/></div>
+<div class="TextSmall LayoutCellSides LayoutRowTop LayoutBigRowBottom">
+        Figure 4. Dropping a button into the ActionBar using Design mode</div>
+</div>
+<a name="articlecontentAdobe_text_15" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>Design mode also correctly previews the effects of pixel density on your application. For example, if your application has applicationDPI set to 160, and you choose a preview device configured for 240 DPI, Design mode will show the application scaled by 1.5x.</p>
+</div>
+				</div>
+<a name="articlecontentAdobe_text_10" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<h4>Running and debugging on the desktop and on device</h4>
+ <p>When it comes time to test or debug your application, you have two options. For quick testing and debugging, you can launch and debug the application on the desktop using the AIR Debug Launcher (ADL). For greater fidelity, you can also launch and debug the application directly on a physical device. In either case, you can use the full array of Flash Builder's debugging capabilities, including setting breakpoints and examining the application's state using the Variables and Expressions panels.</p>
+ <p>When running or debugging on a device, there are a few key points you need to be aware of:</p>
+ <ul>
+ <li>If your application accesses data, you must deploy your data services to a server that can be accessed from the device via WiFi or the cell network; if you've been testing your application against localhost on the desktop, it won't work on the device, since &quot;localhost&quot; for the device is the device itself.</li>
+ <li>In order to run, debug or deploy an ActionScript mobile project on a physical iOS device, you will need to obtain a provisioning profile and certificate from Apple. Also, you'll need to manually deploy the application on your device using iTunes, and launch it on the device itself.&nbsp;For more information on packaging for iOS, see <a href="#packdeploy">Packaging applications for deployment devices</a>.</li>
+ <li>Profiling is currently not supported on devices, only on the desktop.&nbsp; For more information on packaging for iOS, see <a href="/devnet/air/articles/packaging-air-apps-ios.html">Using Flash Builder 4.5 to package applications for Apple iOS devices</a>.</li>
+ </ul>
+ <h4><a name="packdeploy"></a>Packaging applications for deployment</h4>
+ <p>Finally, when your application is finished and ready to go out to the world, you can use the Export Release Build process just as you would to prepare desktop and web applications for deployment. The main difference is that when you export a release build of a mobile project, Flash Builder packages the build as a native installer, not as an .air file. For example, on Android, Flash Builder produces an .apk file that looks the same as a native Android application package. This enables AIR-based applications to be distributed and sold the same way as native applications on each platform, as mentioned above.</p>
+ <p>On Android, users who do not already have the AIR runtime installed will be prompted to download and install it from the Android Market the first time they run any AIR application. This step is not necessary on iOS, where the runtime is bundled into the packaged application, or on BlackBerry Tablet OS, where the runtime is built into the operating system.</p>
+ <p>Depending on which platform you're packaging for, you might need to follow specific procedures in order to package an application for final deployment. For more information on packaging for each platform, see:</p>
+ <ul>
+ <li><a href="/devnet/air/articles/packaging-air-apps-android.html">Using Flash Builder 4.5 to package applications for Google Android devices</a><br>
+ </li>
+ <li><a href="/devnet/air/articles/packaging-air-apps-ios.html">Using Flash Builder 4.5 to package applications for Apple iOS</a></li>
+ <li><a href="/devnet/air/articles/packaging-air-apps-blackberry.html">Using Flash Builder 4.5 to package applications for BlackBerry Tablet OS devices</a></li>
+ </ul>
+ </div>
+				</div>
+<a name="articlecontentAdobe_numberedheader_3" style="visibility:hidden"></a><div class="parbase compbase numberedheader section"><h3 class="TextH3 LayoutCellSides LayoutRow">
+        <a id="articlecontentAdobe_numberedheader_3"></a>
+        Where to go from here</h3>
+</div>
+<a name="articlecontentAdobe_text_11" style="visibility:hidden"></a><div class="text parbase section"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p>We're excited to be able to bring the Flex SDK and Flash Builder to mobile development. In the meantime, though, we hope you'll jump into building great mobile applications with Flash Builder 4.5 and Flex 4.5 SDK. You can get started quickly by installing the <a target="_blank" href="/go/try_flashbuilder/">Flash Builder 4.5 trial</a> and trying out the following tutorials:</p>
+ <ul>
+ <li><a href="/devnet/flash-builder/articles/hello-world.html">Hello World: Build a mobile app in five minutes</a></li>
+ <li><a href="/devnet/flex/articles/twitter-trends.html">Twitter Trends: Build your first mobile app</a></li>
+ <li><a href="/devnet/flex/testdrivemobile.html">Flex Test Drive for Mobile</a></li>
+ </ul>
+ <p>And, of course, we'd love to hear your questions and feedback on what we've done so far:</p>
+ <ul>
+ <li><a target="_blank" href="http://forums.adobe.com/community/flash_builder">Flash Builder forum</a></li>
+ <li><a target="_blank" href="http://forums.adobe.com/community/flex">Flex forum</a><br>
+ </li>
+ </ul>
+ </div>
+				</div>
+<a name="articlecontentAdobe_reference" style="visibility:hidden"></a><div class="parbase section reference"><div style="display:inline;" class="cq-dd-paragraph"><div class="text parbase"><div class="Semantic LayoutCellSides LayoutBreakAfter TextMedium TextBreak">
+						<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank"><img alt="Creative Commons License" style="border-width: 0pt;" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png"></a><br>
+This work is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" rel="license" target="_blank">Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported License</a></p>
+</div>
+				</div>
+</div>
+</div>
+</div></div>
+<div class="LayoutRow">
+                                <div class="articlePaging paging"></div>
+</div>
+                        </div>
+            </div>
+            <div class="ArticleWideGrid-5-6 ArticleWideRight">
+                <div class="LayoutBreakAfter RuleH ArticleWideRuleHide TextSmall LayoutBreak">
+                    <div class="ArticleGrid-2-3 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                            <div class="morelikethis"><div class="LayoutCellSides">
+                                    <h2 class="TextH5 LayoutRow">More Like This</h2>
+                                    
+                                    <ul class="LayoutRow">
+                                        <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/mobile-skinning-part1.html" title="Flex mobile skins – Part 1: Optimized skinning basics">Flex mobile skins – Part 1: Optimized skinning basics</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/twitter-trends.html" title="Build your first mobile Flex application – Twitter Trends">Build your first mobile Flex application – Twitter Trends</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/flex3-flex45-flashbuilder45.html" title="A Flex 3 developer's introduction to Flex 4.5 and Flash Builder 4.5">A Flex 3 developer's introduction to Flex 4.5 and Flash Builder 4.5</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/sending-receiving-sms.html" title="Sending and receiving mobile text messages with Flex, ColdFusion, and BlazeDS">Sending and receiving mobile text messages with Flex, ColdFusion, and BlazeDS</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/flex-mobile-development-tips-tricks-pt1.html" title="Flex mobile development tips and tricks – Part 1: Data handling">Flex mobile development tips and tricks – Part 1: Data handling</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/whats-new-flex-flash-builder-46.html" title="What's new in Flex 4.6 SDK and Flash Builder 4.6">What's new in Flex 4.6 SDK and Flash Builder 4.6</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/caltrain-times-story.html" title="Caltrain Times from design to release: A story of mobile application development">Caltrain Times from design to release: A story of mobile application development</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/flex-mobile-development-tips-tricks-pt4.html" title="Flex mobile development tips and tricks—Part 4: Creating an alert popup and other skinnable popups ">Flex mobile development tips and tricks—Part 4: Creating an alert popup and other skinnable popups </a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/introducing-flex46sdk.html" title="Introducing Adobe Flex 4.6 SDK">Introducing Adobe Flex 4.6 SDK</a></li>
+                                            <li class="LayoutSmallRowBottom">
+                                                <a href="/devnet/flex/articles/flex-mobile-performance-checklist.html" title="Flex mobile performance checklist">Flex mobile performance checklist</a></li>
+                                            </ul>
+                                </div>
+                            </div>
+</div>
+                    <div class="LayoutGrid-1-4 LayoutSlimGrid-1-2 LayoutBreakAfter">
+                        <div class="LayoutRow">
+                            <div class="parbase compbase inheritedpromo"></div>
+</div>
+                    </div>
+                </div>
+                <div class="LayoutBreakAfter TextSmall">
+                    <div class="ArticleGrid-2 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                        <div class="parsys inheritedresources inheritedResources"><div class="parsys"><div id="inheritedResources">
+<div class="parbase xdheading compbase section"><div pathToMoreText="" class="LayoutRow LayoutBreakAfter TextH5" linkboxcolor="RouterMore">
+	<table class="LayoutMaxH">
+        <tbody>
+            <tr>
+                <td class="PanelFillDark">
+					<h2 class="TextH5 LayoutCellSides LayoutSmallCellVSides">
+                        		Tutorials &amp; Samples</h2>
+					    </td>
+                </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="whatsnew section"><div>
+	<div class="LayoutCell">
+            <h3 class="HeadingSmaller">
+           		Tutorials</h3>
+            <ul>
+                <li>
+                               	<a href="/devnet/flex/articles/flex-mobile-performance-checklist.html" title="Flex mobile performance checklist">Flex mobile performance checklist</a></li>
+							<li>
+                               	<a href="/devnet/flex/articles/flex-maven-flexmojos-pt3.html" title="Flex and Maven with Flexmojos – Part 3: Journeyman">Flex and Maven with Flexmojos – Part 3: Journeyman</a></li>
+							<li>
+                               	<a href="/devnet/flex/articles/migrating-flex-apps-part4.html" title="Migrating Flex 3 applications to Flex 4.5 – Part 4">Migrating Flex 3 applications to Flex 4.5 – Part 4</a></li>
+							</ul>
+            </div>
+        </div>
+</div>
+<div class="whatsnew section"><div>
+	<div class="LayoutCell">
+            <h3 class="HeadingSmaller">
+           		Samples</h3>
+            <ul>
+                <li>
+                               	<a href="/devnet/flex/articles/twitter-trends.html" title="Twitter Trends">Twitter Trends</a></li>
+							<li>
+                               	<a href="/devnet/flex/samples.html" title="Flex 4.5 reference applications">Flex 4.5 reference applications</a></li>
+							<li>
+                               	<a href="http://coenraets.org/blog/2011/04/flex-based-ipad-trader-app-now-on-android-market/" title="Mobile Trader Flex app on Android Market">Mobile Trader Flex app on Android Market</a></li>
+							</ul>
+            </div>
+        </div>
+</div>
+</div></div>
+</div>
+</div>
+                    <div class="ArticleGrid-3 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                        <div class="parsys inheritedresources inheritedResources2"></div>
+</div>
+                    <div class="ArticleGrid-4 LayoutSlimGrid-1-2 ArticleWideGridColReset">
+                        <div class="parsys inheritedResources3 inheritedresources"></div>
+</div>
+                </div>
+            </div>
+            <!-- Main Content Comments -->
+
+            <div class="LayoutRow LayoutGridBreak LayoutBreakAfter">
+                <div class="parbase compbase jivecomments jiveComments"></div>
+</div>
+
+        </div>
+
+    </div>
+</div>
+<div class="PrintLayoutHide">
+        <!--googleoff: all--><script>
+	//<![CDATA[
+	var hideEvidon = false;
+
+    $(document).ready(function() {
+		adobe.fn.initGlobalFooter();
+		adobe.fn.evidon('_bapw-link');
+		
+		adobe.fn.initGeorouting();
+	});
+    changeRegion = adobe.fn.changeRegionFooter;
+    //]]>
+</script>
+
+<!--googleoff: index-->
+<!-- $Id: //depot/projects/dylan/releases/rc_13_11/ubi/footer/en_us/globalfooter_ssi.html#1 $ -->
+<div id="SiteFooter" class="SiteFooter Text TextSmall TextInvert Link LayoutBreak">
+	<span id="Georouting"></span>
+    <div class="LayoutBreakAfter">
+        <div class="LayoutGrid-1 LayoutSlimGrid-1 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/products/catalog.html?promoid=JOPBT">Products</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconCloud" href="/products/creativecloud.html?promoid=JQPER">Adobe Creative Cloud</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconCS" href="/products/cs6.html?promoid=KFHNH">Creative Suite 6</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconOMS" href="/solutions/digital-marketing.html?promoid=JOPBY">Adobe Marketing Cloud</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconAcrobat" href="/products/acrobat.html?promoid=JOPBV">Acrobat</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconPS" href="/products/photoshop.html?promoid=JOPCB">Photoshop</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconDPS" href="/products/digital-publishing-suite-family.html?promoid=JOPBZ">Digital Publishing Suite</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconElements" href="/products/elements-family.html?promoid=JOPBX">Elements family</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts SiteFooterMenuItemIconSC" href="/products/sitecatalyst.html?promoid=KFGCH">SiteCatalyst</a></li>
+                    <li><a class="icon Icon SiteFooterMenuItemIconProducts" href="/education.html?marketSegment=EDU&promoid=JUTMH">For education</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-2 LayoutSlimGrid-2 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/downloads/?promoid=JOPDB">Download</a></h4>
+                <ul class="SiteFooterLinkList SiteFooterLinkListBottom">
+                    <li><a href="/downloads/?promoid=KEWBH">Product trials</a></li>
+                    <li><a href="/go/gffooter_adobe_reader">Adobe Reader</a></li>
+                    <li><a href="http://get2.adobe.com/flashplayer/?promoid=KFHNI">Adobe Flash Player</a></li>
+                    <li><a href="/go/gffooter_adobe_air">Adobe AIR</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-3 LayoutSlimGrid-1 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/go/gffooter_help">Support &amp; Learning</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a href="http://helpx.adobe.com/support.html?promoid=KFKQG">Product help</a></li>
+                    <li><a href="http://forums.adobe.com/index.jspa?promoid=JOPCT" target="_blank">Forums</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-4 LayoutSlimGrid-2 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/buy.html?promoid=JOPCV">Buy</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a href="/go/gffooter_homeuse">For personal and professional use</a></li>
+                    <li><a href="/go/gffooter_students_store">For students, educators, and staff</a></li>
+                    <li><a href="/products/small-business-pricing/software-catalog._sl_id-contentfilter_sl_catalog_sl_software_sl_creativecloudmembership.html?marketSegment=COM&promoid=JOPCY">For small and medium businesses</a></li>
+                    <li><a href="/go/gffooter_licensingprograms">Volume Licensing</a></li>
+                    <li><a href="/go/gffooter_special_offers">Special offers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="LayoutGrid-5 LayoutSlimGrid-1-2 LinkInvert">
+        	<div class="LayoutCellSides LayoutCellTop">
+                <h4><a href="/company.html?promoid=JOPDG">Company</a></h4>
+                <ul class="SiteFooterLinkList">
+                    <li><a href="/go/gffooter_news_room">News room</a></li>
+                    <li><a href="/go/gffooter_partner_programs">Partner programs</a></li>
+                    <li><a href="/go/gffooter_corporate_social_responsibility">Corporate responsibility</a></li>
+                    <li><a href="/go/gffooter_career_opportunities">Career opportunities</a></li>
+                    <li><a href="/go/gffooter_investor_relation">Investor Relations</a></li>
+                    <li><a href="/go/gffooter_events">Events</a></li>
+                    <li><a href="/go/gffooter_legal">Legal</a></li>
+                    <li><a href="/go/gffooter_security">Security</a></li>
+                    <li><a href="/company/contact.html?promoid=JOPDO">Contact Adobe</a></li>
+                </ul>
+            </div>
+        </div>
+        
+		<div class="LayoutGridBreak">
+        	<div class="LayoutCellSides LayoutCellBottom">
+                <div class="SiteFooterRegionSelector TextInvert LinkInvert LinkStrong">
+                    <a href="/go/gffooter_choose_region" id="sfRegion" class="SiteFooterMenuItemIcon SiteFooterMenuItemIconRegionBlue">Choose your region</a>
+                    <span id="sfRegionSet" class="SiteFooterMenuItemIcon SiteFooterMenuItemIconRegionBlack" style="display: none;">United States <a href="/go/gffooter_choose_region" id="sfRegionChange">(Change)</a></span>
+                </div>
+                <div class="SiteFooterRegionPanel SiteFooterRegionPanelEvidon" id="RegionPanel" style="display: none;">
+                    <div class="SiteFooterRegionPanelHeader">
+                        <span class="SiteFooterMenuItemIcon SiteFooterMenuItemIconRegionBlack">Choose your region</span>
+                        <a id="sfRegionClose" class="SiteFooterRegionPanelHeaderClose">Close</a>
+                    </div>
+                    <div class="Column">
+                        <div class="Column-1">
+                            <p class="SiteFooterRegionPanelRegionHeader">North America</p>
+                        </div>
+                        <div class="Column-2-3">
+                            <p class="SiteFooterRegionPanelRegionHeader">Europe, Middle East and Africa</p>
+                        </div>
+                        <div class="Column-4">
+                            <p class="SiteFooterRegionPanelRegionHeader">Asia Pacific</p>
+                        </div>
+                        <div class="Column-1">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('ca');">Canada - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('ca_fr');">Canada - Fran&ccedil;ais</a></li>
+                                <li lang="es"><a onClick="changeRegion('la');">Latinoam&eacute;rica</a></li>
+                                <li lang="es"><a onClick="changeRegion('mx');">M&eacute;xico</a></li>
+                                <li lang="en"><a onClick="changeRegion('us');">United States</a></li>
+                            </ul>
+            
+                            <p class="SiteFooterRegionPanelRegionHeader">South America</p>
+                            <ul>
+                                <li lang="pt"><a onClick="changeRegion('br');">Brasil</a></li>
+                            </ul>
+                        </div>
+                        <div class="Column-2">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('africa');">Africa - English</a></li>
+                                <li lang="de"><a onClick="changeRegion('at');">&Ouml;sterreich - Deutsch</a></li>
+                                <li lang="en"><a onClick="changeRegion('be_en');">Belgium - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('be_fr');">Belgique - Fran&ccedil;ais</a></li>
+                                <li lang="nl"><a onClick="changeRegion('be_nl');">Belgi&euml; - Nederlands</a></li>
+                                <li lang="bg"><a onClick="changeRegion('bg');">България</a></li>
+                                <li lang="hr"><a onClick="changeRegion('hr');">Hrvatska</a></li>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Cyprus - English</a></li>                                
+                                <li lang="cs"><a onClick="changeRegion('cz');">Česk&aacute; republika</a></li>
+                                <li lang="da"><a onClick="changeRegion('dk');">Danmark</a></li>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Eastern Europe - English</a></li>
+                                <li lang="et"><a onClick="changeRegion('ee');">Eesti</a></li>
+                                <li lang="fi"><a onClick="changeRegion('fi');">Suomi</a></li>
+                                <li lang="fr"><a onClick="changeRegion('fr');">France</a></li>
+                                <li lang="de"><a onClick="changeRegion('de');">Deutschland</a></li>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Greece - English</a></li>
+                                <li lang="hu"><a onClick="changeRegion('hu');">Magyarorsz&aacute;g</a></li>
+                                <li lang="en"><a onClick="changeRegion('ie');">Ireland</a></li>
+                                <li lang="en"><a onClick="changeRegion('il_en');">Israel - English</a></li>
+                                <li lang="he"><a onClick="changeRegion('il_he');">&#1497;&#1513;&#1512;&#1488;&#1500; - &#1506;&#1489;&#1512;&#1497;&#1514;</a></li>
+                                <li lang="it"><a onClick="changeRegion('it');">Italia</a></li>
+                                <li lang="lv"><a onClick="changeRegion('lv');">Latvija</a></li>
+                                <li lang="lt"><a onClick="changeRegion('lt');">Lietuva</a></li>
+                                <li lang="de"><a onClick="changeRegion('lu_de');">Luxembourg - Deutsch</a></li>
+                                <li lang="en"><a onClick="changeRegion('lu_en');">Luxembourg - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('lu_fr');">Luxembourg - Fran&ccedil;ais</a></li>
+                            </ul>
+                        </div>
+                        <div class="Column-3">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('eeurope');">Malta - English</a></li>
+								<li lang="ar"><a onClick="changeRegion('mena_ar');">&#1575;&#1604;&#1588;&#1585;&#1602; &#1575;&#1604;&#1571;&#1608;&#1587;&#1591; &#1608;&#1588;&#1605;&#1575;&#1604; &#1571;&#1601;&#1585;&#1610;&#1602;&#1610;&#1575; - &#1575;&#1604;&#1604;&#1594;&#1577; &#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</a></li>                                <li lang="en"><a onClick="changeRegion('mena_en');">Middle East and North Africa - English</a></li>
+                                <li lang="fr"><a onClick="changeRegion('mena_fr');">Moyen-Orient et Afrique du Nord - Fran&ccedil;ais</a></li>
+                                <li lang="nl"><a onClick="changeRegion('nl');">Nederland</a></li>
+                                <li lang="no"><a onClick="changeRegion('no');">Norge</a></li>
+                                <li lang="pl"><a onClick="changeRegion('pl');">Polska</a></li>
+                                <li lang="pt"><a onClick="changeRegion('pt');">Portugal</a></li>
+                                <li lang="ro"><a onClick="changeRegion('ro');">Rom&acirc;nia</a></li>
+                                <li lang="ru"><a onClick="changeRegion('ru');">Россия</a></li>
+                                <li lang="sr"><a onClick="changeRegion('rs');">Srbija</a></li>
+                                <li lang="sk"><a onClick="changeRegion('sk');">Slovensko</a></li>
+                                <li lang="sl"><a onClick="changeRegion('si');">Slovenija</a></li>
+                                <li lang="es"><a onClick="changeRegion('es');">Espa&ntilde;a</a></li>
+                                <li lang="sv"><a onClick="changeRegion('se');">Sverige</a></li>
+                                <li lang="de"><a onClick="changeRegion('ch_de');">Schweiz - Deutsch</a></li>
+                                <li lang="fr"><a onClick="changeRegion('ch_fr');">Suisse - Fran&ccedil;ais</a></li>
+                                <li lang="it"><a onClick="changeRegion('ch_it');">Svizzera - Italiano</a></li>
+                                <li lang="tr"><a onClick="changeRegion('tr');">T&uuml;rkiye</a></li>
+                                <li lang="uk"><a onClick="changeRegion('ua');">Україна</a></li>
+                                <li lang="en"><a onClick="changeRegion('uk');">United Kingdom</a></li>
+                            </ul>
+                        </div>
+                        <div class="Column-4">
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('au');">Australia</a></li>
+                                <li lang="zh"><a onClick="changeRegion('cn');">中国</a></li>
+                                <li lang="zh"><a onClick="changeRegion('hk_zh');">中國香港特別行政區</a></li>
+                                <li lang="en"><a onClick="changeRegion('hk_en');">Hong Kong S.A.R. of China</a></li>
+                                <li lang="en"><a onClick="changeRegion('in');">India - English</a></li>
+                                <li lang="ja"><a onClick="changeRegion('jp');">日本</a></li>
+                                <li lang="ko"><a onClick="changeRegion('kr');">한국</a></li>
+                                <li lang="en"><a onClick="changeRegion('nz');">New Zealand</a></li>
+                                <li lang="zh"><a onClick="changeRegion('tw');">台灣</a></li>
+                            </ul>
+            
+                            <p class="SiteFooterRegionPanelRegionHeader">Southeast Asia</p>
+                            <ul>
+                                <li lang="en"><a onClick="changeRegion('sea');">Includes Indonesia, Malaysia, Philippines, Singapore, Thailand, and Vietnam - English</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<div class="LayoutGridBreak">
+        	<div class="LayoutCellSides">
+                <hr />
+            </div>
+        </div>
+    
+        <div class="LayoutGrid-1-5 LayoutSlimGrid-1-2 LinkInvert LinkStrong">
+        	<div class="LayoutCellSides LayoutCellBottom LinkInvert">
+                <p class="SiteFooterRow TextSmall">Copyright &copy; 2013 Adobe Systems Incorporated.  All rights reserved.</p>
+                <p class="SiteFooterRow TextSmall"><a href="/go/gffooter_terms_of_use">Terms of Use</a> | <a href="/privacy.html">Privacy</a> | <a href="/privacy/cookies.html">Cookies</a></p>
+                <p class="SiteFooterRow SiteFooterRowTop"><a href="#" id="_bapw-link" class="TextSmall icon Icon SiteFooterMenuItemIconEvidon" style="display:none;">Ad Choices</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--googleon: index--><!--googleon: all--></div>
+    <div class="parsys templatembox bottomofbodymbox"><div class="mboxDefault">
+                    </div>
+                <script>
+                            mboxCreate('defaultmboxname');
+                    </script>
+                </div>
+<div class="parsys doubleclickfloodlight"><!-- Fetch either EDU or COM snippet based on the Mode selection-->
+</div>
+
+    <!-- Invoking faas form engine tracking Script !! --->
+    </div>
+</body>
+</html>

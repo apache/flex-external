@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+-->
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 width="250" height="295">
+	
+	<!-- Properties of the parent ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:layout>
+		<s:VerticalLayout gap="15" 
+						  paddingTop="15" paddingLeft="15" paddingRight="15" paddingBottom="15"/>
+	</s:layout>
+	
+	<!-- Metadata ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Script ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	
+	
+	<!-- Declarations ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<!-- UI components ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	
+	<s:HGroup gap="15"
+			  width="100%">
+		
+		<s:BitmapImage source="assets/aparker.jpg"/>
+		
+		<s:VGroup>
+			
+			<s:Label text="ATHENA PARKER"  
+					 fontWeight="bold" /> 
+			
+			<s:Label text="Hardware Engineering Product Manager"  
+					 width="128" height="30"/>
+			
+		</s:VGroup>	
+		
+	</s:HGroup>
+	
+	<s:Label width="100%">Congratulations to Athena our Employee of the Month. Athena has been instrumental in planning and overseeing our new wind power unit development.
+		
+Her dedication and infectious enthusiasm has helped to increase our wind-powered sales by 8% throughout the nation.</s:Label>
+	
+</s:Panel>

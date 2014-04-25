@@ -1,0 +1,82 @@
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+<head><title></title>
+<meta name="viewport" content="width=750" />
+<link rel="stylesheet" href="http://wwwimages.adobe.com/www.adobe.com/include/style/compressed.css"/>
+<link rel="stylesheet" href="http://wwwimages.adobe.com/www.adobe.com/include/jmvc/adobe-configurator-compressed.css" media="screen"/>
+<script src="http://wwwimages.adobe.com/www.adobe.com/include/script/compressed.js"></script>
+</head>
+<body class="Text"><div id="bodycontent1-swfmodal" class="LayoutImage"><span style="width:750px;height:590px;" class="FlashAltCanvas">
+        <span class="FlashAltLayoutOverlay FlashAltLayoutBody FlashAltText">
+            <span class="FlashAltLayoutRow FlashAltTextLarge">
+                This content requires Flash</span>
+            <span class="FlashAltLayoutRow FlashAltRequires">
+                    To view this content, JavaScript must be enabled, and you need the latest version of the Adobe Flash Player.</span>
+            <span class="FlashAltLayoutRow FlashAltButton">
+                    <a href="/go/getflashplayer/" class="FlashAltButton">To view this content, JavaScript must be enabled, and you need the latest version of the Adobe Flash Player.</a></span>
+            </span>
+</span></div>
+    <script>
+        //<![CDATA[
+        var attributes =         {
+                'id':'bodycontent1-swfmodal','name':'bodycontent1-swfmodal','class':'LayoutImage'
+            };
+		
+        var params =         {play: "true",
+                loop: "true",
+                menu: "true",
+                scale: "showall",
+                wmode: "opaque",
+                swliveconnect: "false",
+                devicefont: "false",
+                allowscriptaccess: "samedomain",
+                seamlesstabbing: "true",
+                allowfullscreen: "true",
+                allownetworking: "all"
+            };
+
+        var flashvars =         {
+                
+            };
+
+        if (swfobject.getQueryParamValue( 'autoPlay').length) flashvars.autoPlay = swfobject.getQueryParamValue( 'autoPlay' ); 
+        if (swfobject.getQueryParamValue( 'allowFullScreen').length) flashvars.allowFullScreen = swfobject.getQueryParamValue( 'allowFullScreen' );
+
+        var hash = location.hash;
+        var chapterIdDeepLink = '';
+        if(hash != null && hash != '') {
+			var hashArray = hash.split("_split_");
+			if(hashArray != null && hashArray.length >= 2) {
+				if(hashArray[0] == '#bodycontent1-swfmodal') {
+					chapterIdDeepLink = hashArray[hashArray.length-1];
+					flashvars.chapterID = chapterIdDeepLink;
+				}
+			}
+        }
+        
+        swfobject.embedSWF("/content/dam/Adobe/en/devnet/flex/testdrive/swf/FlexWebTestDrive.swf",
+                "bodycontent1-swfmodal",
+                "750",
+                "590",
+                "9",
+                "",
+        flashvars, params, attributes);
+        //]]>
+    </script>
+    </body>
+</html>

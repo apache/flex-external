@@ -1,0 +1,56 @@
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<objects 
+    xmlns="http://www.spicefactory.org/parsley"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.spicefactory.org/parsley 
+        http://www.spicefactory.org/parsley/schema/2.0/parsley-core.xsd">
+        
+    <object id="channels" type="mx.collections.ArrayCollection">
+    	<property name="source">
+    		<array>
+		    	<object type="mx.messaging.channels.StreamingAMFChannel">
+		        	<property name="id" value="my-nio-amf-stream"/>
+		        	<property name="uri" value="http://localhost:2088/nioamfstream"/>
+		        </object>
+		    	<object type="mx.messaging.channels.StreamingAMFChannel">
+		        	<property name="id" value="my-streaming-amf"/>
+		        	<property name="uri" value="http://localhost:8400/traderdesktop/messagebroker/streamingamf"/>
+		        </object>
+		    	<object type="mx.messaging.channels.RTMPChannel">
+		        	<property name="id" value="my-rtmp"/>
+		        	<property name="uri" value="rtmp://localhost:2050"/>
+		        </object>
+	        </array>
+		</property>
+    </object>
+    
+    <object id="remotingEndpoint" type="String">
+	    <constructor-args>
+	        <string>http://localhost:8400/traderdesktop/messagebroker/amf</string>
+	    </constructor-args>
+	</object>
+	
+	<object id="feedService" type="mx.rpc.remoting.RemoteObject">
+		<property name="destination" value="feedManager"/>
+		<property name="endpoint" value="http://localhost:8400/traderdesktop/messagebroker/amf"/>
+		<property name="showBusyCursor" value="true"/>
+	</object>
+    
+</objects>
